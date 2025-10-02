@@ -1,4 +1,3 @@
-import React from 'react'
 import './CreateAccountPage.css'
 import GoogleLogo from '../assets/images/GoogleLogo.png'
 import FacebookLogo from '../assets/images/FacebookLogo.png'
@@ -8,10 +7,10 @@ import eventlogo from '../assets/images/eventlogo.png'
 
 const CreateAccountPage = () => {
     return (
-
+        
         <div className='CreateAccountPage'>
             <header className="App-header">
-                <img src={eventlogo} alt="Event Logo" />
+                <img src={eventlogo} alt="Event Logo" className="event-logo" />
             </header>
          <div className="header">
             <div className="Text">Create Account</div>
