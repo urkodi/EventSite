@@ -6,6 +6,7 @@
     background: #9CCED6;
     padding: 20px;
     border-radius: 20px;
+    width: 500px;
 }
 
 .header {
@@ -55,4 +56,45 @@
     margin-top: 15px;
     color: #4C9DB0;
     font-size: 14px;
+}
+
+.forgot-password span {
+    text-decoration: underline;
+    color:  #ECFBFD;
+    cursor: pointer;
+}
+
+.submit-container {
+    margin-top: 10px;
+    width: 350px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.submit-container button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 150px;
+    height: 40px;
+    color: #ECFBFD;
+    background: #4C9DB0;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold; 
+}
+
+.signup-link {
+    font-size: 15px;
+    color: #4C9DB0;
+}
+
+.signup-link a {
+    color: #4C9DB0;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
 }
