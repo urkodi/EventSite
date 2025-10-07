@@ -18,6 +18,8 @@ const LoginPage = () => {
             <div className="flex flex-col items-center justify-center mt-10">
                 <div className="w-full max-w-md rounded-2xl p-8 bg-lightermoonstone shadow-md">
                     <h2 className="font-bold mb-6 text-center text-5xl text-moonstone">Log In</h2>
+
+                    <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla"></div>
                     
                     {/*User Inputs*/}
                     <div className="flex flex-col mb-6">
@@ -25,20 +27,24 @@ const LoginPage = () => {
                             <input
                                 type="email"
                                 placeholder="Email"
-                                className="rounded-lg p-2 bg-bluewhite text-moonstone"
+                                className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
                             />
                         </div>
                         <div className="flex flex-col mt-4">
                             <input
                                 type="password"
                                 placeholder="Password"
-                                className="rounded-lg p-2 bg-bluewhite text-moonstone"
+                                className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
                             />
+                    </div>
+
+                    <div className="mt-2 flex justify-end">
+                     <a href="/forgot-password" className="text-white text-[13px] underline" > Forgot Password?</a>
                     </div>
 
                     {/*Log in button*/}
                     <div className="flex justify-center items-center mt-3">
-                        <button type="submit" className="px-10 py-2 text-[20px] font-bold rounded-full bg-moonstone text-bluewhite shadow-md cursor-pointer">
+                        <button type="submit" className="px-10 py-2 text-[20px] font-bold rounded-full bg-moonstone text-bluewhite shadow-md cursor-pointer hover:ring-3 hover:ring-vanilla">
                             Log In
                         </button>
                     </div>
@@ -67,11 +73,14 @@ const LoginPage = () => {
 
                     {/*Link to signup page if user wants to make an account*/}
                     <div className="px-3 text-center text-moonstone">
-                        Dont have an account? Create one <a href="/create-account" className="text-moonstone font-bold underline cursor-pointer">here!</a>
+                        Dont have an account? Create one <a href="/create-account" className="text-moonstone font-bold underline cursor-pointer">here.</a>
                     </div>
 
                 </div>
             </div>  
+
+            <div className="mt-10 h-10 w-full bg-lightermoonstone p-4 shadow-md"></div>
+
         </div>
       </div>
     );
