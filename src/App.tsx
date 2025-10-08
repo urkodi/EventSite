@@ -5,6 +5,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import CreateAccountPage from "./pages/CreateAccountPage";
 import LoginPage from "./pages/LoginPage";
+import HelpPage from "./pages/HelpPage";
+import ContactUsPage from "./pages/ContactUsPage";
 
 
 function App() {
@@ -23,7 +25,8 @@ function App() {
         />  
         <Route path="/create-account" element={<CreateAccountPage />} />
         <Route path="/login" element={<LoginPage />} />
-        //add more routes here as needed
+        <Route path="/help" element={<HelpPage />} />
+        <Route path="/contact-us" element={<ContactUsPage />} />
       </Routes>
     </Router>
   )

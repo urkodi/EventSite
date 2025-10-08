@@ -9,7 +9,7 @@ const LoginPage = () => {
 
             <header className="w-screen h-auto bg-lightermoonstone p-4 shadow-md">
                 <div className="flex items-left">
-                    <a href = "/homepage">
+                    <a href = "/ ">
                         <img src={eventlogo} alt="Event Logo" className="h-10" />
                     </a>
                 </div>
