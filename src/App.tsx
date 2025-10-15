@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Panels from "./features/Panels";
 import CreateAccountPage from "./pages/CreateAccountPage";
 import LoginPage from "./pages/LoginPage";
-import Homepage from "./pages/Homepage";
+import HelpPage from "./pages/HelpPage";
+import ContactUsPage from "./pages/ContactUsPage";
 
 
 function App() {
@@ -13,8 +14,9 @@ function App() {
         <Route path="/" element={<Panels />} />  
         <Route path="/create-account" element={<CreateAccountPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/help" element={<HelpPage />} />
+        <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/homepage" element={<Homepage />} />
-        //add more routes here as needed
       </Routes>
     </Router>
   )
