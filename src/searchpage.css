@@ -1,0 +1,12 @@
+/* Overall page layout */
+.app-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr 250px; /* side | main | right */
+  height: 100vh;
+}
+
+/* Optional basic styling */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
