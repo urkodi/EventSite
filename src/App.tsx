@@ -5,6 +5,7 @@ import CreateAccountPage from "./pages/CreateAccountPage";
 import LoginPage from "./pages/LoginPage";
 import HelpPage from "./pages/HelpPage";
 import ContactUsPage from "./pages/ContactUsPage";
+import Homepage from "./pages/Homepage";
 
 
 function App() {
