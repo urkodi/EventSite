@@ -7,6 +7,7 @@
   --color-lightermoonstone:#9CCED6;
   --color-darkervanilla:#E9CC73;
   --color-vanilla:#FFEBAF;
+  --color-lightgrey:#E3E3E3;
 }
 html, body, #root {
   height: 100%;
