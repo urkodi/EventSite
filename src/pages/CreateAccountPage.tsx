@@ -7,11 +7,13 @@ const CreateAccountPage = () => {
     return (
         <div className="flex flex-col mx-auto h-auto">
 
-            <header className="w-screen h-auto bg-lightermoonstone p-4 shadow-md">
-                <div className="flex items-left">
+            <header className="w-screen h-auto bg-lightermoonstone p-3 shadow-md">
+                <div className="items-left w-22 rounded-4xl h-18 bg-bluewhite p-2">
+                <div className="flex items-center justify-center ml-1">
                     <a href = "/ ">
-                        <img src={eventlogo} alt="Event Logo" className="h-10" />
+                        <img src={eventlogo} alt="Event Logo" className="h-15" />
                     </a>
+                </div>
                 </div>
             </header>
 
