@@ -2,53 +2,8 @@ import SearchColor from '../assets/images/SearchColor.png';
 import LockColor from '../assets/images/LockColor.png';
 
 import Sidenav from '../features/Sidenav';
-import { useState } from 'react';
 
 const HelpPage = () => {
-
-    const [flippedBoxes, setFlippedBoxes] = useState<{ [key: string]: boolean }>({});
-
-    const toggleFlip = (key: string) => {
-    setFlippedBoxes(prev => ({ ...prev, [key]: !prev[key] }));
-  };
-
-  const flipCardStyle = {
-    perspective: '1000px',
-    cursor: 'pointer',
-    width: '15rem',
-    height: '15rem',
-  };
-
-  const flipInnerStyle = (flipped: boolean) => ({
-    position: 'relative',
-    width: '100%',
-    height: '100%',
-    transition: 'transform 0.6s',
-    transformStyle: 'preserve-3d',
-    transform: flipped ? 'rotateY(180deg)' : 'none',
-  });
-
-  const flipFaceStyle = {
-    position: 'absolute' as const,
-    width: '100%',
-    height: '100%',
-    borderRadius: '2rem',
-    backfaceVisibility: 'hidden' as const,
-    backgroundColor: '#e6f0fa',
-    boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-    padding: '1.5rem',
-    display: 'flex',
-    flexDirection: 'column' as const,
-    justifyContent: 'center',
-    alignItems: 'center',
-  };
-
-  const flipBackStyle = {
-    ...flipFaceStyle,
-    transform: 'rotateY(180deg)',
-    backgroundColor: '#cfe3ff',
-  };
-
     return (
         <>
             <div className="flex">

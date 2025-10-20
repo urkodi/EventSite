@@ -7,7 +7,7 @@ const LoginPage = () => {
    return (
     <div className="flex flex-col mx-auto h-auto">
 
-            <header className="w-screen h-auto bg-lightermoonstone p-4 shadow-md">
+            <header className="w-screen h-auto bg-moonstone p-4 shadow-md">
                 <div className="flex items-left">
                     <a href = "/ ">
                         <img src={eventlogo} alt="Event Logo" className="h-10" />
