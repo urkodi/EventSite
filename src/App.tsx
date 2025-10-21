@@ -7,6 +7,8 @@ import HelpPage from "./pages/HelpPage";
 import ContactUsPage from "./pages/ContactUsPage";
 import Homepage from "./pages/Homepage";
 
+import ForgotPassword from "./pages/ForgotPassword";
+
 
 function App() {
   return(
@@ -18,6 +20,7 @@ function App() {
         <Route path="/help" element={<HelpPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/homepage" element={<Homepage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
       </Routes>
     </Router>
   )

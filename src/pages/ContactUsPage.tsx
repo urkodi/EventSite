@@ -1,5 +1,6 @@
 import Sidenav from '../features/Sidenav';
 import MailWhiteBlue from '../assets/images/MailWhiteBlue.png';
+import HelpDuck from '../assets/images/HelpDuck.png';
 
 const ContactUsPage = () => {
     return (
@@ -24,7 +25,12 @@ const ContactUsPage = () => {
                 <div className="mt-4 flex flex-row flex-wrap justify-center gap-10">
                 {/*Decorative containers*/}
                 <div className="flex mr-auto flex-col gap-10 w-2/7">
-                    <div className="bg-bluewhite p-6 rounded-4xl shadow-md h-70"></div>
+                    <div className="p-6 rounded-4xl shadow-md h-70 bg-bluewhite bg-cover bg-center bg-no-repeat"
+                        style={{ backgroundImage: `url(${HelpDuck})`,
+                        backgroundSize: '280%',
+                        backgroundPosition: 'center -180px',
+                        }}>
+                    </div>
                     <div className="bg-moonstone p-6 rounded-4xl shadow-md h-70"></div>
                 </div>
 

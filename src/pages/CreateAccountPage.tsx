@@ -7,7 +7,7 @@ const CreateAccountPage = () => {
     return (
         <div className="flex flex-col mx-auto h-auto">
 
-            <header className="w-screen h-auto bg-moonstone p-4 shadow-md">
+            <header className="w-screen h-auto bg-moonstone p-4">
                 <div className="flex items-left">
                     <a href = "/ ">
                         <img src={eventlogo} alt="Event Logo" className="h-10" />
@@ -101,7 +101,7 @@ const CreateAccountPage = () => {
                     </div>
 
                 </div>
-                <div className="mt-10 h-10 w-full bg-lightermoonstone p-4 shadow-md"></div>
+                <div className="mt-10 h-10 w-full bg-moonstone p-4 shadow-md"></div>
             </div>  
         </div>
     );

@@ -12,9 +12,10 @@ html, body, #root {
   height: 100%;
   width: 100%;
   background-image: url(./assets/images/deco.png);
-  background-position: bottom left;
-  background-repeat: no-repeat; 
-  background-size: 100vw;
+  background-position: bottom;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: contain;
   background-color: var(--color-whiteblue);
 }
 #root {
