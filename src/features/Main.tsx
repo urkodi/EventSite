@@ -1,7 +1,7 @@
 import { Routes, Route } from 'react-router-dom';
 import Homepage from '../Homepage';
-import Bookmark from '../components/Bookmark';
-import MyTickets from '../components/MyTickets';
+import Bookmark from '../pages/Bookmark';
+import MyTickets from '../pages/MyTickets';
 
 function Main() {
   return (
