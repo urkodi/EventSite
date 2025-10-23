@@ -1,6 +1,7 @@
 @import "tailwindcss";
 
 @theme {
+  --color-whiteblue:#ECFBFD;
   --color-bluewhite:#ECFBFD;
   --color-moonstone:#4C9DB0;
   --color-lightermoonstone:#9CCED6;
@@ -10,6 +11,11 @@
 html, body, #root {
   height: 100%;
   width: 100%;
+  background-image: url(./assets/images/deco.png);
+  background-position: bottom;
+  background-repeat: no-repeat; 
+  background-size: auto;
+  background-color: var(--color-whiteblue);
 }
 #root {
   display: flex;

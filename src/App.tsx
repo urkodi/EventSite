@@ -1,15 +1,23 @@
-import Main from "./features/Main";
-import Sidenav from "./features/Sidenav";
-import UserPanel from "./features/UserPanel";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import Panels from "./features/Panels";
+//import CreateAccountPage from "./pages/CreateAccountPage";
+//import LoginPage from "./pages/LoginPage";
+//import HelpPage from "./pages/HelpPage";
+//import ContactUsPage from "./pages/ContactUsPage";
+//import Homepage from "./pages/Homepage";
+
 
 
 function App() {
   return(
-    <>
-      <Sidenav />
-      <Main/>
-      <UserPanel/>  
-    </>
+    <Router>
+      <Routes>
+        <Route path="/*" element={<Panels />} />  
+        {/* <Route path="/create-account" element={<CreateAccountPage />} /> */}
+        {/* <Route path="/homepage" element={<Homepage />} /> */}
+      </Routes>
+    </Router>
   )
 }
 
