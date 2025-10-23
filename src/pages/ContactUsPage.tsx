@@ -3,6 +3,7 @@ import MailWhiteBlue from '../assets/images/MailWhiteBlue.png';
 import HelpDuck from '../assets/images/HelpDuck.png';
 
 const ContactUsPage = () => {
+
     return (
         <>
             <div className="flex">
@@ -41,7 +42,7 @@ const ContactUsPage = () => {
                         <h2 className="text-2xl text-whiteblue ml-4">Please fill out the form below</h2>
                     </div>
                     <form className="mt-4">
-                        <div className="mb-6 space-y-4">
+                        <div className="mb-1 space-y-4">
 
                             <div className="flex justify-center gap-4 max-w-3xl mx-auto">
                                 <input

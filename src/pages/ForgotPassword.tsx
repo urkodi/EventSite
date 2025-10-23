@@ -32,22 +32,22 @@ const ForgotPassword = () => {
             <header className="w-screen h-auto bg-moonstone p-4">
                 <div className="flex items-left">
                     <a href="/">
-                        <img src={eventlogo} alt="Event Logo" className="h-10" />
+                        <img src={eventlogo} alt="Event Logo" className="h-10 transition-transform duration-300 hover:scale-120 hover:-translate-y-0" />
                     </a>
                 </div>
             </header>
 
             {/* Main Content */}
-            <div className="flex flex-col items-center justify-center mt-10 mb-10">
-                <div className="w-full max-w-md rounded-2xl p-8 bg-bluewhite shadow-md border-12 border-moonstone">
+            <main className="flex flex-col items-center justify-center mt-10 mb-10">
+                <div className="w-full max-w-md rounded-2xl p-8 bg-bluewhite shadow-md border-12 border-lightermoonstone">
                     <h2 className="font-bold mb-6 text-center text-5xl text-moonstone">
                         {submitted ? "Check Your Email" : "Forgot Password?"}
                     </h2>
                     <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla mb-5"></div>
                     <div className="mb-6 text-center text-moonstone text-bold text-lg">
                         {submitted
-                            ? "If an account with that email exists, you will receive a password reset link shortly."
-                            : "Enter your email address below to receive a password reset link."
+                            ? "If an account with that email exists, you will receive a 6-digit code."
+                            : "Enter your email address below to receive verification code ."
                         }
                     </div>
 
@@ -64,15 +64,15 @@ const ForgotPassword = () => {
                             )}
 
                             {/* Email Input */}
-                            <div className="flex flex-col mb-6">
+                            <form className="flex flex-col mb-6">
                                 <input
-                                    type="text"
+                                    type="email"
                                     placeholder="Email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                     className="rounded-lg p-2 text-moonstone focus:outline-vanilla border-2 border-moonstone"
                                 />
-                            </div>
+                            </form>
 
                             {/* Submit Button */}
                             <div className="flex justify-center items-center mt-3">
@@ -84,8 +84,8 @@ const ForgotPassword = () => {
                         </form>
                     )}
                 </div>
-                <div className="mt-10 h-10 w-full bg-moonstone p-4 shadow-md"></div>
-            </div>
+            </main>
+            <footer className="h-screen w-screen bg-moonstone p-4 shadow-md"></footer>
         </div>
         </>
     );

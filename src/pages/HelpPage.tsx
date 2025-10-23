@@ -7,6 +7,7 @@ import LockMoonstone from '../assets/icons/LockMoonstone.svg';
 import MailMoonstone from '../assets/icons/MailMoonstone.svg';
 import UserMoonstone from '../assets/icons/UserMoonstone.svg';
 import BellMoonstone from '../assets/icons/BellMoonstone.svg';
+import CalendarMoonstone from '../assets/icons/CalendarMoonstone.svg';
 
 const FlipBox = ({ frontContent, backContent }: { frontContent: JSX.Element; backContent: JSX.Element }) => {
     const [flipped, setFlipped] = useState(false);
@@ -26,7 +27,7 @@ const FlipBox = ({ frontContent, backContent }: { frontContent: JSX.Element; bac
             >
                 {/* Front */}
                 <div
-                    className="absolute h-full w-full bg-whiteblue p-6 rounded-4xl shadow-md"
+                    className="absolute h-full w-full bg-whiteblue p-6 rounded-4xl shadow-md transform-gpu transition-all duration-300"
                     style={{ backfaceVisibility: 'hidden' }}
                 >
                     {frontContent}
@@ -34,7 +35,7 @@ const FlipBox = ({ frontContent, backContent }: { frontContent: JSX.Element; bac
 
                 {/* Back */}
                 <div
-                    className="absolute h-full w-full bg-whiteblue p-6 rounded-4xl shadow-md"
+                    className="absolute h-full w-full bg-whiteblue p-6 rounded-4xl shadow-md transform-gpu transition-all duration-300"
                     style={{
                         transform: 'rotateY(180deg)',
                         backfaceVisibility: 'hidden',
@@ -162,6 +163,7 @@ const HelpPage = () => {
                     <FlipBox
                         frontContent={
                             <>
+                                <img src={CalendarMoonstone} alt="calendar" className = "w-20 h-20 mx-auto" />
                                 <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Event Details</h2>
                                 <p className="mt-1 text-moonstone text-center">
                                     Learn what to expect before attending an event.
