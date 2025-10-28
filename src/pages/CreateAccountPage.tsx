@@ -4,8 +4,12 @@ import GoogleLogo from '../assets/images/GoogleLogo.png';
 import FacebookLogo from '../assets/images/FacebookLogo.png';
 import AppleLogo from '../assets/images/AppleLogo.png';
 import eventlogo from '../assets/images/eventlogo.png';
+import useUserStore from '../lib/userStore';
 
 const CreateAccountPage = () => {
+
+    const { setUser } = useUserStore();
+
     const [formData, setFormData] = useState({
         firstName: '',
         lastName: '',
@@ -16,6 +20,7 @@ const CreateAccountPage = () => {
     });
 
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
     const [submitted, setSubmitted] = useState(false);
 
     const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -29,7 +34,7 @@ const CreateAccountPage = () => {
         setError('');
     };
 
-    const handleSubmit = (e: { preventDefault: () => void; }) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const { firstName, lastName, email, password, confirmPassword, terms } = formData;
 
@@ -53,7 +58,32 @@ const CreateAccountPage = () => {
             return;
         }
 
-        setSubmitted(true);
+        setLoading(true);
+        
+        // Call the server + getting the response
+        let res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/register`, {
+            method: "post",
+            body: JSON.stringify({
+                "firstName": formData.firstName,
+                "lastName": formData.lastName,
+                "email": formData.email,
+                "password": formData.password
+            })
+        });
+
+        // Set is loading false
+        setLoading(false);
+
+        // Make sure everythings good
+        // If response is ok go to next screen
+        if (res.ok) {
+            let body = await res.json();
+
+            setUser(body);
+
+            setSubmitted(true);
+        }
+        // Else do smth
     };
 
     if (submitted) {
@@ -134,8 +164,8 @@ const CreateAccountPage = () => {
                         <p className="text-cyan-600 text-center mb-4 font-semibold">{error}</p>
                     )}
 
-                    <div className="flex flex-col mb-6">
-                        <form className="flex justify-center gap-2">
+                    <form className="flex flex-col mb-6">
+                        <fieldset className="flex justify-center gap-2"  onSubmit={handleSubmit}>
                             <input
                                 type="text"
                                 name="firstName"
@@ -152,9 +182,9 @@ const CreateAccountPage = () => {
                                 onChange={handleChange}
                                 className="rounded-lg p-2 bg-bluewhite w-1/2 ml-2 text-moonstone focus:outline-vanilla"
                             />
-                        </form>
+                        </fieldset>
 
-                        <form className="flex flex-col mt-4">
+                        <fieldset className="flex flex-col mt-4">
                             <input
                                 type="email"
                                 name="email"
@@ -163,9 +193,9 @@ const CreateAccountPage = () => {
                                 onChange={handleChange}
                                 className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
                             />
-                        </form>
+                        </fieldset>
 
-                        <form className="flex flex-col mt-4">
+                        <fieldset className="flex flex-col mt-4">
                             <input
                                 type="password"
                                 name="password"
@@ -174,9 +204,9 @@ const CreateAccountPage = () => {
                                 onChange={handleChange}
                                 className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
                             />
-                        </form>
+                        </fieldset>
 
-                        <form className="flex flex-col mt-4">
+                        <fieldset className="flex flex-col mt-4">
                             <input
                                 type="password"
                                 name="confirmPassword"
@@ -185,31 +215,31 @@ const CreateAccountPage = () => {
                                 onChange={handleChange}
                                 className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
                             />
-                        </form>
-                    </div>
+                        </fieldset>
 
-                    <form className="mt-3 text-[13px] text-white space-x-1 flex items-center">
-                        <input
-                            type="checkbox"
-                            id="terms"
-                            name="terms"
-                            checked={formData.terms}
-                            onChange={handleChange}
-                            className="w-4 h-4 rounded accent-moonstone hover:ring-2 hover:ring-vanilla"
-                        />
-                        <label htmlFor="terms" className="ml-1">
-                            I agree to the terms & conditions
-                        </label>
-                    </form>
+                        <fieldset className="mt-3 text-[13px] text-white space-x-1 flex items-center">
+                            <input
+                                type="checkbox"
+                                id="terms"
+                                name="terms"
+                                checked={formData.terms}
+                                onChange={handleChange}
+                                className="w-4 h-4 rounded accent-moonstone hover:ring-2 hover:ring-vanilla"
+                            />
+                            <label htmlFor="terms" className="ml-1">
+                                I agree to the terms & conditions
+                            </label>
+                        </fieldset>
 
-                    <form className="flex justify-center items-center mt-3" onSubmit={handleSubmit}>
-                        <button
-                            type="submit"
-                            className="px-10 py-2 text-[20px] font-bold rounded-full bg-moonstone text-bluewhite shadow-md cursor-pointer hover:ring-3 hover:ring-vanilla"
-                            onClick={handleSubmit}
-                        >
-                            Sign Up
-                        </button>
+                        <fieldset className="flex justify-center items-center mt-3">
+                            <button
+                                type="submit"
+                                className="px-10 py-2 text-[20px] font-bold rounded-full bg-moonstone text-bluewhite shadow-md cursor-pointer hover:ring-3 hover:ring-vanilla"
+                                onClick={handleSubmit}
+                            >
+                                Sign Up
+                            </button>
+                        </fieldset>
                     </form>
 
                     <div className="mt-5 w-auto h-px bg-moonstone flex items-center relative">
