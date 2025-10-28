@@ -1,7 +1,11 @@
 import Sidenav from '../features/Sidenav';
 import MailWhiteBlue from '../assets/images/MailWhiteBlue.png';
+import HelpDuck from '../assets/images/HelpDuck.png';
+
+import { Link } from "react-router-dom";
 
 const ContactUsPage = () => {
+
     return (
         <>
             <div className="flex">
@@ -23,9 +27,30 @@ const ContactUsPage = () => {
 
                 <div className="mt-4 flex flex-row flex-wrap justify-center gap-10">
                 {/*Decorative containers*/}
-                <div className="flex mr-auto flex-col gap-10 w-2/7">
-                    <div className="bg-bluewhite p-6 rounded-4xl shadow-md h-70"></div>
-                    <div className="bg-moonstone p-6 rounded-4xl shadow-md h-70"></div>
+                <div className="flex mr-auto flex-col gap-8 w-2/7">
+                    <div className="p-6 rounded-4xl shadow-md h-65 bg-bluewhite bg-cover bg-center bg-no-repeat transition-all duration-500 hover:scale-102 hover:-translate-y-0"
+                    style={{
+                        backgroundImage: `url(${HelpDuck})`,
+                        backgroundSize: '280%',
+                        backgroundPosition: 'center -200px',
+                        }}
+                    ></div>
+
+                    <div className="bg-moonstone p-6 rounded-4xl shadow-md h-25 flex justify-center items-center">
+                        <h2 className="text-xl text-bluewhite text-center font-bold">Thank you for reaching out!</h2>
+                    </div>
+
+                    <div className="bg-bluewhite p-6 rounded-4xl shadow-md h-25 flex justify-center items-center">
+                        <h3 className="text-2xl font-bold text-moonstone">Need Quick Answers?</h3>
+                        <Link 
+                            to="/help"
+                            className="bg-vanilla text-center text-moonstone font-semibold px-6 py-2 rounded-full shadow-md hover:ring-3 hover:ring-vanilla hover:bg-darkervanilla transition"
+                            >
+                            Visit Help
+                        </Link>
+                    </div>
+
+
                 </div>
 
                 {/*Contact form container*/}
@@ -34,8 +59,8 @@ const ContactUsPage = () => {
                         <img src={MailWhiteBlue} alt="Mail" className="w-10 h-10 mb-4" />
                         <h2 className="text-2xl text-whiteblue ml-4">Please fill out the form below</h2>
                     </div>
-                    <form className="mt-4">
-                        <div className="mb-6 space-y-4">
+                    <form className="">
+                        <div className="mb-1 space-y-4">
 
                             <div className="flex justify-center gap-4 max-w-3xl mx-auto">
                                 <input
@@ -75,19 +100,26 @@ const ContactUsPage = () => {
                                     <textarea
                                         id="message"
                                         placeholder="Message"
-                                        className="rounded-lg h-40 p-2 bg-bluewhite w-full text-moonstone focus:outline-vanilla overflow-y-scroll resize-none"
+                                        className="rounded-lg h-30 p-2 bg-bluewhite w-full text-moonstone focus:outline-vanilla overflow-y-scroll resize-none"
                                         style={{
                                             scrollbarWidth: 'thin',
                                             scrollbarColor: '#FFEBAF transparent',
                                         }}
                                     />
 
-                                    <div className="flex justify-center items-center">
-                                        <button type="submit" className="px-10 py-2 text-[20px] font-bold rounded-full bg-vanilla text-moonstone shadow-md cursor-pointer hover:ring-3 hover:ring-lightermoonstone mt-4">
-                                            Submit
-                                        </button>
-                                    </div>
+                                    <div className="mt-2 flex items-center justify-center w-full">
 
+                                    <div className="flex-grow h-1 rounded-xl bg-bluewhite mx-4" />
+                                    
+<Link
+  to="/help"
+  className="px-10 py-2 text-[20px] font-bold rounded-full bg-vanilla text-moonstone shadow-md cursor-pointer hover:ring-3 hover:ring-vanilla hover:bg-darkervanilla"
+>
+  Submit
+</Link>
+
+                                    <div className="flex-grow h-1 rounded-xl bg-bluewhite mx-4" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
