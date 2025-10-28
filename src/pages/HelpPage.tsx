@@ -8,6 +8,8 @@ import MailMoonstone from '../assets/icons/MailMoonstone.svg';
 import UserMoonstone from '../assets/icons/UserMoonstone.svg';
 import BellMoonstone from '../assets/icons/BellMoonstone.svg';
 import CalendarMoonstone from '../assets/icons/CalendarMoonstone.svg';
+import ShoppingCart from '../assets/icons/ShoppingCart.svg';
+import { Link } from 'react-router-dom';
 
 const FlipBox = ({ frontContent, backContent }: { frontContent: JSX.Element; backContent: JSX.Element }) => {
     const [flipped, setFlipped] = useState(false);
@@ -55,19 +57,30 @@ const HelpPage = () => {
                 <Sidenav />
             </div>
 
-            <div
-                className="flex-grow flex-col p-6 bg-lightermoonstone h-auto rounded-xl shadow-md overflow-y-scroll"
+            <main
+                className="flex-grow flex-col p-6 bg-lightermoonstone h-auto shadow-md overflow-y-scroll"
                 style={{
                     scrollbarColor: '#4C9DB0 transparent',
                 }}
             >
-                <div className="flex justify-center w-full max-w-3xl mx-auto bg-bluewhite p-4 rounded-2xl shadow-md flex-col mb-8">
+                <div className="flex justify-center w-[80%] mx-auto bg-bluewhite p-4 rounded-2xl shadow-md flex-col mb-8 border-6 border-moonstone">
                     <h1 className="text-5xl font-bold text-moonstone mb-4 text-center">How can we help?</h1>
                     <div className="mx-auto w-130 rounded-xl h-2 bg-darkervanilla"></div>
 
                     <div className="mt-4 text-moonstone text-center">
-                        <p className="mb-4">Need a hand? Find answers to common questions below.</p>
+                        <p className="mb-2">Need a hand? Find answers to common questions below.</p>
                     </div>
+                </div>
+                
+                <div className="flex items-center text-center justify-center mx-auto bg-moonstone w-[70%] h-12 rounded-xl">
+                <div className="flex text-xl text-whiteblue font-bold"> ----------  Can't find what you're looking for?<Link
+                    to="/contact-us"
+                    className="ml-1 underline"
+                    >
+                    Contact Us
+                    </Link>
+                    <p className="ml-2">----------</p>
+                </div>
                 </div>
 
                 <div className="mt-8 flex flex-row justify-center gap-10">
@@ -75,7 +88,7 @@ const HelpPage = () => {
                     {/* Account Access Box */}
                     <FlipBox
                         frontContent={
-                            <>
+                            <>  
                                 <img src={UserMoonstone} alt="User" className="w-20 h-20 mx-auto" />
                                 <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Account Access</h2>
                                 <p className="mt-1 text-moonstone text-center">
@@ -118,18 +131,18 @@ const HelpPage = () => {
                     <FlipBox
                         frontContent={
                             <>
-                                <img src={MailMoonstone} alt="Mail" className="w-20 h-20 mx-auto" />
-                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Contact Support</h2>
+                                <img src={ShoppingCart} alt="Mail" className="w-20 h-20 mx-auto" />
+                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Payments</h2>
                                 <p className="mt-1 text-moonstone text-center">
-                                    Reach out to our team for personalized help.
+                                    Get help on making payments and checking out.
                                 </p>
                             </>
                         }
                         backContent={
                             <>
-                                <h2 className="text-xl font-bold text-moonstone text-center">Need assistance?</h2>
+                                <h2 className="text-xl font-bold text-moonstone text-center">Need help checking out?</h2>
                                 <p className="mt-2 text-moonstone text-center">
-                                    Go to the Contact Us page to submit your questions or issues.
+                                    If you booked an event by accident, you can request a refund and you will receive it in a few days.
                                 </p>
                             </>
                         }
@@ -201,9 +214,8 @@ const HelpPage = () => {
                         }
                     />
                 </div>
-
                 <div className="mt-8 mx-auto w-130 rounded-xl h-2 bg-vanilla"></div>
-            </div>
+            </main>
         </>
     );
 };

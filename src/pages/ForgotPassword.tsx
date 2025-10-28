@@ -7,13 +7,13 @@ const ForgotPassword = () => {
     const [submitted, setSubmitted] = useState(false);
 
     const customErrorText = "Please enter a valid email address.";
-    const customSuccessText = "A confirmation email has been sent to";
+    const customSuccessText = " ";
 
-    const validateEmail = (email) => {
+    const validateEmail = (email: string) => {
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         setError('');
 
@@ -40,22 +40,53 @@ const ForgotPassword = () => {
             {/* Main Content */}
             <main className="flex flex-col items-center justify-center mt-10 mb-10">
                 <div className="w-full max-w-md rounded-2xl p-8 bg-bluewhite shadow-md border-12 border-lightermoonstone">
-                    <h2 className="font-bold mb-6 text-center text-5xl text-moonstone">
+                    <h2 className="font-bold mb-3 text-center text-5xl text-moonstone">
                         {submitted ? "Check Your Email" : "Forgot Password?"}
                     </h2>
-                    <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla mb-5"></div>
-                    <div className="mb-6 text-center text-moonstone text-bold text-lg">
+                    <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla mb-1"></div>
+                    <div className="mb-1 text-center text-moonstone text-bold text-lg">
                         {submitted
-                            ? "If an account with that email exists, you will receive a 6-digit code."
+                            ? "If we found an account with that email, your 6-digit code has been sent to:"
                             : "Enter your email address below to receive verification code ."
                         }
                     </div>
 
                     {/* Confirmation View */}
                     {submitted ? (
-                        <p className="text-cyan-600 text-center text-lg">
+                        <div className="text-cyan-600 text-center text-lg">
                             {customSuccessText} <span className="font-semibold">{email}</span>.
-                        </p>
+
+                            {/* Input verification code  */}
+                            <div className="flex flex-col p-2 mt-1"> 
+                                <form className="flex justify-center gap-3"> 
+                                    <input 
+                                        type="text"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl">
+                                    </input>
+                                    <input 
+                                        type="text"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl">
+                                    </input>
+                                    <input 
+                                        type="text"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl">
+                                    </input>
+                                    <input 
+                                        type="text"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl">
+                                    </input>
+                                    <input 
+                                        type="text"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl">
+                                    </input>
+                                    <input 
+                                        type="text"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl">
+                                    </input>
+                                </form>  
+                            </div>
+                            
+                        </div>
                     ) : (
                         <form onSubmit={handleSubmit} noValidate>
                             {/* Error Message */}

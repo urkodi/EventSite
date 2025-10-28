@@ -18,9 +18,9 @@ const CreateAccountPage = () => {
     const [error, setError] = useState('');
     const [submitted, setSubmitted] = useState(false);
 
-    const validateEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-    const handleChange = (e) => {
+    const handleChange = (e: { target: { name: any; value: any; type: any; checked: any; }; }) => {
         const { name, value, type, checked } = e.target;
         setFormData({
             ...formData,
@@ -29,7 +29,7 @@ const CreateAccountPage = () => {
         setError('');
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const { firstName, lastName, email, password, confirmPassword, terms } = formData;
 
@@ -54,25 +54,60 @@ const CreateAccountPage = () => {
         }
 
         setSubmitted(true);
-
-        setTimeout(() => {
-            window.location.href = '/verification';
-        }, 2500);
     };
 
     if (submitted) {
         return (
             <div className="flex flex-col mx-auto h-auto">
+            <header className="w-screen h-auto bg-moonstone p-4 shadow-md">
+                <div className="flex items-left">
+                    <a href="/">
+                        <img src={eventlogo} alt="Event Logo" className="h-10 transition-transform duration-300 hover:scale-120 hover:-translate-y-0" />
+                    </a>
+                </div>
+            </header>
+
+            <div className="flex flex-col mx-auto h-auto">
                 <div className="flex-grow flex flex-col items-center justify-center mt-10 mb-10">
                     <div className="w-full max-w-md rounded-2xl p-8 bg-lightermoonstone shadow-md text-center">
                         <h2 className="font-bold mb-6 text-5xl text-moonstone">Check Your Email!</h2>
                         <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla mb-5"></div>
-                        <p className="text-moonstone text-lg mb-3">
-                            A confirmation email has been sent to
+                        <p className="text-bluewhite text-lg mb-3">
+                            If we found an account with that email, your 6-digit code has been sent to:
                         </p>
                         <p className="text-cyan-600 font-semibold">{formData.email}</p>
+                        <div className="flex flex-col p-2 mt-1"> 
+                            <form className="flex justify-center gap-3"> 
+                                <input 
+                                    type="text"
+                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
+                                </input>
+                                <input 
+                                    type="text"
+                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
+                                </input>
+                                <input 
+                                    type="text"
+                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
+                                </input>
+                                <input 
+                                    type="text"
+                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
+                                </input>
+                                <input 
+                                    type="text"
+                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
+                                </input>
+                                <input 
+                                    type="text"
+                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
+                                </input>
+                            </form>  
+                        </div>
                     </div>
                 </div>
+            </div>
+            <footer className="h-full w-full bg-moonstone p-4 shadow-md"></footer>
             </div>
         );
     }
@@ -218,7 +253,7 @@ const CreateAccountPage = () => {
                     </div>
                 </div>
 
-                <footer className="mt-10 h-screen w-full bg-lightermoonstone p-4 shadow-md"></footer>
+                <footer className="mt-10 h- w-full bg-moonstone p-4 shadow-md"></footer>
             </main>
         </div>
     );
