@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 const initialBookmarkedEvents = [
   {
     id: 1,
-    title: 'Rhode Island College Internship',
+    title: 'Music Festival',
     date: 'Oct 12, 2025 at 7:00 PM',
-    location: 'Rhode Island College',
-    image: 'https://www.golocalprov.com/cache/images/remote/https_s3.amazonaws.com/media.golocalprov.com/RIC_Anchormen_Logo_2019.png',
+    location: 'AMP Amica Mutual Pavilion',
+    image: 'https://hips.hearstapps.com/hmg-prod/images/gettyimages-971260876-1559600482.jpg',
   },
   {
     id: 2,
@@ -19,8 +19,15 @@ const initialBookmarkedEvents = [
     id: 3,
     title: 'Paint & Sip',
     date: 'Dec 5, 2025 at 1:00 PM',
-    location: 'New York City, NYC Bar',
+    location: 'New York City, Central Park',
     image: 'https://assets.mainlinetoday.com/2024/02/wine-and-painting-AdobeStock_351266380.jpg'
+  },
+  {
+    id: 4,
+    title: 'Cultural Festival',
+    date: 'Dec 5, 2025 at 1:00 PM',
+    location: 'New York City, NYC Bar',
+    image: 'https://wjla.com/resources/media/6c0acf9b-3e14-4886-9115-92ac22d831f7-large16x9_worldculturefestival.png'
   },
 ];
 

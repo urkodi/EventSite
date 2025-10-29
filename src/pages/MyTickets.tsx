@@ -13,13 +13,13 @@ const initialTickets = [
   },
   {
     id: 2,
-    title: 'Computer Science Job Fair',
-    startTime: '10:00 AM',
+    title: 'Cooking Masterclass: Flavors of the World',
+    startTime: '2:00 PM',
     date: 'Nov 3, 2025',
-    address: '415 Tech, Boston, MA 02210',
-    location: 'Boston Convention Center',
-    image: 'https://jessup.edu/wp-content/uploads/2023/12/Programming-in-Computer-Science.jpg',
-    barcode: 'https://api.qrserver.com/v1/create-qr-code/?data=CSJobFair2025Ticket2',
+    address: '45 Culinary Ave, Boston, MA 02118',
+    location: 'Boston Culinary Institute',
+    image: 'https://images.unsplash.com/photo-1600891964599-f61ba0e24092',
+    barcode: 'https://api.qrserver.com/v1/create-qr-code/?data=CookingMasterclass2025Ticket2',
   },
   {
     id: 3,
@@ -31,32 +31,38 @@ const initialTickets = [
     image: 'https://assets.mainlinetoday.com/2024/02/wine-and-painting-AdobeStock_351266380.jpg',
     barcode: 'https://api.qrserver.com/v1/create-qr-code/?data=PaintSip2025Ticket3',
   },
+  {
+    id: 4,
+    title: 'Glow-in-the-Dark Dance Party',
+    startTime: '9:00 PM',
+    date: 'Dec 5, 2025',
+    address: '99 Neon Blvd, Brooklyn, NY 11211',
+    location: 'Neon Warehouse',
+    image: 'https://res.cloudinary.com/hz3gmuqw6/image/upload/c_fill,f_auto,q_60,w_750/v1/classpop/664f9c067b50c',
+    barcode: 'https://api.qrserver.com/v1/create-qr-code/?data=GlowDanceParty2025Ticket4',
+  },
 ];
 
 const MyTickets = () => {
   const [tickets] = useState(initialTickets);
 
   return (
-    <div className="p-6 bg-moonstone min-h-screen">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="p-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {tickets.map(ticket => (
           <div
             key={ticket.id}
-            className="bg-white text-gray-800 p-4 rounded-xl shadow-md"
+            className="bg-lightermoonstone text-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow relative"
           >
             <img
               src={ticket.image}
               alt={ticket.title}
-              className="w-full h-40 object-cover rounded-md mb-2"
+              className="w-full h-40 object-cover rounded-md mb-4"
             />
-            <div className="bg-[#f5f5dc] text-center text-sm font-semibold py-1 rounded mb-2">
-              Event Ticket
-            </div>
-            <h2 className="text-xl font-bold text-[#003366] mb-1">{ticket.title}</h2>
-            <p className="text-sm"><strong>Date:</strong> {ticket.date} at {ticket.startTime}</p>
-            <p className="text-sm"><strong>Location:</strong> {ticket.location}</p>
-            <p className="text-sm"><strong>Address:</strong> {ticket.address}</p>
-            <p className="text-sm"><strong>Ticket ID:</strong> #{ticket.id}</p>
+            <p className="text-sm mb-2">{ticket.date}</p>
+            <h2 className="text-xl font-semibold mb-1">{ticket.title}</h2>
+            <p className="text-sm text-white/80 mb-2">{ticket.location}</p>
+            <p className="text-sm text-white/80 mb-4">{ticket.address}</p>
             <img
               src={ticket.barcode}
               alt="Scan to enter"
@@ -66,7 +72,7 @@ const MyTickets = () => {
               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ticket.address)}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-3 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              className="inline-block mt-4 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded"
             >
               View on Map
             </a>

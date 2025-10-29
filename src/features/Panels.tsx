@@ -6,6 +6,7 @@ import UserPanel from "./UserPanel";
 //import Homepage from "../pages/Homepage";
 import Bookmark from "../pages/Bookmark";
 import MyTickets from "../pages/MyTickets";
+import HostedEvents from "../pages/HostedEvents";
 
 type PanelParam = {
   children?: React.ReactNode;  
@@ -19,6 +20,8 @@ function Panels( {children} : PanelParam ) {
                 <Routes>
                   <Route path="/bookmark" element={<Bookmark />} />
                   <Route path="/my-tickets" element={<MyTickets />} />
+                  <Route path="/hosted-events" element={<HostedEvents />} />
+
                 </Routes>
                 {children}
               </Main> 
