@@ -78,6 +78,7 @@ const CreateAccountPage = () => {
         // If response is ok go to next screen
         if (res.ok) {
             let body = await res.json();
+            console.log(body);
 
             setUser(body);
 

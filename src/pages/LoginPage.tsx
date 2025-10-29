@@ -4,8 +4,10 @@ import GoogleLogo from "../assets/images/GoogleLogo.png";
 import FacebookLogo from "../assets/images/FacebookLogo.png";
 import AppleLogo from "../assets/images/AppleLogo.png";
 import eventlogo from "../assets/images/eventlogo.png";
+import useUserStore from "../lib/userStore";
 
-const LoginPage = () => {
+function LoginPage() {
+  const { setUser } = useUserStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -14,7 +16,7 @@ const LoginPage = () => {
 
   const isValidEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const handleLogin = (e: { preventDefault: () => void; }) => {
+  const handleLogin = async (e: { preventDefault: () => void; }) => {
     e.preventDefault();
     setError("");
     setLoading(false);
@@ -30,10 +32,28 @@ const LoginPage = () => {
     }
 
     setLoading(true);
-    setTimeout(() => {
-        setLoading(false);
-        navigate("/");
-    }, 1000);
+
+    // Call the server + getting the response
+    let res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/login`, {
+        method: "post",
+        body: JSON.stringify({
+            "email": email,
+            "password": password
+        })
+    });
+
+    // Set is loading false
+    setLoading(false);
+
+    // Make sure everythings good
+    // If response is ok go to next screen
+    if (res.ok) {
+        let body = await res.json();
+
+        setUser(body);
+        navigate("/")
+    }
+    // Else do smth
   };
 
 
@@ -60,8 +80,8 @@ const LoginPage = () => {
           )}
 
           {/* User Inputs */}
-          <div className="flex flex-col mb-6">
-            <form className="flex flex-col mt-4">
+          <form className="flex flex-col mb-6" onSubmit={handleLogin}>
+            <fieldset className="flex flex-col mt-4">
               <input
                 type="email"
                 placeholder="Email"
@@ -72,9 +92,9 @@ const LoginPage = () => {
                 }}
                 className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
               />
-            </form>
+            </fieldset>
 
-            <form className="flex flex-col mt-4">
+            <fieldset className="flex flex-col mt-4">
               <input
                 type="password"
                 placeholder="Password"
@@ -85,7 +105,7 @@ const LoginPage = () => {
                 }}
                 className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
               />
-            </form>
+            </fieldset>
 
             <div className="mt-2 flex justify-end">
               <a
@@ -99,7 +119,6 @@ const LoginPage = () => {
             {/* Log in button */}
             <div className="flex justify-center items-center mt-3">
               <button
-                onClick={handleLogin}
                 className="px-10 py-2 text-[20px] font-bold rounded-full bg-moonstone text-bluewhite shadow-md cursor-pointer hover:ring-3 hover:ring-vanilla"
               >
                 Log In
@@ -147,7 +166,7 @@ const LoginPage = () => {
                 here.
               </a>
             </div>
-          </div>
+          </form>
         </div>
       </main>
       <footer className="mt-10 h-screen w-full bg-moonstone p-4 shadow-md"></footer>
