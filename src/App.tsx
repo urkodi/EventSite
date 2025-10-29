@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import SearchPage from "./searchpage";
 import LandingPage from "./landingpage";
 
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import Panels from "./features/Panels";
 import CreateAccountPage from "./pages/CreateAccountPage";
