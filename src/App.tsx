@@ -1,15 +1,21 @@
-import Main from "./features/Main";
-import Sidenav from "./features/Sidenav";
-import UserPanel from "./features/UserPanel";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+
+import ProfilePage from "./pages/ProfilePage";
+import CreateEvent from "./pages/CreateEvent";
 
 
 function App() {
   return(
-    <>
-      <Sidenav />
-      <Main/>
-      <UserPanel/>  
-    </>
+  // <ProfilePage/>
+  <Router>
+     <Routes>
+        
+        <Route path="/ProfilePage" element={<ProfilePage />} />
+        <Route path="/CreateEvent" element={<CreateEvent />} />
+        //add more routes here as needed
+      </Routes>
+    </Router>
   )
 }
 
