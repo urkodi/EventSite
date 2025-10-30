@@ -169,7 +169,6 @@ function LoginPage() {
           </form>
         </div>
       </main>
-      <footer className="mt-10 h-screen w-full bg-moonstone p-4 shadow-md"></footer>
     </div>
   );
 };
