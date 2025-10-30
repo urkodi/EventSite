@@ -16,7 +16,7 @@ const FlipBox = ({ frontContent, backContent }: { frontContent: JSX.Element; bac
 
     return (
         <div
-            className="h-60 w-60 cursor-pointer"
+            className="h-60 w-60 cursor-pointer transition-transform duration-300 active:scale-95 hover:scale-95"
             style={{ perspective: '1000px' }}
             onClick={() => setFlipped(!flipped)}
         >
@@ -53,22 +53,26 @@ const FlipBox = ({ frontContent, backContent }: { frontContent: JSX.Element; bac
 const HelpPage = () => {
     return (
         <>
-            <div className="flex">
+            <div className="flex lg:flex-row flex-col">
                 <Sidenav />
             </div>
 
             <main
-                className="flex-grow flex-col p-6 bg-lightermoonstone h-auto shadow-md overflow-y-scroll"
+                className="flex-grow p-6 bg-lightermoonstone h-auto shadow-md overflow-y-scroll"
                 style={{
                     scrollbarColor: '#4C9DB0 transparent',
                 }}
             >
-                <div className="flex justify-center w-[80%] mx-auto bg-bluewhite p-4 rounded-2xl shadow-md flex-col mb-8 border-6 border-moonstone">
-                    <h1 className="text-5xl font-bold text-moonstone mb-4 text-center">How can we help?</h1>
+                <div className="flex flex-col items-center w-full max-w-5xl mx-auto bg-bluewhite p-4 rounded-2xl shadow-md mb-8 border-6 border-moonstone">
+                    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-moonstone mb-4 text-center">
+                        How can we help?
+                    </h1>
                     <div className="mx-auto w-130 rounded-xl h-2 bg-darkervanilla"></div>
 
                     <div className="mt-4 text-moonstone text-center">
-                        <p className="mb-2">Need a hand? Find answers to common questions below.</p>
+                        <p className="mb-2">
+                            Need a hand? Find answers to common questions below.
+                        </p>
                     </div>
                 </div>
                 
@@ -83,7 +87,10 @@ const HelpPage = () => {
                 </div>
                 </div>
 
-                <div className="mt-8 flex flex-row justify-center gap-10">
+                <div className="mt-6 grid gap-6 px-4 place-items-center" 
+                    style={{ 
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))'
+                        }}>
 
                     {/* Account Access Box */}
                     <FlipBox
@@ -147,10 +154,6 @@ const HelpPage = () => {
                             </>
                         }
                     />
-                </div>
-
-                <div className="mt-8 flex flex-row justify-center gap-10">
-
                     {/* Browsing Events Box */}
                     <FlipBox
                         frontContent={
@@ -213,7 +216,130 @@ const HelpPage = () => {
                             </>
                         }
                     />
+
+                    <FlipBox
+                        frontContent={
+                            <>  
+                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
+                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
+                                <p className="mt-1 text-moonstone text-center">
+                                    add description
+                                </p>
+                            </>
+                        }
+                        backContent={
+                            <>
+                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
+                                <p className="mt-2 text-moonstone text-center">
+                                    Add help
+                                </p>
+                            </>
+                        }
+                    />
+
+                    <FlipBox
+                        frontContent={
+                            <>  
+                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
+                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
+                                <p className="mt-1 text-moonstone text-center">
+                                    add description
+                                </p>
+                            </>
+                        }
+                        backContent={
+                            <>
+                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
+                                <p className="mt-2 text-moonstone text-center">
+                                    Add help
+                                </p>
+                            </>
+                        }
+                    />
+
+                    <FlipBox
+                        frontContent={
+                            <>  
+                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
+                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
+                                <p className="mt-1 text-moonstone text-center">
+                                    add description
+                                </p>
+                            </>
+                        }
+                        backContent={
+                            <>
+                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
+                                <p className="mt-2 text-moonstone text-center">
+                                    Add help
+                                </p>
+                            </>
+                        }
+                    />
+
+                    <FlipBox
+                        frontContent={
+                            <>  
+                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
+                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
+                                <p className="mt-1 text-moonstone text-center">
+                                    add description
+                                </p>
+                            </>
+                        }
+                        backContent={
+                            <>
+                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
+                                <p className="mt-2 text-moonstone text-center">
+                                    Add help
+                                </p>
+                            </>
+                        }
+                    />
+
+                    <FlipBox
+                        frontContent={
+                            <>  
+                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
+                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
+                                <p className="mt-1 text-moonstone text-center">
+                                    add description
+                                </p>
+                            </>
+                        }
+                        backContent={
+                            <>
+                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
+                                <p className="mt-2 text-moonstone text-center">
+                                    Add help
+                                </p>
+                            </>
+                        }
+                    />
+
+                    <FlipBox
+                        frontContent={
+                            <>  
+                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
+                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
+                                <p className="mt-1 text-moonstone text-center">
+                                    add description
+                                </p>
+                            </>
+                        }
+                        backContent={
+                            <>
+                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
+                                <p className="mt-2 text-moonstone text-center">
+                                    Add help
+                                </p>
+                            </>
+                        }
+                    />
+
+
                 </div>
+
                 <div className="mt-8 mx-auto w-130 rounded-xl h-2 bg-vanilla"></div>
             </main>
         </>

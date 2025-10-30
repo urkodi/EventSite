@@ -98,7 +98,7 @@ const CreateAccountPage = () => {
             </header>
 
             <div className="flex flex-col mx-auto h-auto">
-                <div className="flex-grow flex flex-col items-center justify-center mt-10 mb-10">
+                <div className="flex-grow flex flex-col items-center justify-center mt-10">
                     <div className="w-full max-w-md rounded-2xl p-8 bg-lightermoonstone shadow-md text-center">
                         <h2 className="font-bold mb-6 text-5xl text-moonstone">Check Your Email!</h2>
                         <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla mb-5"></div>
@@ -137,13 +137,13 @@ const CreateAccountPage = () => {
                     </div>
                 </div>
             </div>
-            <footer className="h-full w-full bg-moonstone p-4 shadow-md"></footer>
             </div>
         );
     }
 
     return (
         <div className="flex flex-col mx-auto h-auto">
+            
             <header className="w-screen h-auto bg-moonstone p-4 shadow-md">
                 <div className="flex items-left">
                     <a href="/">
@@ -282,8 +282,6 @@ const CreateAccountPage = () => {
                         </a>
                     </div>
                 </div>
-
-                <footer className="mt-10 h- w-full bg-moonstone p-4 shadow-md"></footer>
             </main>
         </div>
     );
