@@ -39,12 +39,12 @@ const ForgotPassword = () => {
 
             {/* Main Content */}
             <main className="flex flex-col items-center justify-center mt-10 mb-10">
-                <div className="w-full max-w-md rounded-2xl p-8 bg-bluewhite shadow-md border-12 border-lightermoonstone">
-                    <h2 className="font-bold mb-3 text-center text-5xl text-moonstone">
+                <div className="max-w-md rounded-2xl p-8 bg-bluewhite shadow-md border-12 border-lightermoonstone">
+                    <h2 className="font-bold mb-5 text-center text-5xl text-moonstone">
                         {submitted ? "Check Your Email" : "Forgot Password?"}
                     </h2>
-                    <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla mb-1"></div>
-                    <div className="mb-1 text-center text-moonstone text-bold text-lg">
+                    <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla mb-5 mt-5"></div>
+                    <div className="mb-5 text-center text-moonstone text-bold text-lg">
                         {submitted
                             ? "If we found an account with that email, your 6-digit code has been sent to:"
                             : "Enter your email address below to receive verification code ."
@@ -57,7 +57,7 @@ const ForgotPassword = () => {
                             {customSuccessText} <span className="font-semibold">{email}</span>.
 
                             {/* Input verification code  */}
-                            <div className="flex flex-col p-2 mt-1"> 
+                            <div className="flex flex-col p-2 mt-5"> 
                                 <form className="flex justify-center gap-3"> 
                                     <input 
                                         type="text"
@@ -116,7 +116,7 @@ const ForgotPassword = () => {
                     )}
                 </div>
             </main>
-            <footer className="h-screen w-screen bg-moonstone p-4 shadow-md"></footer>
+
         </div>
         </>
     );
