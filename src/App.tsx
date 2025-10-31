@@ -1,3 +1,6 @@
+import Main from "./features/Main";
+import Sidenav from "./features/Sidenav";
+import UserPanel from "./features/UserPanel";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import CreateAccountPage from "./pages/CreateAccountPage";
@@ -31,4 +34,6 @@ function App() {
   )
 }
 
+
 export default App;
+
