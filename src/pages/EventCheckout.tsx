@@ -1,6 +1,6 @@
 
 import { useState } from "react";
-import eventlogo from "./assets/images/eventlogo.png";
+import eventlogo from "../assets/images/eventlogo.png";
 
 export default function EventCheckout() {
 //Event Details - will come from API 

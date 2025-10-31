@@ -7,7 +7,6 @@ import BookmarkSVG from '../components/icons/BookmarkSVG.tsx'
 import HelpSVG from '../components/icons/HelpSVG.tsx'
 import MailSVG from '../components/icons/MailSVG.tsx'
 import ContactLink from '../components/ContactLink.tsx'
-import HostedSVG from '../components/icons/HostedSVG.tsx'
 
 function Sidenav() {
     return (
@@ -20,7 +19,6 @@ function Sidenav() {
                         <NavLink icon = {HomeSVG} text = "Home" link = "/"/>
                         <NavLink icon = {SearchSVG} text = "Browse" link = "/browse"/>
                         <NavLink icon = {TicketSVG} text = "My Tickets" link = "/my-tickets"/>
-                        <NavLink icon = {HostedSVG} text="Hosted Events" link = "/hosted-events"/>
                         <NavLink icon = {BookmarkSVG} text = "Bookmark" link = "/bookmark"/>
                         
                     </ul>

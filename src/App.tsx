@@ -5,10 +5,11 @@ import LoginPage from "./pages/LoginPage";
 import HelpPage from "./pages/HelpPage";
 import ContactUsPage from "./pages/ContactUsPage";
 import Homepage from "./pages/Homepage";
-import EventCheckout from "./EventCheckout";
+import EventCheckout from "./pages/EventCheckout";
 import ForgotPassword from "./pages/ForgotPassword";
-import EventCheckout from "./EventCheckout";
-
+import HostedEvents from "./pages/HostedEvents";
+import MyTickets from "./pages/MyTickets";
+import Bookmarks from "./pages/Bookmark";
 
 function App() {
   return(
@@ -21,6 +22,10 @@ function App() {
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/checkout" element={<EventCheckout />} />
+        <Route path="/hosted-events" element={<HostedEvents />} />
+        <Route path="/my-tickets" element={<MyTickets />} />
+        <Route path="/bookmark" element={<Bookmarks />} />
+
       </Routes>
     </Router>
   )
