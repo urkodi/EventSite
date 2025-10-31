@@ -7,6 +7,7 @@ import ContactUsPage from "./pages/ContactUsPage";
 import Homepage from "./pages/Homepage";
 
 import ForgotPassword from "./pages/ForgotPassword";
+import EventCheckout from "./EventCheckout";
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
         <Route path="/help" element={<HelpPage />} />
         <Route path="/contact-us" element={<ContactUsPage />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/checkout" element={<EventCheckout />} />
       </Routes>
     </Router>
   )
