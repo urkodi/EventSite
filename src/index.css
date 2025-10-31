@@ -1,22 +1,15 @@
 @import "tailwindcss";
 
 @theme {
-  --color-whiteblue:#ECFBFD;
   --color-bluewhite:#ECFBFD;
   --color-moonstone:#4C9DB0;
   --color-lightermoonstone:#9CCED6;
   --color-darkervanilla:#E9CC73;
   --color-vanilla:#FFEBAF;
-  --color-lightgrey:#E3E3E3;
 }
 html, body, #root {
   height: 100%;
   width: 100%;
-  background-image: url(./assets/images/deco.png);
-  background-position: bottom left;
-  background-repeat: no-repeat; 
-  background-size: 100vw;
-  background-color: var(--color-whiteblue);
 }
 #root {
   display: flex;
