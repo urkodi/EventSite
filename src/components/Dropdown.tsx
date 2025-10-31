@@ -13,7 +13,7 @@ function Dropdown({buttonName, title, children}: DropdownProps) {
 
   return (
     <div>
-      <button className="flex gap-1 items-center bg-white text-black font-semibold m-2 p-2 rounded-2xl" onClick={() => setIsOpen(!isOpen)}>
+      <button className="flex gap-2 items-center bg-white text-black font-semibold text-xl m-2 p-2 rounded-2xl" onClick={() => setIsOpen(!isOpen)}>
         <p>{buttonName}</p>
         <div className={`${isOpen ? "rotate-180" : ""} transition-all`}>
           <ChevronSVG width="1em" height="1em" />
@@ -24,7 +24,7 @@ function Dropdown({buttonName, title, children}: DropdownProps) {
           <div className="absolute z-50 bg-lightgrey p-2 rounded-xl">
             <span className="mx-2 mb-2 grid grid-cols-3 justify-center items-center">
               <div></div>
-              <h1 className="font-bold text-xl text-center">{title}</h1>
+              <h1 className="font-semibold text-xl text-center">{title}</h1>
               <button onClick={() => setIsOpen(false)} className="justify-self-end">
                 <XSVG width="1em" height="1em" />
               </button>
