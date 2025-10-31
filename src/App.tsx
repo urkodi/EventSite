@@ -7,6 +7,7 @@ import ContactUsPage from "./pages/ContactUsPage";
 import Homepage from "./pages/Homepage";
 import EventCheckout from "./EventCheckout";
 import ForgotPassword from "./pages/ForgotPassword";
+import EventCheckout from "./EventCheckout";
 
 
 function App() {

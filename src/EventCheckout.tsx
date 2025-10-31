@@ -1,5 +1,6 @@
 
 import { useState } from "react";
+import eventlogo from "./assets/images/eventlogo.png";
 
 export default function EventCheckout() {
 //Event Details - will come from API 
@@ -23,15 +24,25 @@ export default function EventCheckout() {
     const [paymentMethod, setPaymentMethod] = useState("card");
 
     return (
-        <div className="w-full min-h-screen py-8 px-4"> 
-            <div className="max-w-4xl mx-auto">
+        <div className="flex flex-col mx-auto h-auto"> 
+
+            <header className="w-screen h-auto bg-moonstone p-4 shadow-md">
+                    <div className="flex items-left">
+                        <a href="/">
+                            <img src={eventlogo} alt="Event Logo" className="h-10 transition-transform duration-300 hover:scale-120 hover:-translate-y-0" />
+                            </a>
+                    </div>
+            </header>
+
+            <div className="max-w-4xl mx-auto mt-10">
                 {/* Header */}
-                <div class="bg-lightermoonstone p-4 rounded-lg">
-                    <div className="text-center mb-8">
-                        <h1 className="text-3xl font-bold text-white mb-2">
+                <div className="p-4 rounded-3xl bg-gradient-to-b from-lightermoonstone to-moonstone">
+                    <div className="text-center mb-8 mt-5">
+                        <h1 className="text-6xl font-bold text-moonstone mb-2">
                             Complete Your Booking
                         </h1>
-                        <p className="text-white font-normal">Secure your spot at the event!</p>
+                        <div className="mx-auto w-[65%] rounded-xl h-2 bg-vanilla mb-5 mt-5"></div>
+                        <p className="text-white text-xl font-normal">Secure your spot at the event!</p>
                     </div>
               
                     {/* Two column grid */}
@@ -39,8 +50,8 @@ export default function EventCheckout() {
 
 
                         {/* Left column - Event Details */}
-                        <div className="lg:col-span-4 bg-white rounded-lg p-6">
-                            <h2 className="text-xl font-medium text-gray-900 mb-4">Order Summary</h2>
+                        <div className="lg:col-span-4 bg-white rounded-2xl p-6">
+                            <h2 className="text-2xl font-bold text-moonstone mb-4">Order Summary</h2>
                             {/* Event Card with image and details */}
                             <div className="flex gap-4 mb-4 pb-6 border-b border-[#9CCED6]">
                             {/* Image placeholder */}
@@ -48,7 +59,7 @@ export default function EventCheckout() {
                             
                             {/* Event details */}
                             <div>
-                                <h3 className="font-semibold text-gray-900">{event.name}</h3>
+                                <h3 className="font-semibold text-moonstone">{event.name}</h3>
                                 <p className="text-sm text-gray-600 mt-1">{event.date} </p>
                                 <p className="text-sm text-gray-600 mt-1">{event.location}</p>
                                 <p className="text-sm text-gray-600 mt-1">{event.ticketType}</p>
@@ -77,8 +88,8 @@ export default function EventCheckout() {
                         </div>
 
                         {/* Right column - Payment Form */}
-                        <div className="lg:col-span-3 bg-white rounded-lg p-6">
-                            <h2 className="text-xl font-medium text-gray-900 mb-6">Payment Information</h2>   
+                        <div className="lg:col-span-3 bg-white rounded-2xl p-6">
+                            <h2 className="text-2xl font-bold text-moonstone mb-4">Payment Information</h2>   
                             
                                 {/* Contact Details */}
                                 <div className="mb-6">
