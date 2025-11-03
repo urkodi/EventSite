@@ -1,36 +1,33 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
 // icons
-import eventLogo from "./assets/icons/eventlogo.svg";
-import ArtIcon from "./assets/icons/palette.svg";
-import SportsIcon from "./assets/icons/volleyball.svg";
-import MicIcon from "./assets/icons/mic-vocal.svg";
-import PartyIcon from "./assets/icons/party.svg";
-import WineIcon from "./assets/icons/wine.svg";
-import BurgerIcon from "./assets/icons/hamburger.svg";
-import SearchIcon from "./assets/icons/SearchMoonstone.svg";
+import eventlogo from "../assets/icons/eventlogo.svg";
+import ArtIcon from "../assets/icons/palette.svg";
+import SportsIcon from "../assets/icons/volleyball.svg";
+import MicIcon from "../assets/icons/mic-vocal.svg";
+import PartyIcon from "../assets/icons/party.svg";
+import WineIcon from "../assets/icons/wine.svg";
+import BurgerIcon from "../assets/icons/hamburger.svg";
+import SearchIcon from "../assets/icons/SearchMoonstone.svg";
 
 // hero background image
-import heroBg from "./assets/icons/hero-bg.jpg";
+import heroBg from "../assets/icons/hero-bg.jpg";
 
 const LandingPage: React.FC = () => {
   return (
     <div className="min-h-screen w-full flex flex-col bg-gradient-to-b from-bluewhite to-moonstone text-gray-800">
-      {/* ---------- HEADER ---------- */}
-      <header className="flex justify-between items-center px-10 py-4 bg-moonstone shadow-md">
-        <img
-          src={eventLogo}
-          alt="EventSite Logo"
-          className="h-10 w-auto object-contain cursor-pointer"
-        />
-        <div className="space-x-8 text-sm font-medium text-white">
-          <button className="hover:text-whiteblue transition">Help</button>
-          <button className="hover:text-whiteblue transition">Sign In</button>
-        </div>
-      </header>
+      <header className="w-screen h-auto bg-moonstone p-4 shadow-md">
+                <div className="flex">
+                    <a href="/">
+                        <img src={eventlogo} alt="Event Logo" className="h-10 transition-transform duration-300 hover:scale-120 hover:-translate-y-0" />
+                    </a>
+                     <div className="ml-5 flex gap-5">
+                        <button className="hover:text-whiteblue transition">Help</button>
+                        <button className="hover:text-whiteblue transition">Sign In</button>
+                  </div>
+                </div>
+            </header>
 
-      {/* ---------- MAIN CONTENT ---------- */}
       <main
         className="flex-1 flex flex-col items-center justify-start pt-0 px-6 overflow-y-auto"
         style={{
@@ -38,7 +35,6 @@ const LandingPage: React.FC = () => {
             "var(--color-bluewhite) var(--color-lightermoonstone)", // thumb | track
         }}
       >
-        {/* ---------- HERO SECTION ---------- */}
         <div
           className="w-screen -mx-6 flex items-center justify-center mb-10 px-8 py-24 shadow-lg relative bg-cover bg-center bg-no-repeat"
           style={{
@@ -49,10 +45,8 @@ const LandingPage: React.FC = () => {
             backgroundAttachment: "fixed", // optional parallax effect
           }}
         >
-          {/* Enhanced gradient overlay */}
           <div className="absolute inset-0 bg-gradient-to-b from-moonstone/50 via-moonstone/40 to-transparent"></div>
 
-          {/* Hero content */}
           <div className="relative z-10 flex flex-col items-center text-center">
             <h1 className="text-6xl font-bold text-white mb-4 leading-tight drop-shadow-[0_2px_6px_rgba(0,0,0,0.6)]">
               Experience More
@@ -107,7 +101,7 @@ const LandingPage: React.FC = () => {
             <h2 className="bg-moonstone text-whiteblue font-semibold text-lg px-30 py-2 rounded-full mb-6 shadow-lg self-center text-center">
               Explore Categories
             </h2>
-            <div className="flex gap-10 flex-wrap">
+            <div className="flex gap-10">
               {[
                 { name: "Art", icon: ArtIcon },
                 { name: "Sports", icon: SportsIcon },

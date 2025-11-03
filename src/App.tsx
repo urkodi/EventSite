@@ -1,6 +1,3 @@
-import Main from "./features/Main";
-import Sidenav from "./features/Sidenav";
-import UserPanel from "./features/UserPanel";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import CreateAccountPage from "./pages/CreateAccountPage";
@@ -13,6 +10,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import HostedEvents from "./pages/HostedEvents";
 import MyTickets from "./pages/MyTickets";
 import Bookmarks from "./pages/Bookmark";
+import LandingPage from "./pages/landingpage";
+import SearchPage from "./pages/searchpage";
 
 function App() {
   return(
@@ -28,6 +27,8 @@ function App() {
         <Route path="/hosted-events" element={<HostedEvents />} />
         <Route path="/my-tickets" element={<MyTickets />} />
         <Route path="/bookmark" element={<Bookmarks />} />
+        <Route path="/landing" element={<LandingPage />} />
+        <Route path="/browse" element={<SearchPage />} />
 
       </Routes>
     </Router>

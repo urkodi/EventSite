@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Panels from "./features/Panels";
-import BookmarkIcon from "./assets/icons/bookmark.svg";
-import ExternalLinkIcon from "./assets/icons/external-link.svg";
-import MicIcon from "./assets/icons/mic-vocal.svg";
-import WineIcon from "./assets/icons/wine.svg";
-import BurgerIcon from "./assets/icons/hamburger.svg";
-import BallIcon from "./assets/icons/volleyball.svg";
-import ArtIcon from "./assets/icons/palette.svg";
-import PartyIcon from "./assets/icons/party.svg";  
+import Panels from "../features/Panels";
+import BookmarkIcon from "../assets/icons/bookmark.svg";
+import ExternalLinkIcon from "../assets/icons/external-link.svg";
+import MicIcon from "../assets/icons/mic-vocal.svg";
+import WineIcon from "../assets/icons/wine.svg";
+import BurgerIcon from "../assets/icons/hamburger.svg";
+import BallIcon from "../assets/icons/volleyball.svg";
+import ArtIcon from "../assets/icons/palette.svg";
+import PartyIcon from "../assets/icons/party.svg";  
 
 const SearchPage: React.FC = () => {
   // ---------- PLACEHOLDER FOR CATEGORY FILTER FOR DEMO PURPOSES ----------
@@ -44,7 +44,7 @@ const SearchPage: React.FC = () => {
       {/* ---------- SEARCH + FILTER SECTION --------- */}
       <div className="flex flex-col w-full px-8 pt-6">
         {/* Search Bar */}
-        <div className="bg-white flex items-center px-4 py-3 rounded-lg shadow-md w-full">
+        <div className="bg-white flex items-center px-4 py-3 rounded-xl shadow-md w-full">
           <input
             type="text"
             placeholder="Find an Event"
@@ -71,7 +71,7 @@ const SearchPage: React.FC = () => {
                     selectedCategory === name ? null : name
                   )
                 }
-                className={`bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-sm hover:bg-gray-100 transition ${
+                className={`bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-sm hover:bg-vanilla transition transition-transform duration-300 active:scale-95 hover:scale-90 ${
                   selectedCategory === name
                     ? "ring-2 ring-[var(--color-vanilla)]"
                     : ""
@@ -85,7 +85,7 @@ const SearchPage: React.FC = () => {
       </div>
 
       {/* ---------- SCROLLABLE EVENT GRID SECTION ---------- */}
-      <div className="px-8 py-6 h-[70vh] overflow-y-auto"
+      <div className="px-8 py-6 h-[80%] overflow-y-auto mt-4"
         style={{
           scrollbarColor: '#ECFBFD transparent',
         }}
