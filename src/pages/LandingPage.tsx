@@ -41,30 +41,31 @@ function LandingPage() {
         }}
       >
         <div
-          className="w-full flex items-center justify-center mb-10 px-8 py-24 shadow-lg relative bg-cover bg-center bg-no-repeat"
+          className="w-full flex items-start justify-start mb-10 px-8 py-24 shadow-lg relative bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `url(${landingBg})`,
             backgroundSize: "contain",
-            backgroundPosition: "center",
+            backgroundPosition: "bottom",
             backgroundAttachment: "fixed", 
           }}
         >          
         <div className="absolute inset-0 bg-gradient-to-b from-whiteblue via-whiteblue/25 to-transparent"></div>
 
-          <div className="relative flex flex-col items-center text-center">
-            <h1 className="text-7xl font-bold text-moonstone mb-2 leading-tight drop-shadow-md">
+          <div className="relative flex flex-col items-start text-left ml-10">
+            <h1 className="text-6xl font-bold text-moonstone mb-2 leading-tight drop-shadow-md">
               Welcome To
             </h1>
 
-            <h1 className="text-7xl font-bold text-moonstone mb-2 leading-tight drop-shadow-md">
+            <h1 className="text-6xl font-bold text-moonstone/75 mb-2 leading-tight drop-shadow-md">
               Whist
             </h1>
+          </div>
 
-            <p className="text-moonstone text-lg mb-6 max-w-md drop-shadow-md">
+          <div className="absolute bottom-[30%] right-20 w-full max-w-[45%]">
+            <p className="text-moonstone text-center font-bold text-lg mb-6 drop-shadow-md">
               Discover events and experiences that match your interests.
             </p>
-
-            <div className="flex items-center bg-white rounded-2xl px-3 py-3 shadow-lg w-full max-w-3xl backdrop-blur-sm bg-opacity-90">
+            <div className="flex items-center bg-white rounded-2xl px-3 py-3 shadow-lg backdrop-blur-sm bg-opacity-90">
               <img
                 src={SearchIcon}
                 alt="Search"
@@ -130,7 +131,7 @@ function LandingPage() {
             <h2 className="bg-moonstone text-whiteblue font-semibold text-xl px-30 py-3 rounded-full mb-6 shadow-lg self-center text-center">
               Why Join?
             </h2>
-            <div className="bg-bluewhite rounded-2xl shadow-lg px-8 py-10 text-white flex flex-col justify-start overflow-hidden"></div>
+            <div className="bg-bluewhite rounded-2xl shadow-lg w-full py-50 text-white flex flex-col"></div>
           </section>
         </section>
 

@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { BrowserRouter, useNavigate } from "react-router-dom";
 import GoogleLogo from "../assets/images/GoogleLogo.png";
 import FacebookLogo from "../assets/images/FacebookLogo.png";
 import AppleLogo from "../assets/images/AppleLogo.png";
 import eventlogo from "../assets/images/eventlogo.png";
 import useUserStore from "../lib/userStore";
+
+import { Link } from "react-router-dom";
 
 function LoginPage() {
   const { setUser } = useUserStore();
@@ -33,7 +35,6 @@ function LoginPage() {
 
     setLoading(true);
 
-    // Call the server + getting the response
     let res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/login`, {
         method: "post",
         body: JSON.stringify({
@@ -42,30 +43,33 @@ function LoginPage() {
         })
     });
 
-    // Set is loading false
     setLoading(false);
 
-    // Make sure everythings good
-    // If response is ok go to next screen
     if (res.ok) {
         let body = await res.json();
 
         setUser(body);
         navigate("/")
     }
-    // Else do smth
   };
-
 
   return (
     <div className="flex flex-col mx-auto min-h-screen">
       <header className="w-screen bg-moonstone p-4">
-        <div className="flex items-left">
+        <div className="flex items-center justify-between">
           <a href="/">
             <img src={eventlogo} alt="Event Logo" className="h-10 transition-transform duration-300 hover:scale-120 hover:-translate-y-0" />
           </a>
+          <Link to="/help"
+              className="mr-3 font-bold hover:text-darkervanilla transition text-bluewhite hover:scale-110">Help
+          </Link>
         </div>
       </header>
+
+      <div className="overflow-y-scroll"
+            style={{
+                scrollbarColor: '#4C9DB0 transparent',
+            }}>
 
       <main className="flex flex-col items-center justify-center mt-10">
         <div className="w-full max-w-md rounded-2xl p-8 bg-lightermoonstone shadow-md">
@@ -90,7 +94,7 @@ function LoginPage() {
                   setEmail(e.target.value);
                   setError("");
                 }}
-                className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
+                className="rounded-lg p-2 bg-white text-moonstone focus:outline-vanilla"
               />
             </fieldset>
 
@@ -103,7 +107,7 @@ function LoginPage() {
                   setPassword(e.target.value);
                   setError("");
                 }}
-                className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
+                className="rounded-lg p-2 bg-white text-moonstone focus:outline-vanilla"
               />
             </fieldset>
 
@@ -161,7 +165,7 @@ function LoginPage() {
               Don't have an account? Create one{" "}
               <a
                 href="/create-account"
-                className="text-moonstone font-bold underline cursor-pointer"
+                className="text-white font-bold underline cursor-pointer"
               >
                 here.
               </a>
@@ -170,6 +174,7 @@ function LoginPage() {
         </div>
       </main>
     </div>
+  </div>
   );
 };
 

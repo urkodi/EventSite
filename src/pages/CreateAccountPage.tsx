@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from "react-router-dom";
 
 import GoogleLogo from '../assets/images/GoogleLogo.png';
 import FacebookLogo from '../assets/images/FacebookLogo.png';
@@ -60,7 +61,6 @@ const CreateAccountPage = () => {
 
         setLoading(true);
         
-        // Call the server + getting the response
         let res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/register`, {
             method: "post",
             body: JSON.stringify({
@@ -71,11 +71,8 @@ const CreateAccountPage = () => {
             })
         });
 
-        // Set is loading false
         setLoading(false);
 
-        // Make sure everythings good
-        // If response is ok go to next screen
         if (res.ok) {
             let body = await res.json();
             console.log(body);
@@ -84,17 +81,19 @@ const CreateAccountPage = () => {
 
             setSubmitted(true);
         }
-        // Else do smth
     };
 
     if (submitted) {
         return (
             <div className="flex flex-col mx-auto h-auto">
-            <header className="w-screen h-auto bg-moonstone p-4 shadow-md">
-                <div className="flex items-left">
+            <header className="w-screen h-auto bg-moonstone p-4">
+                <div className="flex items-center justify-between">
                     <a href="/">
                         <img src={eventlogo} alt="Event Logo" className="h-10 transition-transform duration-300 hover:scale-120 hover:-translate-y-0" />
                     </a>
+                    <Link to="/help"
+                        className="mr-3 font-bold hover:text-darkervanilla transition text-bluewhite hover:scale-110">Help
+                    </Link>
                 </div>
             </header>
 
@@ -143,15 +142,22 @@ const CreateAccountPage = () => {
     }
 
     return (
-        <div className="flex flex-col mx-auto h-auto">
-            
+        <div className="flex flex-col mx-auto h-auto max-h-screen overflow-x-hidden">
             <header className="w-screen h-auto bg-moonstone p-4 shadow-md">
-                <div className="flex items-left">
+                <div className="flex items-center justify-between">
                     <a href="/">
                         <img src={eventlogo} alt="Event Logo" className="h-10 transition-transform duration-300 hover:scale-120 hover:-translate-y-0" />
                     </a>
+                    <Link to="/help"
+                        className="mr-3 font-bold hover:text-darkervanilla transition text-bluewhite hover:scale-110">Help
+                    </Link>
                 </div>
             </header>
+
+            <div className="overflow-y-scroll"
+            style={{
+                scrollbarColor: '#4C9DB0 transparent',
+            }}>
 
             <main className="flex-grow flex flex-col items-center justify-center mt-10 mb-10">
                 <div className="w-full max-w-md rounded-2xl p-8 bg-lightermoonstone shadow-md">
@@ -173,7 +179,7 @@ const CreateAccountPage = () => {
                                 placeholder="First Name"
                                 value={formData.firstName}
                                 onChange={handleChange}
-                                className="rounded-lg p-2 bg-bluewhite w-1/2 mr-2 text-moonstone focus:outline-vanilla"
+                                className="rounded-lg p-2 bg-white w-1/2 mr-2 text-moonstone focus:outline-vanilla"
                             />
                             <input
                                 type="text"
@@ -181,7 +187,7 @@ const CreateAccountPage = () => {
                                 placeholder="Last Name"
                                 value={formData.lastName}
                                 onChange={handleChange}
-                                className="rounded-lg p-2 bg-bluewhite w-1/2 ml-2 text-moonstone focus:outline-vanilla"
+                                className="rounded-lg p-2 bg-white w-1/2 ml-2 text-moonstone focus:outline-vanilla"
                             />
                         </fieldset>
 
@@ -192,7 +198,7 @@ const CreateAccountPage = () => {
                                 placeholder="Email"
                                 value={formData.email}
                                 onChange={handleChange}
-                                className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
+                                className="rounded-lg p-2 bg-white text-moonstone focus:outline-vanilla"
                             />
                         </fieldset>
 
@@ -203,7 +209,7 @@ const CreateAccountPage = () => {
                                 placeholder="Password"
                                 value={formData.password}
                                 onChange={handleChange}
-                                className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
+                                className="rounded-lg p-2 bg-white text-moonstone focus:outline-vanilla"
                             />
                         </fieldset>
 
@@ -214,7 +220,7 @@ const CreateAccountPage = () => {
                                 placeholder="Confirm Password"
                                 value={formData.confirmPassword}
                                 onChange={handleChange}
-                                className="rounded-lg p-2 bg-bluewhite text-moonstone focus:outline-vanilla"
+                                className="rounded-lg p-2 bg-white text-moonstone focus:outline-vanilla"
                             />
                         </fieldset>
 
@@ -277,7 +283,7 @@ const CreateAccountPage = () => {
                         Already have an account?{' '}
                         <a
                             href="/login"
-                            className="text-moonstone font-bold underline cursor-pointer"
+                            className="text-white font-bold underline cursor-pointer"
                         >
                             Log In
                         </a>
@@ -285,6 +291,7 @@ const CreateAccountPage = () => {
                 </div>
             </main>
         </div>
+    </div>
     );
 };
 
