@@ -10,7 +10,7 @@ import WineIcon from "../assets/icons/wine.svg";
 import BurgerIcon from "../assets/icons/hamburger.svg";
 import SearchIcon from "../assets/icons/SearchMoonstone.svg";
 
-import landingBg from "../assets/images/deco.png"
+import landingBg from "../assets/images/landingBg.png"
 
 function LandingPage() {
   return (
@@ -41,10 +41,10 @@ function LandingPage() {
         }}
       >
         <div
-          className="w-full flex items-start justify-start mb-10 px-8 py-24 shadow-lg relative bg-cover bg-center bg-no-repeat"
+          className="w-full flex items-start justify-start mb-10 px-8 py-24 shadow-lg relative bg-cover bg-center bg-no-repeat rounded-3xl"
           style={{
             backgroundImage: `url(${landingBg})`,
-            backgroundSize: "contain",
+            backgroundSize: "cover",
             backgroundPosition: "bottom",
             backgroundAttachment: "fixed", 
           }}
@@ -59,9 +59,13 @@ function LandingPage() {
             <h1 className="text-6xl font-bold text-moonstone/75 mb-2 leading-tight drop-shadow-md">
               Whist
             </h1>
+
           </div>
 
-          <div className="absolute bottom-[30%] right-20 w-full max-w-[45%]">
+          <div className="absolute right-20 w-full max-w-[45%]">
+            <h1 className="text-4xl text-center font-bold text-moonstone/90 mb-2 leading-tight drop-shadow-md">
+              Experience More, Stress Less
+            </h1>
             <p className="text-moonstone text-center font-bold text-lg mb-6 drop-shadow-md">
               Discover events and experiences that match your interests.
             </p>
@@ -86,9 +90,20 @@ function LandingPage() {
             <h2 className="bg-moonstone text-whiteblue font-semibold text-xl px-30 py-3 rounded-full mb-6 shadow-xl self-center text-center">
               How It Works
             </h2>
+            
             <div className="flex gap-8 justify-center flex-wrap">
-              <div className="w-66 h-56 bg-bluewhite rounded-2xl shadow-lg"></div>
-              <div className="w-66 h-56 bg-bluewhite rounded-2xl shadow-lg"></div>
+                <div className="w-max overflow-x-scroll"
+                  style={{
+                          scrollbarColor: '#ECFBFD transparent',
+                      }}>
+                  <div className="flex gap-7 w-max px-4 py-2">
+                      <div className="w-40 h-40 bg-white rounded-2xl"></div>
+                      <div className="w-40 h-40 bg-white rounded-2xl"></div>
+                      <div className="w-40 h-40 bg-white rounded-2xl"></div>
+                      <div className="w-40 h-40 bg-white rounded-2xl"></div>
+                      <div className="w-40 h-40 bg-white rounded-2xl"></div>
+                  </div>
+                </div>
 
                 <section className="flex flex-col items-center">
                   <h2 className="bg-moonstone text-whiteblue font-semibold text-xl px-25 py-3 rounded-full mb-6 shadow-xl self-center text-center">
@@ -109,7 +124,7 @@ function LandingPage() {
                     ].map((cat) => (
                       <div
                         key={cat.name}
-                        className="w-40 h-40 bg-bluewhite rounded-3xl flex flex-col items-center justify-center shadow-md hover:scale-105 transition"
+                        className="w-40 h-40 bg-white rounded-3xl flex flex-col items-center justify-center hover:scale-105 transition"
                       >
                         <img
                           src={cat.icon}
@@ -131,7 +146,7 @@ function LandingPage() {
             <h2 className="bg-moonstone text-whiteblue font-semibold text-xl px-30 py-3 rounded-full mb-6 shadow-lg self-center text-center">
               Why Join?
             </h2>
-            <div className="bg-bluewhite rounded-2xl shadow-lg w-full py-50 text-white flex flex-col"></div>
+            <div className="bg-white rounded-2xl shadow-lg w-full py-50 text-white flex flex-col"></div>
           </section>
         </section>
 
