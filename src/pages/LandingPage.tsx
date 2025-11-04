@@ -10,7 +10,7 @@ import WineIcon from "../assets/icons/wine.svg";
 import BurgerIcon from "../assets/icons/hamburger.svg";
 import SearchIcon from "../assets/icons/SearchMoonstone.svg";
 
-import landingBg from "../assets/images/landingBg.png"
+import landingBg from "../assets/images/LandingBg.png"
 
 function LandingPage() {
   return (
