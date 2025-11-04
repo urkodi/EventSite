@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Panels from "../features/Panels";
+import Dropdown from '../components/Dropdown';
 
 const initialTickets = [
   {
@@ -45,41 +47,72 @@ const initialTickets = [
 
 const MyTickets = () => {
   const [tickets] = useState(initialTickets);
+  const [activeQR, setActiveQR] = useState<string | null>(null);
+
 
   return (
-    <div className="p-6">
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {tickets.map(ticket => (
-          <div
-            key={ticket.id}
-            className="bg-lightermoonstone text-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow relative"
-          >
-            <img
-              src={ticket.image}
-              alt={ticket.title}
-              className="w-full h-40 object-cover rounded-md mb-4"
-            />
-            <p className="text-sm mb-2">{ticket.date}</p>
-            <h2 className="text-xl font-semibold mb-1">{ticket.title}</h2>
-            <p className="text-sm text-white/80 mb-2">{ticket.location}</p>
-            <p className="text-sm text-white/80 mb-4">{ticket.address}</p>
-            <img
-              src={ticket.barcode}
-              alt="Scan to enter"
-              className="w-32 mt-3 mx-auto"
-            />
-            <a
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ticket.address)}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block mt-4 px-4 py-2 bg-red-500 hover:bg-red-600 text-white text-sm rounded"
-            >
-              View on Map
-            </a>
+    <>
+      <Panels>
+      <div 
+        className="flex flex-col h-full p-6 overflow-y-scroll"
+        style={{
+          scrollbarColor: '#9CCED6 transparent',
+        }}
+      >
+        <div className="h-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {tickets.map(ticket => (
+              <div
+                key={ticket.id}
+                className="h-[480px] bg-lightermoonstone text-white p-4 rounded-xl shadow-md hover:shadow-lg transition-shadow flex flex-col justify-between"
+              >
+                <div>
+                  <img
+                    src={ticket.image}
+                    alt={ticket.title}
+                    className="w-full h-40 object-cover rounded-md mb-2"
+                  />
+                  <p className="text-sm mb-1">{ticket.date}</p>
+                  <h2 className="text-xl font-semibold mb-1">{ticket.title}</h2>
+                  <p className="text-sm text-black mb-1">{ticket.location}</p>
+                  <p className="text-sm text-black">{ticket.address}</p>
+                </div>
+                  <button
+                    onClick={() => setActiveQR(ticket.barcode)}
+                    className="w-[50%] px-4 py-2 bg-moonstone text-white rounded-2xl "
+                    >
+                      QR Code
+                  </button>
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ticket.address)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-[75%] px-4 py-2 bg-darkervanilla text-black text-sm rounded-2xl"
+                    > View on Map
+                  </a>
+                </div>
+            ))}
           </div>
-        ))}
+        </div>
       </div>
-    </div>
+
+      {activeQR && (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <div className="relative bg-white p-4 rounded-lg shadow-lg w-72">
+          <button
+            onClick={() => setActiveQR(null)}
+            className="absolute top-2 right-2 text-gray-600 hover:text-black text-xl font-bold"
+             aria-label="Close"
+            >
+              &times;
+          </button>
+          <img src={activeQR} alt="QR Code" className="w-64 h-64 object-contain" 
+          />
+        </div>
+      </div>
+    )}
+    </Panels>
+    </>
   );
 };
 

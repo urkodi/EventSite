@@ -13,7 +13,6 @@ function Homepage() {
     const { user } = useUserStore();
     const categories = [{categoryId: 1, icon:TicketSVG},{categoryId:2, icon:TicketSVG}, {categoryId:3, icon:TicketSVG}, {categoryId:4, icon:TicketSVG}, {categoryId:2, icon:TicketSVG}]
     
-
     return (
         <Panels>
             <div className="m-8 flex items-center justify-between">
@@ -25,7 +24,7 @@ function Homepage() {
                         Let's find something fun to do...
                     </h2>
                 </section>
-                <section className="bg-white p-2 rounded-lg flex items-center gap-1.5 text-neutral-400">
+                <section className="w-[50%] bg-white p-2 rounded-xl flex items-center gap-1.5 text-neutral-400">
                     <SearchSVG width="1.4em" height="1.4em"/>
                     <input
                         type="text"

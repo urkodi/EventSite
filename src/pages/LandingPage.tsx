@@ -13,17 +13,17 @@ import SearchIcon from "../assets/icons/SearchMoonstone.svg";
 // hero background image
 import heroBg from "../assets/icons/hero-bg.jpg";
 
-const LandingPage: React.FC = () => {
+function LandingPage() {
   return (
     <div className="min-h-screen w-full flex flex-col bg-gradient-to-b from-bluewhite to-moonstone text-gray-800">
       <header className="w-screen h-auto bg-moonstone p-4 shadow-md">
-                <div className="flex">
+                <div className="flex items-center justify-between">
                     <a href="/">
                         <img src={eventlogo} alt="Event Logo" className="h-10 transition-transform duration-300 hover:scale-120 hover:-translate-y-0" />
                     </a>
-                     <div className="ml-5 flex gap-5">
-                        <button className="hover:text-whiteblue transition">Help</button>
-                        <button className="hover:text-whiteblue transition">Sign In</button>
+                     <div className="mr-3 flex gap-5">
+                        <button className="font-bold hover:text-darkervanilla transition text-bluewhite hover:scale-110">Help</button>
+                        <button className="font-bold hover:text-darkervanilla transition text-bluewhite hover:scale-110">Sign In</button>
                   </div>
                 </div>
             </header>
@@ -72,9 +72,8 @@ const LandingPage: React.FC = () => {
           </div>
         </div>
 
-        {/* ---------- HOW IT WORKS + WHY JOIN ---------- */}
         <section className="w-full flex justify-center items-start gap-16 px-12 mb-20 max-w-7xl">
-          {/* HOW IT WORKS */}
+
           <section className="flex flex-col flex-1 items-start">
             <h2 className="bg-moonstone text-whiteblue font-semibold text-xl px-30 py-3 rounded-full mb-6 shadow-xl self-center text-center">
               How It Works
@@ -86,7 +85,6 @@ const LandingPage: React.FC = () => {
             </div>
           </section>
 
-          {/* WHY JOIN */}
           <section className="flex flex-col flex-1 items-start">
             <h2 className="bg-moonstone text-whiteblue font-semibold text-xl px-30 py-3 rounded-full mb-6 shadow-lg self-center text-center">
               Why Join?
@@ -95,13 +93,17 @@ const LandingPage: React.FC = () => {
           </section>
         </section>
 
-        {/* ---------- EXPLORE CATEGORIES ---------- */}
+        {/* catergories */}
         <div className="w-[90%] ml-auto mr-7 mb-16">
           <section className="flex flex-col items-start">
             <h2 className="bg-moonstone text-whiteblue font-semibold text-lg px-30 py-2 rounded-full mb-6 shadow-lg self-center text-center">
               Explore Categories
             </h2>
-            <div className="flex gap-10">
+            <div className="w-full overflow-x-scroll"
+            style={{
+                    scrollbarColor: '#ECFBFD transparent',
+                }}>
+              <div className="flex gap-7 w-max px-4 py-2">
               {[
                 { name: "Art", icon: ArtIcon },
                 { name: "Sports", icon: SportsIcon },
@@ -112,18 +114,19 @@ const LandingPage: React.FC = () => {
               ].map((cat) => (
                 <div
                   key={cat.name}
-                  className="w-40 h-40 bg-lightermoonstone rounded-lg flex flex-col items-center justify-center shadow-md hover:scale-105 transition"
+                  className="w-40 h-40 bg-bluewhite rounded-3xl flex flex-col items-center justify-center shadow-md hover:scale-105 transition"
                 >
                   <img
                     src={cat.icon}
                     alt={cat.name}
                     className="w-10 h-10 mb-2 object-contain"
                   />
-                  <span className="text-sm font-medium text-white">
+                  <span className="text-sm font-medium text-moonstone">
                     {cat.name}
                   </span>
                 </div>
               ))}
+            </div>
             </div>
           </section>
         </div>
