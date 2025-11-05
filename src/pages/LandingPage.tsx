@@ -92,16 +92,33 @@ function LandingPage() {
             </h2>
             
             <div className="flex gap-8 justify-center flex-wrap">
+
+              {/* Info on how the website works */}
                 <div className="w-max overflow-x-scroll"
                   style={{
                           scrollbarColor: '#ECFBFD transparent',
                       }}>
                   <div className="flex gap-7 w-max px-4 py-2">
-                      <div className="w-40 h-40 bg-white rounded-2xl"></div>
-                      <div className="w-40 h-40 bg-white rounded-2xl"></div>
-                      <div className="w-40 h-40 bg-white rounded-2xl"></div>
-                      <div className="w-40 h-40 bg-white rounded-2xl"></div>
-                      <div className="w-40 h-40 bg-white rounded-2xl"></div>
+                      <div className="w-40 h-40 bg-white rounded-2xl">
+                        <p className="text-moonstone font-bold px-3 py-3 text-center">Log in or create an account for a more personalized experience.</p>
+                        <div className="mx-auto w-[50%] rounded-xl h-2 bg-vanilla"></div>
+                      </div>
+                      <div className="w-40 h-40 bg-white rounded-2xl">
+                        <p className="text-moonstone font-bold px-3 py-3 text-center">Browse events freely without an account.</p>
+                        <div className="mx-auto w-[50%] rounded-xl h-2 bg-vanilla"></div>
+                      </div>
+                      <div className="w-40 h-40 bg-white rounded-2xl">
+                        <p className="text-moonstone font-bold px-3 py-3 text-center">Find events happening near you or further away.</p>
+                        <div className="mx-auto w-[50%] rounded-xl h-2 bg-vanilla"></div>
+                      </div>
+                      <div className="w-40 h-40 bg-white rounded-2xl">
+                        <p className="text-moonstone font-bold px-3 py-3 text-center">Sign in to host your own events or sign up for an event.</p>
+                        <div className="mx-auto w-[50%] rounded-xl h-2 bg-vanilla"></div>
+                      </div>
+                      <div className="w-40 h-40 bg-white rounded-2xl">
+                        <p className="text-moonstone font-bold px-3 py-3 text-center">Create your own profile and receive notifications on events.</p>
+                        <div className="mx-auto w-[50%] rounded-xl h-2 bg-vanilla"></div>
+                      </div>
                   </div>
                 </div>
 
@@ -146,7 +163,11 @@ function LandingPage() {
             <h2 className="bg-moonstone text-whiteblue font-semibold text-xl px-30 py-3 rounded-full mb-6 shadow-lg self-center text-center">
               Why Join?
             </h2>
-            <div className="bg-white rounded-2xl shadow-lg w-full py-50 text-white flex flex-col"></div>
+            <div className="bg-white rounded-2xl shadow-lg w-full py-50 flex flex-col">
+                <p className="text-moonstone ml-5">
+                    Insert content here blah blah blah someone help me...
+                </p>
+            </div>
           </section>
         </section>
 
