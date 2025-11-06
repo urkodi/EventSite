@@ -7,7 +7,15 @@ import WineIcon from "../assets/icons/wine.svg";
 import BurgerIcon from "../assets/icons/hamburger.svg";
 import BallIcon from "../assets/icons/volleyball.svg";
 import ArtIcon from "../assets/icons/palette.svg";
-import PartyIcon from "../assets/icons/party.svg";  
+import PartyIcon from "../assets/icons/party.svg"; 
+
+
+import EventBlock from "../components/EventBlock";
+import SearchSVG from "../components/icons/SearchSVG";
+import Dropdown from "../components/Dropdown";
+import Category from "../components/Category";
+import TicketSVG from "../components/icons/TicketSVG";
+
 
 const SearchPage: React.FC = () => {
   // ---------- PLACEHOLDER FOR CATEGORY FILTER FOR DEMO PURPOSES ----------
@@ -41,8 +49,8 @@ const SearchPage: React.FC = () => {
 
   return (
     <Panels>
-      {/* ---------- SEARCH + FILTER SECTION --------- */}
-      <div className="flex flex-col w-full px-8 pt-6">
+      {/* SEARCH + FILTER SECTION */}
+      <div className="flex flex-col w-full px-8 pt-6 ">
         {/* Search Bar */}
         <div className="bg-white flex items-center px-4 py-3 rounded-xl shadow-md w-full">
           <input
@@ -53,18 +61,29 @@ const SearchPage: React.FC = () => {
         </div>
 
         {/* Filter Buttons + Icon Buttons */}
-        <div className="flex items-center gap-3 w-full mt-4">
-          <button className="bg-white text-gray-700 rounded-full px-4 py-1 shadow-sm hover:bg-gray-100">
-            Near Me ▾
-          </button>
-          <button className="bg-white text-gray-700 rounded-full px-4 py-1 shadow-sm hover:bg-gray-100">
-            Today ▾
-          </button>
-
-          {/* Icon Filters */}
-          <div className="flex gap-2">
-            {categories.map(({ name, icon }, i) => (
-              <button
+        <span className="flex h-auto mt-4">
+                <Dropdown title="Choose a Location" buttonName="Boston">
+                    <div className="w-full mt-4 bg-white rounded-2xl px-2 py-2 flex items-center gap-2">
+                        <span className="px-1 text-neutral-400">
+                            <SearchSVG width="1.2em" height="1.2em" />
+                        </span>
+                        <input
+                            type="text"
+                            placeholder="Search by city or ZIP code"
+                            className= "flex-1 placeholder-neutral-400 border-none outline-none"
+                        />
+                        {/* ADD MAP FEATURE BACK IN LATER */}
+                    </div>
+                </Dropdown>
+                <Dropdown title="Dates" buttonName="Today">
+                    <input>
+                    
+                    </input>
+                </Dropdown>
+                <span className="h-auto w-0.5 my-2 m-4 rounded-xl bg-lightgrey"/>
+                <div className="flex gap-2">
+                {categories.map(({ name, icon }, i) => (
+                <button
                 key={i}
                 onClick={() =>
                   setSelectedCategory(
@@ -80,9 +99,9 @@ const SearchPage: React.FC = () => {
                 <img src={icon} alt={name} className="w-6 h-6" />
               </button>
             ))}
-          </div>
+            </div>
+            </span>
         </div>
-      </div>
 
       {/* ---------- SCROLLABLE EVENT GRID SECTION ---------- */}
       <div className="px-8 py-6 h-[80%] overflow-y-auto mt-4"

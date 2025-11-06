@@ -30,9 +30,11 @@ function EventBlock({eventId, imageUrl, link, eventDate, eventTitle, eventAddres
                         </button>
                     </div>
                 </section>
-                <section className='bg-white p-1.5'>
+                <section className='bg-white/85 p-3'>
                     <p>{eventDate}</p>
-                    <h3 className='font-bold text-xl'>{eventTitle}</h3>
+                    <div className="overflow-x-hidden">
+                        <h3 className='font-bold text-xl'>{eventTitle}</h3>
+                    </div>
                     <p>{eventAddress}</p>
                 </section>
             </a>
