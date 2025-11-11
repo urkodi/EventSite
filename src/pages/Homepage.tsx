@@ -34,7 +34,7 @@ function Homepage() {
                 </section>
             </div>
 
-            <span className="flex h-auto ml-5 mt-1">
+            <span className="flex h-auto ml-5 mt-1 mb-1">
                 <Dropdown title="Choose a Location" buttonName="Boston">
                     <div className="w-full mt-4 bg-white rounded-2xl px-2 py-2 flex items-center gap-2">
                         <span className="px-1 text-neutral-400">
@@ -69,106 +69,145 @@ function Homepage() {
                         Featured Events 
                     </h1>
 
-                <div className="overflow-x-scroll mx-10"
+                <div className="overflow-x-auto mx-10 max-w-full"
                     style={{
                         scrollbarColor:"#E9CC73 transparent",
-                        scrollbarWidth:"thin",
                     }}>
 
                 <ul className="flex gap-6 snap-x snap-mandatory mb-2">
-                    <li className="snap-start shrink-0 w-[calc(100%/3-1rem)]">
+                    <li className="snap-start shrink-0">
                     <EventBlock eventId="1" 
-                                imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
-                                link="https://cornhub.website" 
-                                eventTitle="Bop w/ Bops" 
-                                eventDate="October 30th 2025" 
-                                eventAddress="44 Hummingbird Ln" 
-                            /> 
-                    </li>
-
-                    <li className="snap-start shrink-0 w-[calc(100%/3-1rem)]">
-                    <EventBlock eventId="1" 
-                                imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
+                                imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQFZfnxTBwHRAbsGJ8UugN2NUL5t8dAKvbhQ&s" 
                                 link="https://cornhub.website" 
                                 eventTitle="Bop w/ Bops" 
                                 eventDate="October 30th 2025" 
                                 eventAddress="44 Hummingbird Ln" /> 
                     </li>
 
-                    <li className="snap-start shrink-0 w-[calc(100%/3-1rem)]">
+                    <li className="snap-start shrink-0">
                     <EventBlock eventId="1" 
-                                imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
+                                imageUrl="https://www.stockvault.net/data/2020/01/18/272608/thumb16.jpg" 
+                                link="https://chatgpt.com/" 
+                                eventTitle="Bop w/ Bops" 
+                                eventDate="October 30th 2025" 
+                                eventAddress="44 Hummingbird Ln" /> 
+                    </li>
+                    <li className="snap-start shrink-0">
+                    <EventBlock eventId="1" 
+                                imageUrl="https://gratisography.com/wp-content/uploads/2025/05/gratisography-dino-party-800x525.jpg" 
+                                link="https://cornhub.website" 
+                                eventTitle="Bop w/ Bops" 
+                                eventDate="October 30th 2025" 
+                                eventAddress="44 Hummingbird Ln" /> 
+                    </li>
+                    <li className="snap-start shrink-0">
+                    <EventBlock eventId="1" 
+                                imageUrl="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG66KxSseACXvW6KvUTYLxE2DbuCNfv4APUpURpgqxOGkqjvfGR1GqxuYS1WXr2bfoV34&usqp=CAU" 
+                                link="https://cornhub.website" 
+                                eventTitle="Bop w/ Bops" 
+                                eventDate="October 30th 2025" 
+                                eventAddress="44 Hummingbird Ln" /> 
+                    </li>
+                    <li className="snap-start shrink-0">
+                    <EventBlock eventId="1" 
+                                imageUrl="https://www.chillbilldill.com/content/images/2023/08/weirdstockphoto1-2.jpg" 
+                                link="https://cornhub.website" 
+                                eventTitle="Bop w/ Bops" 
+                                eventDate="October 30th 2025" 
+                                eventAddress="44 Hummingbird Ln" /> 
+                    </li>
+                    <li className="snap-start shrink-0">
+                    <EventBlock eventId="1" 
+                                imageUrl="https://jenmulligandesign.com/wp-content/uploads/2017/04/gratisography-free-stock-photos.jpg" 
+                                link="https://cornhub.website" 
+                                eventTitle="Bop w/ Bops" 
+                                eventDate="October 30th 2025" 
+                                eventAddress="44 Hummingbird Ln" /> 
+                    </li>
+                    <li className="snap-start shrink-0">
+                    <EventBlock eventId="1" 
+                                imageUrl="https://www.themarysue.com/wp-content/uploads/2024/04/yurionice.jpg?fit=1200%2C675" 
                                 link="https://cornhub.website" 
                                 eventTitle="Bop w/ Bops" 
                                 eventDate="October 30th 2025" 
                                 eventAddress="44 Hummingbird Ln" /> 
                     </li>
 
-                    <li className="snap-start shrink-0 w-[calc(100%/3-1rem)]">
-                    <EventBlock eventId="1" 
-                                imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
-                                link="https://cornhub.website" 
-                                eventTitle="Bop w/ Bops" 
-                                eventDate="October 30th 2025" 
-                                eventAddress="44 Hummingbird Ln" /> 
-                    </li>
-
-                    <li className="snap-start shrink-0 w-[calc(100%/3-1rem)]">
-                    <EventBlock eventId="1" 
-                                imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
-                                link="https://cornhub.website" 
-                                eventTitle="Bop w/ Bops" 
-                                eventDate="October 30th 2025" 
-                                eventAddress="44 Hummingbird Ln" /> 
-                    </li>
                 </ul>
                 </div>
 
                 {/* DISCOVER EVENTS */}
-                <div className="mt-2 bg-lightermoonstone rounded-xl px-4 py-2">
-                        <h1 className="mb-2 font-bold text-white text-2xl">
-                            Discover Events
-                        </h1>
+                <div className="mt-2 bg-lightermoonstone rounded-xl px-4 py-2 mx-2">
+                    <h1 className="mb-2 font-bold text-white text-2xl">
+                        Discover Events
+                    </h1>
 
-                        <div className="overflow-x-scroll"
-                            style={{
-                                scrollbarColor:"#E9CC73 transparent",
-                                scrollbarWidth:"thin",
-                            }}>
+                    <div className="overflow-x-auto"
+                        style={{
+                            scrollbarColor:"#ECFBFD transparent",
+                        }}>
                                 
-                        <ul className="flex gap-6 snap-x snap-mandatory mb-2 mt-2">
+                    <ul className="flex gap-6 snap-x snap-mandatory mb-2 mt-2">
+                        <li className="snap-start shrink-0">
                             <EventBlock 
                                 eventId="1" 
                                 imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
                                 link="https://cornhub.website" 
                                 eventTitle="Bop w/ Bops" 
                                 eventDate="October 30th 2025" 
-                                eventAddress="44 Hummingbird Ln" 
-                            /> 
-                        <EventBlock 
-                                eventId="1" 
-                                imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
-                                link="https://cornhub.website" 
-                                eventTitle="Bop w/ Bops" 
-                                eventDate="October 30th 2025" 
-                                eventAddress="44 Hummingbird Ln" 
-                            /> 
+                                eventAddress="44 Hummingbird Ln" /> 
+                            </li>
+
+                            <li className="snap-start shrink-0">
                             <EventBlock 
                                 eventId="1" 
                                 imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
                                 link="https://cornhub.website" 
                                 eventTitle="Bop w/ Bops" 
                                 eventDate="October 30th 2025" 
-                                eventAddress="44 Hummingbird Ln" 
-                            /> 
+                                eventAddress="44 Hummingbird Ln" /> 
+                            </li>
+
+                            <li className="snap-start shrink-0">
                             <EventBlock 
                                 eventId="1" 
                                 imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
                                 link="https://cornhub.website" 
                                 eventTitle="Bop w/ Bops" 
                                 eventDate="October 30th 2025" 
-                                eventAddress="44 Hummingbird Ln" 
-                            /> 
+                                eventAddress="44 Hummingbird Ln" /> 
+                            </li>
+
+                            <li className="snap-start shrink-0">
+                            <EventBlock 
+                                eventId="1" 
+                                imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
+                                link="https://cornhub.website" 
+                                eventTitle="Bop w/ Bops" 
+                                eventDate="October 30th 2025" 
+                                eventAddress="44 Hummingbird Ln" /> 
+                            </li>
+
+                            <li className="snap-start shrink-0">
+                            <EventBlock 
+                                eventId="1" 
+                                imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
+                                link="https://cornhub.website" 
+                                eventTitle="Bop w/ Bops" 
+                                eventDate="October 30th 2025" 
+                                eventAddress="44 Hummingbird Ln" /> 
+                            </li>
+
+                            <li className="snap-start shrink-0">
+                            <EventBlock 
+                                eventId="1" 
+                                imageUrl="https://photos.zillowstatic.com/fp/42667657f3aee8e431f9d37624c1fdac-p_d.webp" 
+                                link="https://cornhub.website" 
+                                eventTitle="Bop w/ Bops" 
+                                eventDate="October 30th 2025" 
+                                eventAddress="44 Hummingbird Ln" /> 
+                            </li>
+
                         </ul>
                     </div>
                 </div>
