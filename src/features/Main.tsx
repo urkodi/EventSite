@@ -4,7 +4,7 @@ type MainParam = {
 
 function Main( {children} : MainParam ) {
     return (
-        <main className="flex-7 my-8 mx-2 rounded-lg bg-moonstone p-3 overflow-hidden">
+        <main className="max-w-[65%] flex-7 my-8 mx-2 rounded-lg bg-moonstone p-3 overflow-hidden">
             {children}
         </main>
     )

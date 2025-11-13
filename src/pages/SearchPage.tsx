@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import Panels from "../features/Panels";
 import BookmarkIcon from "../assets/icons/bookmark.svg";
 import ExternalLinkIcon from "../assets/icons/external-link.svg";
@@ -8,7 +8,7 @@ import BurgerIcon from "../assets/icons/hamburger.svg";
 import BallIcon from "../assets/icons/volleyball.svg";
 import ArtIcon from "../assets/icons/palette.svg";
 import PartyIcon from "../assets/icons/party.svg"; 
-
+import useUserStore from "../lib/userStore";
 
 import EventBlock from "../components/EventBlock";
 import SearchSVG from "../components/icons/SearchSVG";
@@ -17,51 +17,95 @@ import Category from "../components/Category";
 import TicketSVG from "../components/icons/TicketSVG";
 
 
-const SearchPage: React.FC = () => {
-  // ---------- PLACEHOLDER FOR CATEGORY FILTER FOR DEMO PURPOSES ----------
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+function SearchPage() {
+  
+  const { user } = useUserStore();
+    const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+    const [events, setEvents] = useState([
+        { eventId: "1",
+            imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQFZfnxTBwHRAbsGJ8UugN2NUL5t8dAKvbhQ&s" ,
+            link:"https://cornhub.website" ,
+            eventTitle:"Bop w/ Bops" ,
+            eventDate:"October 30th 2025" ,
+            eventAddress:"44 Hummingbird Ln" ,
+            category:"Food" ,
+        },
+        {
+            eventId:"2",
+            imageUrl:"https://www.stockvault.net/data/2020/01/18/272608/thumb16.jpg",
+            link:"https://chatgpt.com/",
+            eventTitle:"Bop w/ Bops",
+            eventDate:"October 30th 2025",
+            eventAddress:"44 Hummingbird Ln",
+            category:"Art"
+        },
+        {
+            eventId:"3",
+            imageUrl:"https://gratisography.com/wp-content/uploads/2025/05/gratisography-dino-party-800x525.jpg",
+            link:"https://cornhub.website",
+            eventTitle:"Bop w/ Bops",
+            eventDate:"October 30th 2025",
+            eventAddress:"44 Hummingbird Ln",
+            category:"Party"
+        },
+        {
+            eventId:"4",
+            imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG66KxSseACXvW6KvUTYLxE2DbuCNfv4APUpURpgqxOGkqjvfGR1GqxuYS1WXr2bfoV34&usqp=CAU",
+            link:"https://cornhub.website",
+            eventTitle:"Dogs with Slogs",
+            eventDate:"October 30th 2025",
+            eventAddress:"44 Hummingbird Ln",
+            category:"Drinks"
+        },
+        {
+            eventId:"5",
+            imageUrl:"https://wegotthiscovered.com/wp-content/uploads/2022/11/cherry-blossoms-after-winter.jpg",
+            link:"https://cornhub.website",
+            eventTitle:"Bl bottom Fest",
+            eventDate:"October 30th 2025",
+            eventAddress:"44 Hummingbird Ln",
+            category:"Music"
+        },
+        
+    ]);
 
-  const categories = [
-    { name: "Music", icon: MicIcon },
-    { name: "Drinks", icon: WineIcon },
-    { name: "Food", icon: BurgerIcon },
-    { name: "Sports", icon: BallIcon },
-    { name: "Art", icon: ArtIcon },
-    { name: "Party", icon: PartyIcon },
-  ];
+    useEffect(() => {
+        //backend call to fetch events
+    }, [])
 
-  // ---------- TEMPORARY PLACEHOLDER EVENTS ----------
-  const events = [
-    { id: 1, title: "Music Festival", category: "Music" },
-    { id: 2, title: "Wine Tasting", category: "Drinks" },
-    { id: 3, title: "Food Truck Rally", category: "Food" },
-    { id: 4, title: "Volleyball Game", category: "Sports" },
-    { id: 5, title: "Art Exhibit", category: "Art" },
-    { id: 6, title: "Summer Party", category: "Party" },
-    { id: 7, title: "Jazz Night", category: "Music" },
-    { id: 8, title: "BBQ Bash", category: "Food" },
-    { id: 9, title: "Basketball Finals", category: "Sports" },
-  ];
+    const categories = [
+        { categoryId: "Music", icon: MicIcon },
+        { categoryId: "Drinks", icon: WineIcon },
+        { categoryId: "Food", icon: BurgerIcon },
+        { categoryId: "Sports", icon: BallIcon },
+        { categoryId: "Art", icon: ArtIcon },
+        { categoryId: "Party", icon: PartyIcon },
+    ];
 
-  const filteredEvents = selectedCategory
+    const filteredEvents = selectedCategory
     ? events.filter((e) => e.category === selectedCategory)
     : events;
-
   return (
     <Panels>
       {/* SEARCH + FILTER SECTION */}
-      <div className="flex flex-col w-full px-8 pt-6 ">
+      <div className="flex flex-col w-full px-8 mt-4 mb-1">
         {/* Search Bar */}
-        <div className="bg-white flex items-center px-4 py-3 rounded-xl shadow-md w-full">
-          <input
-            type="text"
-            placeholder="Find an Event"
-            className="w-full focus:outline-none text-gray-600 placeholder-gray-400"
-          />
+        <div className="flex justify-between items-center w-full">
+          <h1 className="font-bold text-white text-4xl px-2">
+              Browse Events 
+          </h1>
+        <section className="w-[50%] bg-white p-3 rounded-2xl flex items-center gap-2 text-neutral-400">
+            <SearchSVG width="1.4em" height="1.4em"/>
+            <input
+              type="text"
+              placeholder="Find an Event..."
+              className="placeholder-neutral-400 outline-none border-none"
+            />
+        </section>
         </div>
 
         {/* Filter Buttons + Icon Buttons */}
-        <span className="flex h-auto mt-4">
+        <span className="flex h-auto mt-4 mb-4">
                 <Dropdown title="Choose a Location" buttonName="Boston">
                     <div className="w-full mt-4 bg-white rounded-2xl px-2 py-2 flex items-center gap-2">
                         <span className="px-1 text-neutral-400">
@@ -82,68 +126,52 @@ const SearchPage: React.FC = () => {
                 </Dropdown>
                 <span className="h-auto w-0.5 my-2 m-4 rounded-xl bg-lightgrey"/>
                 <div className="flex gap-2">
-                {categories.map(({ name, icon }, i) => (
-                <button
-                key={i}
-                onClick={() =>
-                  setSelectedCategory(
-                    selectedCategory === name ? null : name
-                  )
+                {categories.map(({categoryId, icon }, i) => (
+                    <button
+                        key={i}
+                        onClick={() =>
+                        setSelectedCategory(
+                        selectedCategory === categoryId ? null : categoryId
+                    )
                 }
                 className={`bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-sm hover:bg-vanilla transition transition-transform duration-300 active:scale-95 hover:scale-90 ${
-                  selectedCategory === name
+                  selectedCategory === categoryId
                     ? "ring-2 ring-[var(--color-vanilla)]"
                     : ""
                 }`}
               >
-                <img src={icon} alt={name} className="w-6 h-6" />
+                <img src={icon} alt={categoryId} className="w-6 h-6" />
               </button>
             ))}
             </div>
             </span>
-        </div>
 
-      {/* ---------- SCROLLABLE EVENT GRID SECTION ---------- */}
-      <div className="px-8 py-6 h-[80%] overflow-y-auto mt-4"
-        style={{
-          scrollbarColor: '#ECFBFD transparent',
-        }}
-      >
-        <div className="grid grid-cols-3 gap-4">
-          {filteredEvents.map((event, i) => (
-            <div
-              key={i}
-              className="bg-lightermoonstone rounded-xl shadow transition hover:scale-[1.02] flex flex-col overflow-hidden h-[20rem]"
-            >
-              {/* Event Image Placeholder */}
-              <div className="bg-[var(--color-whiteblue)] h-3/5 w-full" />
+            <div className="overflow-y-auto h-[calc(100vh-230px)]"
+                style={{
+                    scrollbarColor:"#E9CC73 transparent",
+                }}>
 
-              {/* Event Info */}
-              <div className="flex flex-col justify-between flex-grow p-4 text-sm text-gray-800 bg-lightermoonstone">
-                <div>
-                  <p className="font-semibold text-[var(--color-bluewhite)]">Date and Time</p>
-                  <p className="font-bold">{event.title}</p>
-                  <p>{event.category}</p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-2 mb-8">
+                  {filteredEvents.length > 0 ? (
+                    filteredEvents.map((event) => (
+                      <EventBlock
+                        key={event.eventId}
+                        eventId={event.eventId}
+                        imageUrl={event.imageUrl}
+                        link={event.link}
+                        eventTitle={event.eventTitle}
+                        eventDate={event.eventDate}
+                        eventAddress={event.eventAddress}
+                        category={event.category}
+                      />
+                    ))
+                  ) : (
+                    <p className="text-white italic opacity-70 col-span-full">
+                      No events found.
+                    </p>
+                  )}
                 </div>
-
-                {/* Bookmark + External Link Icons */}
-                <div className="flex justify-end mt-2 gap-2">
-                  <img
-                    src={ExternalLinkIcon}
-                    alt="External Link"
-                    className="w-5 h-5 cursor-pointer hover:opacity-80 transition"
-                  />
-                  <img
-                    src={BookmarkIcon}
-                    alt="Bookmark"
-                    className="w-5 h-5 cursor-pointer hover:opacity-80 transition"
-                  />
-                </div>
-              </div>
             </div>
-          ))}
-        </div>
-
       </div>
     </Panels>
   );
