@@ -28,10 +28,10 @@ function EventBlock({ eventId, imageUrl, link, eventDate, eventTitle, eventAddre
         {/* Content section */}
         <section className="relative flex flex-col justify-between flex-grow bg-white/85 p-3 overflow-hidden">
           <div>
-            <p className="text-sm text-gray-600 truncate">{eventDate}</p>
             <h3 className="font-bold text-lg leading-tight line-clamp-2">
               {eventTitle}
             </h3>
+            <p className="text-sm text-gray-700 truncate">{eventDate}</p>
             <p className="text-sm text-gray-700 line-clamp-2">{eventAddress}</p>
             <div className="absolute flex gap-2 bottom-4 right-4 text-moonstone">
             <button>

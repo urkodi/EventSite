@@ -146,7 +146,7 @@ function SearchPage() {
             </div>
             </span>
 
-            <div className="overflow-y-auto h-[calc(100vh-230px)]"
+            <div className="overflow-y-auto h-[calc(100vh-240px)] overflow-x-hidden"
                 style={{
                     scrollbarColor:"#E9CC73 transparent",
                 }}>
