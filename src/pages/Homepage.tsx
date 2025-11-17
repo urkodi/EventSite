@@ -93,7 +93,7 @@ function Homepage() {
                     <h1 className="text-3xl">
                         Hello, <span className="font-bold">{user?.firstName || "USER"}</span>!
                     </h1>
-                    <h2 className="text-xl">
+                    <h2 className="text-lg">
                         Let's find something fun to do...
                     </h2>
                 </section>
