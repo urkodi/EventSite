@@ -17,6 +17,8 @@ import BallIcon from "../assets/icons/volleyball.svg";
 import ArtIcon from "../assets/icons/palette.svg";
 import PartyIcon from "../assets/icons/party.svg"; 
 
+import { Link } from 'react-router-dom';
+
 function Homepage() {
 
     const { user } = useUserStore();
@@ -148,15 +150,22 @@ function Homepage() {
             </div>
             </span>
 
-            <div className="overflow-y-auto h-[calc(100vh-220px)]"
+            <div className="overflow-y-auto h-[calc(100vh-240px)] overflow-x-hidden"
                 style={{
                     scrollbarColor:"#E9CC73 transparent",
                 }}>
                 
                 {/* FEATURED EVENTS */}
-                <h1 className="mb-2 mt-2 font-bold text-white text-2xl px-10">
-                    Featured Events 
-                </h1>
+                <div className="justify-between flex items-center">
+                    <h1 className="mb-2 mt-2 font-bold text-white text-2xl px-10">
+                        Featured Events 
+                    </h1>
+                    <Link 
+                        to="/browse"
+                        className="flex items-center font-semibold gap-1 text-white mr-10 hover:underline">
+                        Browse More
+                    </Link>
+                </div>
 
                 <div className="overflow-x-auto mx-10 max-w-full"
                     style={{
@@ -187,9 +196,16 @@ function Homepage() {
 
                 {/* DISCOVER EVENTS */}
                 <div className="mt-2 bg-lightermoonstone rounded-xl px-4 py-2 mx-2 mb-4">
-                    <h1 className="mb-2 font-bold text-white text-2xl">
-                        Discover Events
-                    </h1>
+                    <div className="justify-between flex items-center">
+                        <h1 className="mb-2 mt-2 font-bold text-white text-2xl">
+                            Discover Events 
+                        </h1>
+                        <Link 
+                            to="/browse"
+                            className="flex items-center font-semibold gap-1 text-white mr-2 hover:underline">
+                            Browse More
+                        </Link>
+                    </div>
 
                     <div className="overflow-x-auto"
                         style={{
