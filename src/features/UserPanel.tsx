@@ -21,19 +21,14 @@ function UserPanel() {
   return (
     <>
       {!isOpen && (
-<<<<<<< HEAD
-        <button
-          onClick={() => setIsOpen(true)}
-          className="fixed top-8 right-4 z-50 w-16 h-16 rounded-full overflow-hidden shadow-md hover:ring-4 ring-vanilla bg-lightermoonstone/80 transition cursor-pointer"
-=======
         <div className="fixed top-8 right-0 w-35 h-18 z-50">
         <button
           onClick={() => setIsOpen(true)}
           className="fixed top-8 right-4 z-50 w-16 h-16 rounded-full bg-lightermoonstone/70 overflow-hidden shadow-md hover:ring-4 ring-vanilla transition cursor-pointer"
->>>>>>> ee61e0805a07db8fd831e2e45fba5d1577397d90
         >
           <img src={ProfilePic} alt="Profile" className="w-full h-full object-cover" />
         </button>
+        </div>
       )}
 
       {/* Sliding Panel */}

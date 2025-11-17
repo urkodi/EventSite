@@ -76,7 +76,7 @@ const HostedEvents = () => {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grids-cols-5 gap-6 overflow-y-auto h-[72vh] overflow-x-hidden pr-8" 
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 overflow-y-auto h-[72vh] overflow-x-hidden pr-8" 
               style={{ 
                 scrollbarColor: "#E9CC73 transparent" 
                 }}>
