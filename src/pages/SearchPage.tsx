@@ -23,9 +23,9 @@ function SearchPage() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [events, setEvents] = useState([
         { eventId: "1",
-            imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQQFZfnxTBwHRAbsGJ8UugN2NUL5t8dAKvbhQ&s" ,
-            link:"https://cornhub.website" ,
-            eventTitle:"Bop w/ Bops" ,
+            imageUrl:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg" ,
+            link:"https://chatgpt.com/" ,
+            eventTitle:"Duck Hunt" ,
             eventDate:"October 30th 2025" ,
             eventAddress:"44 Hummingbird Ln" ,
             category:"Food" ,
@@ -34,7 +34,7 @@ function SearchPage() {
             eventId:"2",
             imageUrl:"https://www.stockvault.net/data/2020/01/18/272608/thumb16.jpg",
             link:"https://chatgpt.com/",
-            eventTitle:"Bop w/ Bops",
+            eventTitle:"Art Expo",
             eventDate:"October 30th 2025",
             eventAddress:"44 Hummingbird Ln",
             category:"Art"
@@ -42,8 +42,8 @@ function SearchPage() {
         {
             eventId:"3",
             imageUrl:"https://gratisography.com/wp-content/uploads/2025/05/gratisography-dino-party-800x525.jpg",
-            link:"https://cornhub.website",
-            eventTitle:"Bop w/ Bops",
+            link:"https://chatgpt.com/",
+            eventTitle:"Dino Party",
             eventDate:"October 30th 2025",
             eventAddress:"44 Hummingbird Ln",
             category:"Party"
@@ -51,17 +51,17 @@ function SearchPage() {
         {
             eventId:"4",
             imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG66KxSseACXvW6KvUTYLxE2DbuCNfv4APUpURpgqxOGkqjvfGR1GqxuYS1WXr2bfoV34&usqp=CAU",
-            link:"https://cornhub.website",
-            eventTitle:"Dogs with Slogs",
+            link:"",
+            eventTitle:"Doggy Dance Off",
             eventDate:"October 30th 2025",
             eventAddress:"44 Hummingbird Ln",
             category:"Drinks"
         },
         {
             eventId:"5",
-            imageUrl:"https://wegotthiscovered.com/wp-content/uploads/2022/11/cherry-blossoms-after-winter.jpg",
-            link:"https://cornhub.website",
-            eventTitle:"Bl bottom Fest",
+            imageUrl:"https://www.adobe.com/content/dam/www/us/en/events/overview-page/eventshub_evergreen_opengraph_1200x630_2x.jpg",
+            link:"",
+            eventTitle:"Music Festival",
             eventDate:"October 30th 2025",
             eventAddress:"44 Hummingbird Ln",
             category:"Music"
@@ -151,7 +151,7 @@ function SearchPage() {
                     scrollbarColor:"#E9CC73 transparent",
                 }}>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-2 mb-8">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-2 mb-8">
                   {filteredEvents.length > 0 ? (
                     filteredEvents.map((event) => (
                       <EventBlock
