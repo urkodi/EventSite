@@ -9,11 +9,12 @@ type HostedEvent = {
   date: string;
   address: string;
   image: string;
+  
 };
 
 const HostedEvents = () => {
   const [hostedEvents] = useState<HostedEvent[]>([
-      {
+    {
     id: 1,
     title: 'React Dev Meetup',
     startTime: '6:00 PM',
@@ -22,46 +23,20 @@ const HostedEvents = () => {
     image: 'https://monsterspost.com/wp-content/uploads/2019/03/Images.jpg'
   },
   {
-    id: 1,
+    id: 2,
     title: 'React Dev Meetup',
     startTime: '6:00 PM',
     date: '2025-11-20',
     address: '123 Main St, Lincoln, RI',
     image: 'https://monsterspost.com/wp-content/uploads/2019/03/Images.jpg'
   },
-  {
-    id: 1,
-    title: 'React Dev Meetup',
-    startTime: '6:00 PM',
-    date: '2025-11-20',
-    address: '123 Main St, Lincoln, RI',
-    image: 'https://monsterspost.com/wp-content/uploads/2019/03/Images.jpg'
-  },
-  {
-    id: 1,
-    title: 'React Dev Meetup',
-    startTime: '6:00 PM',
-    date: '2025-11-20',
-    address: '123 Main St, Lincoln, RI',
-    image: 'https://monsterspost.com/wp-content/uploads/2019/03/Images.jpg'
-  },
-  {
-    id: 1,
-    title: 'React Dev Meetup',
-    startTime: '6:00 PM',
-    date: '2025-11-20',
-    address: '123 Main St, Lincoln, RI',
-    image: 'https://monsterspost.com/wp-content/uploads/2019/03/Images.jpg'
-  }
  
-
   ]); // Replace with real data later
   const navigate = useNavigate();
 
   return (
     <Panels>
-      <div className="px-6 mt-2 min-h-screen">
-        <div className="text-3xl text-white font-bold mb-4">My Hosted Events</div>
+      <div className="px-4 mt-2 min-h-screen">
         {hostedEvents.length === 0 ? (
           <div className="text-center mt-10">
             <h2 className="text-3xl font-bold text-white">You haven’t hosted any events yet</h2>
@@ -76,17 +51,20 @@ const HostedEvents = () => {
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 overflow-y-auto h-[72vh] overflow-x-hidden pr-8" 
+          <div className="flex flex-col">
+          <div className="text-3xl text-white font-bold mb-4 ml-2">My Hosted Events</div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-2 mb-8 overflow-y-auto h-[72vh] overflow-x-hidden" 
               style={{ 
                 scrollbarColor: "#E9CC73 transparent" 
                 }}>
             {hostedEvents.map(event => (
-              <div key={event.id} className="bg-white w-58 h-90 p-4 rounded-2xl shadow-md">
+              <div key={event.id} className="bg-bluewhite w-58 min-w-58 h-96 min-h-96 p-4 rounded-2xl shadow-md flex flex-col">
                 <img src={event.image} alt={event.title} className="w-full h-40 object-cover rounded-md mb-2" />
                 <div className="bg-lightermoonstone/60 text-center text-sm font-semibold py-1 rounded mb-2">Hosted Event</div>
                 <h2 className="text-xl font-bold mb-1">{event.title}</h2>
-                <p className="text-sm text-gray-700"><strong></strong> {event.date} at {event.startTime}</p>
-                <p className="text-sm text-gray-700"><strong></strong> {event.address}</p>
+                <p className="text-sm text-gray-700"><strong>Date</strong> {event.date}</p>
+                <p className="text-sm text-gray-700"><strong>Time</strong> {event.startTime}</p>
+                <p className="text-sm text-gray-700"><strong>Address</strong> {event.address}</p>
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(event.address)}`}
                   target="_blank"
@@ -97,6 +75,7 @@ const HostedEvents = () => {
                 </a>
               </div>
             ))}
+          </div>
           </div>
         )}
       </div>

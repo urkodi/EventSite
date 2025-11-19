@@ -51,10 +51,11 @@ const MyTickets = () => {
 
 
   return (
-    <>
-      <Panels>
+    <Panels>
+      <div className="p-6">
+      <h1 className="text-3xl font-bold mb-6 text-white ">My Tickets</h1>
       <div 
-        className="flex flex-col h-full p-6 overflow-y-scroll"
+        className="flex flex-col h-full overflow-y-scroll"
         style={{
           scrollbarColor: '#9CCED6 transparent',
         }}
@@ -111,8 +112,8 @@ const MyTickets = () => {
         </div>
       </div>
     )}
-    </Panels>
-    </>
+    </div>
+  </Panels>
   );
 };
 

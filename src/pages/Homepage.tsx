@@ -150,7 +150,7 @@ function Homepage() {
             </div>
             </span>
 
-            <div className="overflow-y-auto h-[calc(100vh-240px)] overflow-x-hidden"
+            <div className="overflow-y-auto h-[calc(100vh-230px)] overflow-x-hidden mr-2"
                 style={{
                     scrollbarColor:"#E9CC73 transparent",
                 }}>
