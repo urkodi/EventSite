@@ -23,12 +23,10 @@ function EventBlock({ eventId, imageUrl, link, eventDate, eventTitle, eventAddre
     const newBookmarkState = !isBookmarked;
     setIsBookmarked(newBookmarkState);
     
-    // Call the parent callback if provided
     if (onBookmark) {
       onBookmark(eventId, newBookmarkState);
     }
     
-    // You can also save to localStorage or send to backend here
     if (newBookmarkState) {
       // Add to bookmarks
       const bookmarks = JSON.parse(localStorage.getItem('bookmarkedEvents') || '[]');

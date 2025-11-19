@@ -12,6 +12,7 @@ import MyTickets from "./pages/MyTickets";
 import Bookmarks from "./pages/Bookmark";
 import LandingPage from "./pages/landingpage";
 import SearchPage from "./pages/searchpage";
+import EventDetails from "./pages/EventDetails";
 
 function App() {
   return(
@@ -29,7 +30,7 @@ function App() {
         <Route path="/bookmark" element={<Bookmarks />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/browse" element={<SearchPage />} />
-
+        <Route path="/event-details" element={<EventDetails />} />
       </Routes>
     </Router>
   )
