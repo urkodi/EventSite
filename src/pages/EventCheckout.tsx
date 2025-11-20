@@ -1,9 +1,9 @@
 
 import { useState } from "react";
 import eventlogo from "../assets/images/eventlogo.png";
+import { Link } from "react-router-dom";
 
 export default function EventCheckout() {
-//Event Details - will come from API 
     const event ={
         name: "Fall Music Festival 2025",
         date: "July 14 - July 17, 2025",
@@ -17,25 +17,31 @@ export default function EventCheckout() {
     //Calculate total cost
     const totalCost = (event.ticketPrice * event.quantity) + event.serviceFee;
 
-    /////
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [paymentMethod, setPaymentMethod] = useState("card");
 
     return (
-        <div className="flex flex-col mx-auto h-auto"> 
+        <div className="flex flex-col mx-auto h-auto max-h-screen overflow-x-hidden"> 
 
             <header className="w-screen h-auto bg-moonstone p-4 shadow-md">
-                    <div className="flex items-left">
-                        <a href="/">
-                            <img src={eventlogo} alt="Event Logo" className="h-10 transition-transform duration-300 hover:scale-120 hover:-translate-y-0" />
-                            </a>
-                    </div>
+                <div className="flex items-center justify-between">
+                    <a href="/">
+                        <img src={eventlogo} alt="Event Logo" className="h-10 transition-transform duration-300 hover:scale-120 hover:-translate-y-0" />
+                    </a>
+                    <Link to="/help"
+                        className="mr-3 font-bold hover:text-darkervanilla transition text-bluewhite hover:scale-110">Help
+                    </Link>
+                </div>
             </header>
 
-            <div className="max-w-4xl mx-auto mt-10">
-                {/* Header */}
+        <div className="overflow-y-scroll"
+            style={{
+                scrollbarColor: '#4C9DB0 transparent',
+            }}>
+
+            <div className="max-w-4xl mx-auto mt-10 mb-10">
                 <div className="p-4 rounded-3xl bg-gradient-to-b from-lightermoonstone to-moonstone">
                     <div className="text-center mb-8 mt-5">
                         <h1 className="text-6xl font-bold text-moonstone mb-2">
@@ -45,14 +51,12 @@ export default function EventCheckout() {
                         <p className="text-white text-xl font-normal">Secure your spot at the event!</p>
                     </div>
               
-                    {/* Two column grid */}
                     <div className="grid grid-cols-1 lg:grid-cols-7 gap-6">
 
 
                         {/* Left column - Event Details */}
                         <div className="lg:col-span-4 bg-white rounded-2xl p-6">
                             <h2 className="text-2xl font-bold text-moonstone mb-4">Order Summary</h2>
-                            {/* Event Card with image and details */}
                             <div className="flex gap-4 mb-4 pb-6 border-b border-[#9CCED6]">
                             {/* Image placeholder */}
                             <div className="w-24 h-24 bg-[#ECFBFD] rounded-lg flex-shrink-0 border border-[#9CCED6]"></div>
@@ -65,7 +69,6 @@ export default function EventCheckout() {
                                 <p className="text-sm text-gray-600 mt-1">{event.ticketType}</p>
                             </div>
                             </div>
-                              {/* Price Breakdown */}
                                                         
                             <div className="space-y-3">
                             <div className="flex justify-between text-gray-700">
@@ -177,5 +180,6 @@ export default function EventCheckout() {
                 </div>
             </div>
         </div>        
+    </div>
     );
 }
