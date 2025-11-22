@@ -16,12 +16,12 @@ const ContactUsPage = () => {
                 style={{
                     scrollbarColor: '#4C9DB0 transparent',
                 }}>  
-                <div className="flex justify-items-center bg-bluewhite p-4 rounded-2xl shadow-md flex-col mb-8">
+                <div className="flex justify-items-center bg-bluewhite p-4 rounded-2xl shadow-md flex-col mb-8 w-[95%] mx-auto">
                 <h1 className="text-5xl font-bold text-moonstone mb-4 text-center">Contact Us</h1>
                 {/*Decorative divider*/}
                 <div className="mx-auto w-1/2 rounded-xl h-2 bg-darkervanilla"></div>
                 {/*Introductory text*/}
-                <p className="mt-5 text-[16px] text-moonstone text-bold mb-6 text-center">
+                <p className="mt-5 text-lg text-moonstone text-bold mb-6 text-center">
                     You’re not just a visitor, you’re a part of our community. We’re here to listen and help so feel free to reach out!</p>
                 </div>
 

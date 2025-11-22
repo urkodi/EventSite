@@ -11,7 +11,7 @@ import ContactLink from '../components/ContactLink.tsx'
 function Sidenav() {
     return (
         <>
-            <span className= "w-10 my-8 ml-2 mr-4 rounded-2xl bg-gradient-to-b from-moonstone to-lightermoonstone"> </span>
+            <span className= "w-10 my-8 ml-2 mr-4 rounded-2xl bg-gradient-to-b from-lightermoonstone to-moonstone"> </span>
             <header className="flex flex-col items-start my-8"> 
                 <a href='/'> <img src = {eventLogo} alt="Event Logo" className= "h-14 mb-6 transition-transform duration-300 hover:scale-110 hover:-translate-y-1" /> </a>
                 <nav className="flex flex-1 flex-col justify-between">

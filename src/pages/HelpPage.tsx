@@ -63,7 +63,7 @@ const HelpPage = () => {
                     scrollbarColor: '#4C9DB0 transparent',
                 }}
             >
-                <div className="flex flex-col items-center w-full max-w-5xl mx-auto bg-bluewhite p-4 rounded-2xl shadow-md mb-8 border-6 border-moonstone">
+                <div className="flex flex-col items-center w-[90%] mx-auto bg-bluewhite p-4 rounded-2xl shadow-md mb-8 border-6 border-moonstone">
                     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-moonstone mb-4 text-center">
                         How can we help?
                     </h1>
