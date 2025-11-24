@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+
+import ProfilePage from "./pages/ProfilePage";
+import CreateEvent from "./pages/CreateEvent";
 import CreateAccountPage from "./pages/CreateAccountPage";
 import LoginPage from "./pages/LoginPage";
 import HelpPage from "./pages/HelpPage";
@@ -12,6 +15,7 @@ import MyTickets from "./pages/MyTickets";
 import Bookmarks from "./pages/Bookmark";
 import LandingPage from "./pages/landingpage";
 import SearchPage from "./pages/searchpage";
+import EventDetails from "./pages/EventDetails";
 import NotFound from "./pages/NotFound";
 
 
@@ -31,7 +35,9 @@ function App() {
         <Route path="/bookmark" element={<Bookmarks />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/browse" element={<SearchPage />} />
-        <Route path="*" element={<NotFound />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/create-event" element={<CreateEvent />} />
+        <Route path="/event-details" element={<EventDetails />} />        <Route path="*" element={<NotFound />} />
 
 
       </Routes>

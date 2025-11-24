@@ -9,7 +9,6 @@ type HostedEvent = {
   date: string;
   address: string;
   image: string;
-  
 };
 
 const HostedEvents = () => {

@@ -26,7 +26,7 @@ function Homepage() {
     const [events, setEvents] = useState([
         { eventId: "1",
             imageUrl:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg" ,
-            link:"https://chatgpt.com/" ,
+            link:"/event-details" ,
             eventTitle:"Duck Hunt" ,
             eventDate:"October 30th 2025" ,
             eventAddress:"44 Hummingbird Ln" ,
@@ -35,7 +35,7 @@ function Homepage() {
         {
             eventId:"2",
             imageUrl:"https://www.stockvault.net/data/2020/01/18/272608/thumb16.jpg",
-            link:"https://chatgpt.com/",
+            link:"/event-details",
             eventTitle:"Art Expo",
             eventDate:"October 30th 2025",
             eventAddress:"44 Hummingbird Ln",
@@ -44,7 +44,7 @@ function Homepage() {
         {
             eventId:"3",
             imageUrl:"https://gratisography.com/wp-content/uploads/2025/05/gratisography-dino-party-800x525.jpg",
-            link:"https://chatgpt.com/",
+            link:"/event-details",
             eventTitle:"Dino Party",
             eventDate:"October 30th 2025",
             eventAddress:"44 Hummingbird Ln",
@@ -53,7 +53,7 @@ function Homepage() {
         {
             eventId:"4",
             imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG66KxSseACXvW6KvUTYLxE2DbuCNfv4APUpURpgqxOGkqjvfGR1GqxuYS1WXr2bfoV34&usqp=CAU",
-            link:"",
+            link:"/event-details",
             eventTitle:"Doggy Dance Off",
             eventDate:"October 30th 2025",
             eventAddress:"44 Hummingbird Ln",
@@ -62,7 +62,7 @@ function Homepage() {
         {
             eventId:"5",
             imageUrl:"https://www.adobe.com/content/dam/www/us/en/events/overview-page/eventshub_evergreen_opengraph_1200x630_2x.jpg",
-            link:"",
+            link:"/event-details",
             eventTitle:"Music Festival",
             eventDate:"October 30th 2025",
             eventAddress:"44 Hummingbird Ln",

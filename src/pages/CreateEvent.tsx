@@ -1,0 +1,534 @@
+import React, { useState } from 'react';
+import Sidenav from '../features/Sidenav';
+
+const CreateEvent = () => {
+  const [activeTab, setActiveTab] = useState(0);
+  const [formData, setFormData] = useState({
+    eventTitle: '',
+    eventDescription: '',
+    eventDate: '',
+    eventTime: '',
+    eventLocation: '',
+    eventCategory: '',
+    ticketPrice: '',
+    maxAttendees: '',
+    eventImage: null
+  });
+
+  const tabs = [
+    {
+      title: "Event Details",
+      icon: "📝",
+      content: "Fill in the basic information about your event"
+    },
+    {
+      title: "Date & Location", 
+      icon: "📍",
+      content: "Set when and where your event will take place"
+    },
+    {
+      title: "Ticket Settings",
+      icon: "🎫",
+      content: "Configure pricing and attendance options"
+    }
+  ];
+
+  const categories = [
+    "🎵 Music Concert",
+    "💼 Conference", 
+    "🔧 Workshop",
+    "🤝 Networking",
+    "⚽ Sports",
+    "🎨 Art Exhibition",
+    "🍕 Food & Drink",
+    "❤️ Charity",
+    "✨ Other"
+  ];
+
+  const handleInputChange = (e: React.ChangeEvent<never>) => {
+    const { name, value, files } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: files ? files[0] : value
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('Event created:', formData);
+    // Handle form submission here
+  };
+
+  return (
+    <>
+    <div className="flex lg:flex-row flex-col">
+        <Sidenav />
+    </div>
+    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
+      <div className="py-8 flex items-center justify-center px-4">
+        <div className="max-w-6xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden" style={{ border: '2px solid var(--color-lightermoonstone)' }}>
+          {/* Header */}
+          <div className="p-8 text-white relative overflow-hidden" style={{ background: 'linear-gradient(to right, var(--color-moonstone), var(--color-lightermoonstone))' }}>
+            <div className="absolute top-0 right-0 w-32 h-32 rounded-full -m-8 opacity-20" style={{ backgroundColor: 'var(--color-vanilla)' }}></div>
+            <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full -m-6 opacity-30" style={{ backgroundColor: 'var(--color-darkervanilla)' }}></div>
+            
+            <div className="flex items-center justify-between relative z-10">
+              <div className="flex items-center space-x-4">
+                <div className="p-4 rounded-2xl backdrop-blur-sm" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
+                  <div className="text-2xl">🎉</div>
+                </div>
+                <div>
+                  <h1 className="text-3xl font-bold">Create New Event</h1>
+                  <p className="text-lg" style={{ color: 'var(--color-bluewhite)' }}>Share your amazing event with the community! ✨</p>
+                </div>
+              </div>
+              <div className="p-4 rounded-2xl shadow-lg transform hover:scale-105 transition duration-300" style={{ backgroundColor: 'var(--color-vanilla)' }}>
+                <div className="text-2xl" style={{ color: 'var(--color-moonstone)' }}>⭐</div>
+              </div>
+            </div>
+          </div>
+
+          <div className="flex flex-col lg:flex-row">
+            {/* Left Side - Image Upload & Preview */}
+            <div className="lg:w-2/5 p-8" style={{ borderRight: '2px solid var(--color-lightermoonstone)', background: 'linear-gradient(to bottom, var(--color-bluewhite), white)' }}>
+              <div className="space-y-8">
+                {/* Image Upload */}
+                <div className="text-center">
+                  <div className="relative group mb-4">
+                    <div className="w-56 h-56 rounded-3xl border-4 border-dashed flex items-center justify-center mx-auto cursor-pointer transition duration-300 shadow-inner" 
+                         style={{ 
+                           borderColor: 'var(--color-lightermoonstone)',
+                           backgroundColor: 'var(--color-bluewhite)'
+                         }}
+                         onMouseOver={(e) => e.currentTarget.style.borderColor = 'var(--color-moonstone)'}
+                         onMouseOut={(e) => e.currentTarget.style.borderColor = 'var(--color-lightermoonstone)'}>
+                      {formData.eventImage ? (
+                        <img 
+                          src={URL.createObjectURL(formData.eventImage)} 
+                          alt="Event preview" 
+                          className="w-full h-full object-cover rounded-2xl"
+                        />
+                      ) : (
+                        <div className="text-center p-6">
+                          <div className="text-4xl mb-3">📸</div>
+                          <p className="font-medium" style={{ color: 'var(--color-moonstone)' }}>Add Event Photo</p>
+                          <p className="text-sm mt-1" style={{ color: 'var(--color-lightermoonstone)' }}>Click to upload</p>
+                        </div>
+                      )}
+                    </div>
+                    <input
+                      type="file"
+                      className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                      onChange={handleInputChange}
+                      name="eventImage"
+                      accept="image/*"
+                    />
+                    <button className="absolute bottom-4 right-4 p-3 rounded-2xl shadow-lg transition duration-200 transform hover:scale-110" 
+                            style={{ backgroundColor: 'var(--color-vanilla)' }}
+                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--color-darkervanilla)'}
+                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--color-vanilla)'}>
+                      <div className="text-lg">📷</div>
+                    </button>
+                  </div>
+                  <p className="text-sm inline-block px-3 py-1 rounded-full border" 
+                     style={{ 
+                       color: 'var(--color-moonstone)',
+                       backgroundColor: 'var(--color-bluewhite)',
+                       borderColor: 'var(--color-lightermoonstone)'
+                     }}>
+                    Recommended: 800x800px
+                  </p>
+                </div>
+
+                {/* Quick Stats */}
+                <div className="rounded-2xl p-6 shadow-lg border-2" 
+                     style={{ 
+                       backgroundColor: 'white',
+                       borderColor: 'var(--color-lightermoonstone)'
+                     }}>
+                  <h3 className="text-xl font-bold mb-4 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
+                    <div className="text-2xl mr-3">💡</div>
+                    Event Tips
+                  </h3>
+                  <ul className="space-y-3" style={{ color: 'var(--color-moonstone)' }}>
+                    <li className="flex items-start p-3 rounded-xl" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
+                      <span className="text-xl mr-3" style={{ color: 'var(--color-darkervanilla)' }}>✨</span>
+                      <span>Add clear, high-quality images</span>
+                    </li>
+                    <li className="flex items-start p-3 rounded-xl" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
+                      <span className="text-xl mr-3" style={{ color: 'var(--color-darkervanilla)' }}>📝</span>
+                      <span>Write detailed descriptions</span>
+                    </li>
+                    <li className="flex items-start p-3 rounded-xl" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
+                      <span className="text-xl mr-3" style={{ color: 'var(--color-darkervanilla)' }}>💰</span>
+                      <span>Set realistic pricing</span>
+                    </li>
+                    <li className="flex items-start p-3 rounded-xl" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
+                      <span className="text-xl mr-3" style={{ color: 'var(--color-darkervanilla)' }}>🏷️</span>
+                      <span>Choose the right category</span>
+                    </li>
+                  </ul>
+                </div>
+
+                {/* Progress */}
+                <div className="rounded-2xl p-6 text-white text-center shadow-lg" 
+                     style={{ background: 'linear-gradient(to right, var(--color-moonstone), var(--color-lightermoonstone))' }}>
+                  <div className="text-3xl mb-2">📊</div>
+                  <div className="flex justify-between items-center mb-3">
+                    <span className="font-medium">Completion</span>
+                    <span className="font-bold" style={{ color: 'var(--color-vanilla)' }}>60%</span>
+                  </div>
+                  <div className="w-full rounded-full h-3 mb-2" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
+                    <div className="h-3 rounded-full w-3/5 shadow-inner" style={{ backgroundColor: 'var(--color-vanilla)' }}></div>
+                  </div>
+                  <p className="text-sm" style={{ color: 'var(--color-bluewhite)' }}>Almost there! Keep going! 🎯</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Side - Form Content */}
+            <div className="lg:w-3/5">
+              {/* Navigation Tabs */}
+              <div style={{ 
+                borderBottom: '2px solid var(--color-lightermoonstone)',
+                background: 'linear-gradient(to right, var(--color-bluewhite), white)'
+              }}>
+                <ul className="flex">
+                  {tabs.map((tab, index) => (
+                    <li 
+                      key={index}
+                      onClick={() => setActiveTab(index)} 
+                      className={`px-8 py-5 cursor-pointer transition duration-300 flex items-center flex-1 justify-center ${
+                        activeTab === index 
+                          ? 'text-white font-bold shadow-sm' 
+                          : 'hover:text-white hover:bg-white/50'
+                      }`}
+                      style={{ 
+                        borderBottom: activeTab === index ? `4px solid var(--color-vanilla)` : 'none',
+                        backgroundColor: activeTab === index ? 'white' : 'transparent',
+                        color: activeTab === index ? 'var(--color-moonstone)' : 'var(--color-lightermoonstone)'
+                      }}
+                    >
+                      <span className="text-2xl mr-3">{tab.icon}</span>
+                      <span className="font-semibold">{tab.title}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Form Content */}
+              <div className="p-8 bg-white">
+                <form onSubmit={handleSubmit}>
+                  {/* Tab 1: Event Details */}
+                  <div className={`space-y-6 ${activeTab === 0 ? 'block' : 'hidden'}`}>
+                    <div>
+                      <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
+                        <span className="text-2xl mr-3">🎯</span>
+                        Event Title
+                      </label>
+                      <input
+                        type="text"
+                        name="eventTitle"
+                        value={formData.eventTitle}
+                        onChange={handleInputChange}
+                        className="w-full px-5 py-4 border-2 rounded-2xl focus:ring-2 text-lg transition duration-300"
+                        style={{ 
+                          borderColor: 'var(--color-lightermoonstone)',
+                          backgroundColor: 'rgba(236, 251, 253, 0.3)',
+                          color: 'var(--color-moonstone)'
+                        }}
+                        onFocus={(e) => {
+                          e.currentTarget.style.borderColor = 'var(--color-moonstone)';
+                          e.currentTarget.style.boxShadow = '0 0 0 2px var(--color-vanilla)';
+                        }}
+                        onBlur={(e) => {
+                          e.currentTarget.style.borderColor = 'var(--color-lightermoonstone)';
+                          e.currentTarget.style.boxShadow = 'none';
+                        }}
+                        placeholder="Enter a catchy event title..."
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
+                        <span className="text-2xl mr-3">📄</span>
+                        Event Description
+                      </label>
+                      <textarea
+                        name="eventDescription"
+                        value={formData.eventDescription}
+                        onChange={handleInputChange}
+                        rows={4}
+                        className="w-full px-5 py-4 border-2 rounded-2xl focus:ring-2 text-lg transition duration-300"
+                        style={{ 
+                          borderColor: 'var(--color-lightermoonstone)',
+                          backgroundColor: 'rgba(236, 251, 253, 0.3)',
+                          color: 'var(--color-moonstone)'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = 'var(--color-moonstone)';
+                          e.target.style.boxShadow = '0 0 0 2px var(--color-vanilla)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = 'var(--color-lightermoonstone)';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                        placeholder="Describe your event in detail... ✨"
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
+                        <span className="text-2xl mr-3">🏷️</span>
+                        Event Category
+                      </label>
+                      <select
+                        name="eventCategory"
+                        value={formData.eventCategory}
+                        onChange={handleInputChange}
+                        className="w-full px-5 py-4 border-2 rounded-2xl focus:ring-2 text-lg transition duration-300 appearance-none"
+                        style={{ 
+                          borderColor: 'var(--color-lightermoonstone)',
+                          backgroundColor: 'rgba(236, 251, 253, 0.3)',
+                          color: 'var(--color-moonstone)'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = 'var(--color-moonstone)';
+                          e.target.style.boxShadow = '0 0 0 2px var(--color-vanilla)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = 'var(--color-lightermoonstone)';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                        required
+                      >
+                        <option value="" style={{ color: 'var(--color-lightermoonstone)' }}>Select a category...</option>
+                        {categories.map((category, index) => (
+                          <option key={index} value={category} style={{ color: 'var(--color-moonstone)' }}>{category}</option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+
+                  {/* Tab 2: Date & Location */}
+                  <div className={`space-y-6 ${activeTab === 1 ? 'block' : 'hidden'}`}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
+                          <span className="text-2xl mr-3">📅</span>
+                          Event Date
+                        </label>
+                        <input
+                          type="date"
+                          name="eventDate"
+                          value={formData.eventDate}
+                          onChange={handleInputChange}
+                          className="w-full px-5 py-4 border-2 rounded-2xl focus:ring-2 text-lg transition duration-300"
+                          style={{ 
+                            borderColor: 'var(--color-lightermoonstone)',
+                            backgroundColor: 'rgba(236, 251, 253, 0.3)',
+                            color: 'var(--color-moonstone)'
+                          }}
+                          onFocus={(e) => {
+                            e.target.style.borderColor = 'var(--color-moonstone)';
+                            e.target.style.boxShadow = '0 0 0 2px var(--color-vanilla)';
+                          }}
+                          onBlur={(e) => {
+                            e.target.style.borderColor = 'var(--color-lightermoonstone)';
+                            e.target.style.boxShadow = 'none';
+                          }}
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
+                          <span className="text-2xl mr-3">⏰</span>
+                          Event Time
+                        </label>
+                        <input
+                          type="time"
+                          name="eventTime"
+                          value={formData.eventTime}
+                          onChange={handleInputChange}
+                          className="w-full px-5 py-4 border-2 rounded-2xl focus:ring-2 text-lg transition duration-300"
+                          style={{ 
+                            borderColor: 'var(--color-lightermoonstone)',
+                            backgroundColor: 'rgba(236, 251, 253, 0.3)',
+                            color: 'var(--color-moonstone)'
+                          }}
+                          onFocus={(e) => {
+                            e.target.style.borderColor = 'var(--color-moonstone)';
+                            e.target.style.boxShadow = '0 0 0 2px var(--color-vanilla)';
+                          }}
+                          onBlur={(e) => {
+                            e.target.style.borderColor = 'var(--color-lightermoonstone)';
+                            e.target.style.boxShadow = 'none';
+                          }}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
+                        <span className="text-2xl mr-3">📍</span>
+                        Event Location
+                      </label>
+                      <input
+                        type="text"
+                        name="eventLocation"
+                        value={formData.eventLocation}
+                        onChange={handleInputChange}
+                        className="w-full px-5 py-4 border-2 rounded-2xl focus:ring-2 text-lg transition duration-300"
+                        style={{ 
+                          borderColor: 'var(--color-lightermoonstone)',
+                          backgroundColor: 'rgba(236, 251, 253, 0.3)',
+                          color: 'var(--color-moonstone)'
+                        }}
+                        onFocus={(e) => {
+                          e.target.style.borderColor = 'var(--color-moonstone)';
+                          e.target.style.boxShadow = '0 0 0 2px var(--color-vanilla)';
+                        }}
+                        onBlur={(e) => {
+                          e.target.style.borderColor = 'var(--color-lightermoonstone)';
+                          e.target.style.boxShadow = 'none';
+                        }}
+                        placeholder="Enter venue or address... 🏢"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  {/* Tab 3: Ticket Settings */}
+                  <div className={`space-y-6 ${activeTab === 2 ? 'block' : 'hidden'}`}>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
+                          <span className="text-2xl mr-3">💰</span>
+                          Ticket Price ($)
+                        </label>
+                        <input
+                          type="number"
+                          name="ticketPrice"
+                          value={formData.ticketPrice}
+                          onChange={handleInputChange}
+                          className="w-full px-5 py-4 border-2 rounded-2xl focus:ring-2 text-lg transition duration-300"
+                          style={{ 
+                            borderColor: 'var(--color-lightermoonstone)',
+                            backgroundColor: 'rgba(236, 251, 253, 0.3)',
+                            color: 'var(--color-moonstone)'
+                          }}
+                          onFocus={(e) => {
+                            e.target.style.borderColor = 'var(--color-moonstone)';
+                            e.target.style.boxShadow = '0 0 0 2px var(--color-vanilla)';
+                          }}
+                          onBlur={(e) => {
+                            e.target.style.borderColor = 'var(--color-lightermoonstone)';
+                            e.target.style.boxShadow = 'none';
+                          }}
+                          placeholder="0.00"
+                          min="0"
+                          step="0.01"
+                        />
+                      </div>
+                      <div>
+                        <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
+                          <span className="text-2xl mr-3">👥</span>
+                          Max Attendees
+                        </label>
+                        <input
+                          type="number"
+                          name="maxAttendees"
+                          value={formData.maxAttendees}
+                          onChange={handleInputChange}
+                          className="w-full px-5 py-4 border-2 rounded-2xl focus:ring-2 text-lg transition duration-300"
+                          style={{ 
+                            borderColor: 'var(--color-lightermoonstone)',
+                            backgroundColor: 'rgba(236, 251, 253, 0.3)',
+                            color: 'var(--color-moonstone)'
+                          }}
+                          onFocus={(e) => {
+                            e.target.style.borderColor = 'var(--color-moonstone)';
+                            e.target.style.boxShadow = '0 0 0 2px var(--color-vanilla)';
+                          }}
+                          onBlur={(e) => {
+                            e.target.style.borderColor = 'var(--color-lightermoonstone)';
+                            e.target.style.boxShadow = 'none';
+                          }}
+                          placeholder="Unlimited"
+                          min="1"
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Navigation Buttons */}
+                  <div className="flex justify-between pt-8 mt-8" style={{ borderTop: '2px solid var(--color-lightermoonstone)' }}>
+                    <button
+                      type="button"
+                      onClick={() => setActiveTab(prev => Math.max(0, prev - 1))}
+                      className={`px-8 py-4 rounded-2xl font-bold text-lg transition duration-300 flex items-center transform hover:scale-105 ${
+                        activeTab === 0 
+                          ? 'invisible' 
+                          : 'text-white shadow-lg'
+                      }`}
+                      style={{ 
+                        backgroundColor: activeTab === 0 ? 'transparent' : 'var(--color-lightermoonstone)'
+                      }}
+                      onMouseOver={(e) => {
+                        if (activeTab !== 0) {
+                          e.currentTarget.style.backgroundColor = 'var(--color-moonstone)';
+                        }
+                      }}
+                      onMouseOut={(e) => {
+                        if (activeTab !== 0) {
+                          e.currentTarget.style.backgroundColor = 'var(--color-lightermoonstone)';
+                        }
+                      }}
+                    >
+                      <span className="text-xl mr-2">⬅️</span>
+                      Previous
+                    </button>
+
+                    {activeTab < tabs.length - 1 ? (
+                      <button
+                        type="button"
+                        onClick={() => setActiveTab(prev => Math.min(tabs.length - 1, prev + 1))}
+                        className="px-8 py-4 text-white rounded-2xl font-bold text-lg transition duration-300 flex items-center shadow-lg transform hover:scale-105"
+                        style={{ backgroundColor: 'var(--color-moonstone)' }}
+                        onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--color-lightermoonstone)'}
+                        onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--color-moonstone)'}
+                      >
+                        Next
+                        <span className="text-xl ml-2">➡️</span>
+                      </button>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="px-10 py-4 rounded-2xl font-bold text-lg transition duration-300 flex items-center shadow-lg transform hover:scale-105"
+                        style={{ 
+                          backgroundColor: 'var(--color-vanilla)',
+                          color: 'var(--color-moonstone)'
+                        }}
+                        onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--color-darkervanilla)'}
+                        onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--color-vanilla)'}
+                      >
+                        <span className="text-xl mr-2">🎉</span>
+                        Create Event!
+                      </button>
+                    )}
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </>
+  );
+};
+
+export default CreateEvent;
