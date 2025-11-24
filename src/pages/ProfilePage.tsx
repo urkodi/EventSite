@@ -30,10 +30,10 @@ const ProfilePage = () => {
     </div>
 
     <div className="h-screen py-8 flex items-center justify-center px-4">
-      <div className="max-w-5xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div className="max-w-5xl w-full h-[100%] bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="flex flex-col md:flex-row">
           {/* Left Side - Profile Picture Column */}
-          <div className="md:w-1/4 bg-gradient-to-b from-lightermoonstone to-moonstone px-8 flex flex-col items-center justify-center space-y-6">
+          <div className="md:w-1/4 h-screen bg-gradient-to-b from-lightermoonstone to-moonstone px-8 flex flex-col items-center justify-center space-y-6">
             <div className="relative group">
               <div className="w-48 h-48 rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
                 <img 
@@ -42,7 +42,7 @@ const ProfilePage = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <div className="absolute inset-0 rounded-full border-4 border-transparent group-hover:border-[#FFEBAF] transition-all duration-300"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-transparent group-hover:border-vanilla transition-all duration-300"></div>
               <button className="absolute bottom-2 right-2 bg-[#FFEBAF] text-[#4C9DB0] p-2 rounded-full shadow-md hover:bg-[#E9CC73] transition duration-200 transform hover:scale-110">
                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
@@ -56,11 +56,11 @@ const ProfilePage = () => {
                 <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                 </svg>
-                <p className="text-sm">Rhode Island, USA</p>
+                <form className="text-sm">Rhode Island, USA</form>
               </div>
             </div>
 
-            <div className="bg-white/20 backdrop-blur-sm rounded-xl p-4 w-full">
+            <div className="bg-white/30 backdrop-blur-sm rounded-xl p-4 w-full mb-10">
               <div className="text-center">
                 <h3 className="text-3xl font-bold text-white mb-1">4.5</h3>
                 <div className="flex justify-center space-x-1 mb-2">
@@ -78,11 +78,11 @@ const ProfilePage = () => {
           {/* Right Side - Main Content(Add more later) */}
           <div className="md:w-3/4">
             {/* Profile Header */}
-            <div className="flex items-center justify-between p-6 border-b border-[#9CCED6] bg-gradient-to-r from-[#ECFBFD] to-white">
+            <div className="flex items-center justify-between p-6 border-b border-[#9CCED6] bg-gradient-to-r from-white to-lightermoonstone">
               <div className="flex items-center space-x-6">
                 <div className="profile-nav-info">
-                  <h3 className="text-2xl font-bold text-[#4C9DB0]">Welcome Back!</h3>
-                  <p className="text-[#4C9DB0]">Manage your profile and content</p>
+                  <h3 className="text-2xl font-bold text-moonstone">Welcome Back!</h3>
+                  <p className="text-moonstone">Manage your profile and content</p>
                 </div>
               </div>
               <div className="profile-option">
@@ -115,7 +115,7 @@ const ProfilePage = () => {
                       <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
                       <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
                     </svg>
-                    <span className="font-medium">fjada63@gmail.com</span>
+                    <form className="font-medium">user123@email.com</form>
                   </div>
                   
                   <div className="user-bio bg-white rounded-lg p-4 shadow-sm">
@@ -125,10 +125,9 @@ const ProfilePage = () => {
                       </svg>
                       Bio
                     </h3>
-                    <p className="text-[#4C9DB0] text-sm leading-relaxed">
-                      Hi! I'm Jade I'm a Dj and I will be hosting events throughout New England! Please check out my page for more local events!
-                      @Jade123.
-                    </p>
+                    <form className="text-moonstone text-sm leading-relaxed">
+                      Insert bio here.
+                    </form>
                   </div>
                   
                   <div className="profile-btn flex space-x-3">
