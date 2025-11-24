@@ -1,6 +1,11 @@
 import React, { useState } from 'react';
+import Sidenav from '../features/Sidenav';
+import useUserStore from '../lib/userStore';
+
+import { Link } from 'react-router-dom';
 
 const ProfilePage = () => {
+  const { user } = useUserStore();
   const [activeTab, setActiveTab] = useState(0);
 
   const tabs = [
@@ -19,11 +24,16 @@ const ProfilePage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#ECFBFD] py-8 flex items-center justify-center px-4">
-      <div className="max-w-6xl w-full bg-white rounded-2xl shadow-xl overflow-hidden border border-[#9CCED6]">
+    <>
+    <div className="flex lg:flex-row flex-col">
+        <Sidenav />
+    </div>
+
+    <div className="h-screen py-8 flex items-center justify-center px-4">
+      <div className="max-w-5xl w-full bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="flex flex-col md:flex-row">
           {/* Left Side - Profile Picture Column */}
-          <div className="md:w-1/4 bg-gradient-to-b from-[#4C9DB0] to-[#9CCED6] p-8 flex flex-col items-center justify-center space-y-6">
+          <div className="md:w-1/4 bg-gradient-to-b from-lightermoonstone to-moonstone px-8 flex flex-col items-center justify-center space-y-6">
             <div className="relative group">
               <div className="w-48 h-48 rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
                 <img 
@@ -41,7 +51,7 @@ const ProfilePage = () => {
             </div>
             
             <div className="text-center">
-              <h3 className="text-2xl font-bold text-white mb-2">Event Site</h3>
+              <h3 className="text-2xl font-bold text-white mb-2">{user?.firstName || "USER"}</h3>
               <div className="flex items-center justify-center text-[#ECFBFD]">
                 <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
@@ -128,12 +138,12 @@ const ProfilePage = () => {
                       </svg>
                       Chat
                     </button>
-                    <button className="createbtn flex items-center justify-center px-4 py-3 bg-[#FFEBAF] text-[#4C9DB0] rounded-lg hover:bg-[#E9CC73] transition duration-200 shadow-md flex-1">
+                    <Link to="/create-event" className="createbtn flex items-center justify-center px-4 py-3 bg-[#FFEBAF] text-[#4C9DB0] rounded-lg hover:bg-[#E9CC73] transition duration-200 shadow-md flex-1">
                       <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
                       </svg>
                       Create
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -200,6 +210,7 @@ const ProfilePage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

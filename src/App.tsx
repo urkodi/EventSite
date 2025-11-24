@@ -19,7 +19,6 @@ import EventDetails from "./pages/EventDetails";
 
 function App() {
   return(
-  // <ProfilePage/>
     <Router>
       <Routes>
         <Route path="/" element={<Homepage />} />  
@@ -34,9 +33,8 @@ function App() {
         <Route path="/bookmark" element={<Bookmarks />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/browse" element={<SearchPage />} />
-        <Route path="/ProfilePage" element={<ProfilePage />} />
-        <Route path="/CreateEvent" element={<CreateEvent />} />
-
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/create-event" element={<CreateEvent />} />
         <Route path="/event-details" element={<EventDetails />} />
       </Routes>
     </Router>

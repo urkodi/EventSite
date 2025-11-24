@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Sidenav from '../features/Sidenav';
 
 const CreateEvent = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -59,6 +60,10 @@ const CreateEvent = () => {
   };
 
   return (
+    <>
+    <div className="flex lg:flex-row flex-col">
+        <Sidenav />
+    </div>
     <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
       <div className="py-8 flex items-center justify-center px-4">
         <div className="max-w-6xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden" style={{ border: '2px solid var(--color-lightermoonstone)' }}>
@@ -522,6 +527,7 @@ const CreateEvent = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 
