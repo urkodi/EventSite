@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import eventlogo from "../assets/images/eventlogo.png";
 import { Link } from "react-router-dom";
