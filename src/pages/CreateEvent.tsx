@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Sidenav from '../features/Sidenav';
+import UserPanel from '../features/UserPanel';
 
 const CreateEvent = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -18,17 +19,14 @@ const CreateEvent = () => {
   const tabs = [
     {
       title: "Event Details",
-      icon: "📝",
       content: "Fill in the basic information about your event"
     },
     {
       title: "Date & Location", 
-      icon: "📍",
       content: "Set when and where your event will take place"
     },
     {
       title: "Ticket Settings",
-      icon: "🎫",
       content: "Configure pricing and attendance options"
     }
   ];
@@ -56,7 +54,6 @@ const CreateEvent = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Event created:', formData);
-    // Handle form submission here
   };
 
   return (
@@ -64,8 +61,9 @@ const CreateEvent = () => {
     <div className="flex lg:flex-row flex-col">
         <Sidenav />
     </div>
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
-      <div className="py-8 flex items-center justify-center px-4">
+    <UserPanel />
+    <div className="min-h-screen max-w-[70%] sm:max-w-[50%] md:max-w-[60%] lg:max-w-[65%] overflow-hidden py-8 ">
+      <div className="flex items-center justify-center px-4">
         <div className="max-w-6xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden" style={{ border: '2px solid var(--color-lightermoonstone)' }}>
           {/* Header */}
           <div className="p-8 text-white relative overflow-hidden" style={{ background: 'linear-gradient(to right, var(--color-moonstone), var(--color-lightermoonstone))' }}>
@@ -88,7 +86,9 @@ const CreateEvent = () => {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row">
+          <div className="flex flex-col lg:flex-row overflow-y-auto my-2 overflow-x-hidden" style={{ maxHeight: 'calc(100vh - 200px)', 
+                                                                              scrollbarColor: "#E9CC73 transparent"
+          }}>
             {/* Left Side - Image Upload & Preview */}
             <div className="lg:w-2/5 p-8" style={{ borderRight: '2px solid var(--color-lightermoonstone)', background: 'linear-gradient(to bottom, var(--color-bluewhite), white)' }}>
               <div className="space-y-8">
