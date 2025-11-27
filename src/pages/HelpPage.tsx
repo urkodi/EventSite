@@ -83,7 +83,7 @@ const HelpPage = () => {
 
                 <div className="mt-6 grid gap-y-6 gap-x-6 px-4 place-items-center" 
                     style={{ 
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))'
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))'
                         }}>
 
                     {/* Account Access Box */}
