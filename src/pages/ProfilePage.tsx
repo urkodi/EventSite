@@ -30,8 +30,8 @@ const ProfilePage = () => {
         <Sidenav />
     </div>
     <UserPanel />
-    <div className="min-h-screen max-w-[70%] sm:max-w-[50%] md:max-w-[65%] lg:max-w-[65%] py-8 flex items-center justify-center">
-      <div className="max-w-5xl w-full h-[100%] bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div className="min-h-screen max-w-[70%] sm:max-w-[50%] md:max-w-[65%] lg:max-w-[70%] py-8 flex items-center justify-center">
+      <div className="w-full h-[100%] bg-white rounded-2xl shadow-xl overflow-hidden">
         <div className="flex flex-col md:flex-row">
           {/* Left Side - Profile Picture Column */}
           <div className="md:w-1/4 h-screen bg-gradient-to-b from-lightermoonstone to-moonstone px-8 flex flex-col items-center justify-center space-y-8">
