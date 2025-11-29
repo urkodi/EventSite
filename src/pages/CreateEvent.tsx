@@ -55,7 +55,7 @@ const handleInputChange = (
 
   setFormData(prev => ({
     ...prev,
-    [name]: files ? files[0] : value  // ← THIS FIXES FILE INPUTS
+    [name]: files ? files[0] : value 
   }));
 };
 
@@ -72,7 +72,8 @@ const navigate = useNavigate();
 const createAnEvent = async () => {
   const fd = new FormData();
 
-  fd.append("owner", "2");
+  //*****The owner field needs to change when the cookies or some session logic of who is logged in is added
+  fd.append("owner", "1");
   fd.append("title", formData.eventTitle);
   fd.append("description", formData.eventDescription);
   fd.append("category", formData.eventCategory);
@@ -83,7 +84,7 @@ const createAnEvent = async () => {
   fd.append("max_attendees", formData.maxAttendees);
 
   if (formData.eventImage) {
-    fd.append("image_path", formData.eventImage); // ← FIX HERE
+    fd.append("image_path", formData.eventImage); 
   }
 
   try {
