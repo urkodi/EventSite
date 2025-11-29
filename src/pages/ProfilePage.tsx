@@ -96,6 +96,55 @@ const ProfilePage = () => {
   if (loading) return <div className="p-10 text-center">Loading...</div>;
   if (error) return <div className="p-10 text-center text-red-500">{error}</div>;
 
+  /* Saving User Data */
+  const handleSaveChanges = async () => {
+  try {
+    const formData = new FormData();
+
+  formData.append("firstName", firstName);
+  formData.append("lastName", lastName);
+  formData.append("username", username);
+  formData.append("email", email);
+  formData.append("phoneNumber", phone);
+  formData.append("bio", bio);
+  formData.append("location", location);
+  formData.append("timezone", timezone);
+
+  // If a new profile picture was selected, append it
+  if (fileInputRef.current?.files?.[0]) {
+    formData.append("profilePicture", fileInputRef.current.files[0]);
+  }
+
+  const res = await fetch("http://127.0.0.1:8000/users/update_user?user=1", {
+    method: "PUT",
+    body: formData,
+  });
+
+  const data = await res.json();
+
+  // Update UI
+  setFirstName(data.firstName);
+  setLastName(data.lastName);
+  setUsername(data.username);
+  setEmail(data.email);
+  setPhone(data.phoneNumber);
+  setTimezone(data.timezone);
+  setLocation(data.location);
+  setBio(data.bio);
+
+  if (data.profilePicture) {
+    setProfilePic(data.profilePicture);
+  }
+
+  alert("Updated!");
+
+  } catch (error) {
+    console.error("UPDATE FAILED:", error);
+    alert("Error saving changes.");
+  }
+};
+
+
   return (
     <>
       <div className="flex lg:flex-row flex-col">
@@ -503,7 +552,7 @@ const ProfilePage = () => {
 
                         <button
                           className="w-full py-3 bg-[#4C9DB0] text-white rounded-lg shadow-md hover:bg-[#3a8a9d] transition"
-                          onClick={() => alert("Settings Saved!")}
+                          onClick={handleSaveChanges}
                         >
                           Save Changes
                         </button>
