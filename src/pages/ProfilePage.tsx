@@ -249,9 +249,9 @@ fetchPosts();
     setProfilePic(data.profilePicture);
   }
 
-// 🔥 Reload the page so all fields and selected event reset
+  // 🔥 Reload the page so all fields and selected event reset
     window.location.reload();
-
+  
   } catch (error) {
     console.error("UPDATE FAILED:", error);
     alert("Error saving changes.");
