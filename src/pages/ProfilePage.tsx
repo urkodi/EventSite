@@ -10,6 +10,15 @@ type EventType = {
   [key: string]: unknown;
 };
 
+type UserReview = {
+  id: number;
+  stars: number;
+  description: string;
+  event: number;           // event id
+  eventTitle: string | null;
+  eventImage: string | null;
+};
+
 
 const EventSearchResults = ({
   search,
@@ -86,8 +95,9 @@ const ProfilePage = () => {
   const [reviewRating, setReviewRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewSearch, setReviewSearch] = useState("");
-  //const [myReviews, setMyReviews] = useState([]);
+  const [myReviews, setMyReviews] = useState<UserReview[]>([]);
   const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
+  
 
   /* ---------------- ACCOUNT FIELDS ---------------- */
   const [phone, setPhone] = useState("");
@@ -100,11 +110,13 @@ const ProfilePage = () => {
   const [lastName, setLastName] = useState("");
   //const [password, setPassword] = useState("");
 
-  const tabs = [
-    { title: "Your Posts" },
-    { title: "User Reviews" },
-    { title: "Account Setting" },
-  ];
+const tabs = [
+  { title: "Your Posts" },
+  { title: "Write Review" },
+  { title: "Your Reviews" },
+  { title: "Account Settings" },
+];
+
 
   /* -------------------------------------------------------
      FETCH USER DATA ON LOAD
@@ -146,6 +158,22 @@ const ProfilePage = () => {
         setLoading(false);
       }
     };
+
+    // Fetch user's reviews
+const fetchReviews = async () => {
+  try {
+    const res = await fetch("http://127.0.0.1:8000/reviews/by_user?user=1");
+    if (!res.ok) throw new Error("Failed to fetch reviews");
+
+    const data = await res.json();
+    setMyReviews(data);
+  } catch (err) {
+    console.error("Error fetching reviews:", err);
+  }
+};
+
+fetchReviews();
+
 
     fetchUser();
   }, []);
@@ -198,6 +226,49 @@ const ProfilePage = () => {
   } catch (error) {
     console.error("UPDATE FAILED:", error);
     alert("Error saving changes.");
+  }
+};
+
+const handleSubmitReview = async () => {
+  if (!selectedEvent) {
+    alert("Please select an event first.");
+    return;
+  }
+
+  if (reviewRating === 0) {
+    alert("Please select a rating.");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://127.0.0.1:8000/reviews/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: 1,                      // Hardcoded for now
+        event: selectedEvent.id,      // From event search
+        stars: reviewRating,
+        description: reviewText,
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to submit review");
+    }
+
+    const data = await res.json();
+    console.log("Review saved:", data);
+
+    alert("Review submitted successfully!");
+
+    // 🔥 Reload the page so all fields and selected event reset
+    window.location.reload();
+
+  } catch (error) {
+    console.error("Error submitting review:", error);
+    alert("Could not submit review.");
   }
 };
 
@@ -534,27 +605,77 @@ const ProfilePage = () => {
          SUBMIT REVIEW BUTTON
        ----------------------------- */}
     <button
-      className="w-full py-3 bg-[#4C9DB0] text-white rounded-lg shadow-md hover:bg-[#3a8a9d] transition"
-      onClick={() => {
-        alert(`Submitted review for event: ${reviewSearch}`);
-      }}
-    >
-      Submit Review
-    </button>
+  className="w-full py-3 bg-[#4C9DB0] text-white rounded-lg shadow-md hover:bg-[#3a8a9d] transition"
+  onClick={handleSubmitReview}
+>
+  Submit Review
+</button>
 
-    {/* -----------------------------
-         YOUR PREVIOUS REVIEWS
-       ----------------------------- */}
-    <div className="mt-6">
-      <h3 className="text-xl font-semibold text-[#4C9DB0] mb-3">
-        Your Reviews
-      </h3>
+  </div>
+)}
 
-      {/* Placeholder list */}
+{/* ------------------------------
+     YOUR REVIEWS TAB
+------------------------------ */}
+{activeTab === 2 && (
+  <div className="space-y-6">
+
+    <h3 className="text-xl font-semibold text-[#4C9DB0] mb-3">
+      Your Reviews
+    </h3>
+
+    {myReviews.length === 0 ? (
       <div className="text-[#4C9DB0] opacity-60 italic">
-        No reviews yet — coming soon.
+        You haven't written any reviews yet.
       </div>
-    </div>
+    ) : (
+      <div className="space-y-4">
+        {myReviews.map((rev) => (
+          <div
+            key={rev.id}
+            className="p-4 border border-[#9CCED6] bg-[#ECFBFD] rounded-lg shadow-sm"
+          >
+            <h4 className="text-lg font-semibold text-[#4C9DB0]">
+              Event Title: {rev.eventTitle || "Event"}
+            </h4>
+
+          {/* Star Rating */}
+            <div className="flex mt-2">
+              {[1, 2, 3, 4, 5].map((s) => (
+                <svg
+                  key={s}
+                  className={`w-5 h-5 ${
+                    s <= rev.stars ? "text-[#FFEBAF]" : "text-[#9CCED6]"
+                  }`}
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 
+3.292a1 1 0 00.95.69h3.462c.969 0 
+1.371 1.24.588 1.81l-2.8 2.034a1 1 0 
+00-.364 1.118l1.07 3.292c.3.921-.755 
+1.688-1.54 1.118l-2.8-2.034a1 1 0 
+00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 
+1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 
+1 0 00.951-.69l1.07-3.292z" />
+
+                </svg>
+              ))}
+            </div>
+
+            {rev.eventImage && (
+  <img
+    src={`http://127.0.0.1:8000${rev.eventImage}`}
+    alt="Event"
+    className="mt-2 w-40 h-24 object-cover rounded-md shadow"
+  />
+)}
+
+            <p className="text-[#4C9DB0] mt-2">Review: {rev.description}</p>
+          </div>
+        ))}
+      </div>
+    )}
 
   </div>
 )}
@@ -563,7 +684,7 @@ const ProfilePage = () => {
                       { /* ------------------------------
                         ACCOUNT SETTINGS TAB
                     ------------------------------ */}
-                    {activeTab === 2 && (
+                    {activeTab === 3 && (
                       <div className="space-y-6">
 
                         {/* Phone */}
