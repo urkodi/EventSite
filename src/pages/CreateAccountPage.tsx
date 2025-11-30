@@ -61,8 +61,9 @@ const CreateAccountPage = () => {
 
         setLoading(true);
         
-        let res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/register`, {
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/register`, {
             method: "post",
+            credentials: "include",
             body: JSON.stringify({
                 "firstName": formData.firstName,
                 "lastName": formData.lastName,

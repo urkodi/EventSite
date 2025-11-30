@@ -35,8 +35,9 @@ function LoginPage() {
 
     setLoading(true);
 
-    let res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/login`, {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/login`, {
         method: "post",
+        credentials: "include",
         body: JSON.stringify({
             "email": email,
             "password": password
