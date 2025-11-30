@@ -3,6 +3,8 @@ import Sidenav from "../features/Sidenav";
 import useUserStore from "../lib/userStore";
 import { Link } from "react-router-dom";
 
+import UserPanel from "../features/UserPanel";
+
 const ProfilePage = () => {
   const { user } = useUserStore();
   const [activeTab, setActiveTab] = useState(0);
@@ -22,29 +24,29 @@ const ProfilePage = () => {
     if (file) setProfilePic(URL.createObjectURL(file));
   };
 
-  /* ------------------ LEFT PANEL EDITABLE FIELDS ------------------ */
+  /* LEFT PANEL EDITABLE FIELDS  */
   const [phone, setPhone] = useState("+4013321145");
   const [email, setEmail] = useState(user?.email || "user123@email.com");
   const [bio, setBio] = useState("Insert bio here.");
 
-  /* ------------------ POSTS ------------------ */
+  /*  POSTS  */
   const [postText, setPostText] = useState("");
   const [postImage, setPostImage] = useState<string | null>(null);
 
-  /* ------------------ REVIEWS ------------------ */
+  /*  REVIEWS  */
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [reviewImage, setReviewImage] = useState<string | null>(null);
 
-  /* ------------------ ACCOUNT SETTINGS ------------------ */
+  /* ACCOUNT SETTINGS  */
   const [username, setUsername] = useState(user?.email || "");
   const [firstName, setFirstName] = useState(user?.firstName || "");
   const [lastName, setLastName] = useState(user?.lastName || "");
   const [password, setPassword] = useState("");
   const [timezone, setTimezone] = useState("");
 
-  /* ------------------ CHAT ------------------ */
+  /*  CHAT  */
   const [chatOpen, setChatOpen] = useState(false);
   const chatInputRef = useRef<HTMLInputElement | null>(null);
   const openChat = () => {
@@ -52,7 +54,7 @@ const ProfilePage = () => {
     setTimeout(() => chatInputRef.current?.focus(), 200);
   };
 
-  /* ------------------ NOTIFICATIONS ------------------ */
+  /*  NOTIFICATIONS  */
   const [notifOpen, setNotifOpen] = useState(false);
 
   const tabs = [
@@ -63,25 +65,23 @@ const ProfilePage = () => {
 
   return (
     <>
-      <div className="flex lg:flex-row flex-col">
+      <div className="flex">
         <Sidenav />
+        <UserPanel />
       </div>
-
-      <div className="h-screen py-8 flex items-center justify-center px-4">
-        <div className="max-w-7xl w-full h-[100%] bg-white rounded-2xl shadow-xl overflow-hidden">
+      <div className="flex-1 min-h-screen max-w-[70%] sm:max-w-[50%] md:max-w-[65%] lg:max-w-[70%] py-8 flex items-center justify-center">
+        <div className="w-full h-[100%] bg-white rounded-2xl shadow-xl overflow-hidden">
           <div className="flex flex-col md:flex-row">
 
-            {/* -----------------------------------------------------
-                LEFT PANEL
-            ----------------------------------------------------- */}
-            <div className="md:w-1/4 h-screen bg-gradient-to-b from-lightermoonstone to-moonstone px-8 flex flex-col items-center justify-center space-y-6">
+            {/* LEFT PANEL  */}
+            <div className="md:w-[20%] lg:w-[25%] h-screen bg-gradient-to-b from-lightermoonstone to-moonstone px-8 flex flex-col items-center justify-center space-y-6">
 
               {/* Profile Picture */}
               <div
                 className="relative group cursor-pointer"
                 onClick={triggerUpload}
               >
-                <div className="w-48 h-48 rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
+                <div className="w-40 h-40 rounded-full border-4 border-white shadow-lg overflow-hidden bg-white">
                   <img
                     src={profilePic}
                     alt="Profile"
@@ -122,7 +122,7 @@ const ProfilePage = () => {
                     <path d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9z" />
                   </svg>
 
-                  <span className="text-sm">Rhode Island, USA</span>
+                  <form className="text-sm">Rhode Island, USA</form>
                 </div>
               </div>
 
@@ -168,20 +168,24 @@ const ProfilePage = () => {
 
                 <Link
                   to="/create-event"
+                  className="w-40 flex items-center justify-center px-5 py-3 bg-lightermoonstone text-white rounded-lg hover:bg-[#E9CC73] shadow-md"
+                >
+                  Create Event
+                </Link>
+                <Link
+                  to="/hosted-events"
                   className="w-40 flex items-center justify-center px-5 py-3 bg-[#FFEBAF] text-[#4C9DB0] rounded-lg hover:bg-[#E9CC73] shadow-md"
                 >
-                  Create
+                  Hosted Events
                 </Link>
               </div>
             </div>
 
-            {/* -----------------------------------------------------
-                RIGHT PANEL
-            ----------------------------------------------------- */}
-            <div className="md:w-3/4">
+            {/*  RIGHT PANEL */}
+            <div className="w-full">
 
               {/* Header */}
-              <div className="flex items-center justify-between p-6 border-b border-[#9CCED6] bg-gradient-to-r from-white to-lightermoonstone">
+              <div className="flex items-center justify-between p-6 border-b-2 border-lightermoonstone bg-gradient-to-r from-white to-lightermoonstone">
                 <div>
                   <h3 className="text-2xl font-bold text-moonstone">
                     Welcome Back!
@@ -213,7 +217,7 @@ const ProfilePage = () => {
               <div className="flex flex-col md:flex-row">
 
                 {/* LEFT INFO PANEL (EDITABLE FIELDS) */}
-                <div className="md:w-1/3 p-6 border-r border-[#9CCED6] bg-[#ECFBFD]/30">
+                <div className="md:w-[30%] lg:w-[40%] p-6 border-r-2 border-lightermoonstone bg-bluewhite/30 h-screen">
                   <div className="space-y-6">
 
                     {/* Editable Phone */}
@@ -251,8 +255,8 @@ const ProfilePage = () => {
                   </div>
                 </div>
 
-                {/* -------------------- TABS CONTENT -------------------- */}
-                <div className="md:w-2/3">
+                {/* TABS CONTENT */}
+                <div className="md:w-[70%] lg:w-[80%]">
 
                   {/* TAB NAVIGATION */}
                   <div className="nav border-b border-[#9CCED6] bg-gradient-to-r from-[#ECFBFD] to-white">
@@ -274,9 +278,7 @@ const ProfilePage = () => {
                   </div>
 
                   <div className="profile-body p-6 bg-white">
-                    {/* ------------------------------
-                        YOUR POSTS TAB
-                    ------------------------------ */}
+                    {/*  YOUR POSTS TAB  */}
                     {activeTab === 0 && (
                       <div className="space-y-6">
 
@@ -326,9 +328,7 @@ const ProfilePage = () => {
                       </div>
                     )}
 
-                    {/* ------------------------------
-                        USER REVIEWS TAB
-                    ------------------------------ */}
+                    {/* USER REVIEWS TAB */}
                     {activeTab === 1 && (
                       <div className="space-y-6">
 
@@ -407,9 +407,7 @@ const ProfilePage = () => {
                       </div>
                     )}
 
-                    {/* ------------------------------
-                        ACCOUNT SETTINGS TAB
-                    ------------------------------ */}
+                    {/* ACCOUNT SETTINGS TAB */}
                     {activeTab === 2 && (
                       <div className="space-y-4">
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
