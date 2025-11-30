@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Sidenav from '../features/Sidenav';
 import UserPanel from '../features/UserPanel';
 import Calendar from '../components/Calendar';
 import { useNavigate } from "react-router-dom";
 
+type UserType = ({
+  id: number,
+});
+
 const CreateEvent = () => {
+
   const [activeTab, setActiveTab] = useState(0);
   const [formData, setFormData] = useState({
     eventTitle: '',
@@ -19,6 +24,19 @@ const CreateEvent = () => {
   });
 
   const [showCalendar, setShowCalendar] = useState(false);
+  //user stuff
+  const [user, setUser] = useState<UserType | null>(null);
+  useEffect(() => {
+    fetch(`${import.meta.env.VITE_BASE_URL}/users/logged_in`, {
+      credentials: "include",
+    })
+      .then(res => res.json())
+      .then(data => {
+        console.log("Logged-in user:", data);
+        setUser({ id: data.id });
+      })
+      .catch(err => console.error("Error loading user:", err));
+  }, []);
 
   const tabs = [
     {
@@ -70,10 +88,14 @@ const handleInputChange = (
 const navigate = useNavigate();
 
 const createAnEvent = async () => {
+  if (!user) {
+    alert("You must be logged in to create an event.");
+    return;
+  }
+
   const fd = new FormData();
 
-  //*****The owner field needs to change when the cookies or some session logic of who is logged in is added
-  fd.append("owner", "1");
+  fd.append("owner", String(user.id));
   fd.append("title", formData.eventTitle);
   fd.append("description", formData.eventDescription);
   fd.append("category", formData.eventCategory);
@@ -84,7 +106,7 @@ const createAnEvent = async () => {
   fd.append("max_attendees", formData.maxAttendees);
 
   if (formData.eventImage) {
-    fd.append("image_path", formData.eventImage); 
+    fd.append("image_path", formData.eventImage);
   }
 
   try {
@@ -95,11 +117,17 @@ const createAnEvent = async () => {
 
     if (res.ok) {
       navigate("/profile");
+    } else {
+      const err = await res.json();
+      console.log("Event creation error:", err);
+      alert("Failed to create event.");
     }
+
   } catch (error) {
     console.error("POST error:", error);
   }
 };
+
 
 
 
