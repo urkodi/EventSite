@@ -2,6 +2,62 @@ import React, { useState, useRef, useEffect } from "react";
 import Sidenav from "../features/Sidenav";
 import { Link } from "react-router-dom";
 
+type EventType = {
+  id: number;
+  title: string;
+  description?: string;
+  image?: string | null;          // matches Django's image serializer field
+  [key: string]: unknown;
+};
+
+
+const EventSearchResults = ({
+  search,
+  onSelect,
+}: {
+  search: string;
+  onSelect: (event: EventType) => void;
+}) => {
+  const [results, setResults] = useState<EventType[]>([]);
+
+  useEffect(() => {
+    const getEvents = async () => {
+      if (!search.trim()) return setResults([]);
+
+      try {
+        const res = await fetch("http://127.0.0.1:8000/events/list_all");
+        const events: EventType[] = await res.json();
+
+        const filtered = events.filter((ev) =>
+          ev.title.toLowerCase().includes(search.toLowerCase())
+        );
+
+        setResults(filtered);
+      } catch (error) {
+        console.error("Error searching events:", error);
+      }
+    };
+
+    getEvents();
+  }, [search]);
+
+  if (!results.length) return null;
+
+  return (
+    <div className="bg-white border border-[#9CCED6] rounded-lg mt-2 shadow-md max-h-52 overflow-y-auto">
+      {results.map((ev) => (
+        <div
+          key={ev.id}
+          onClick={() => onSelect(ev)}
+          className="px-4 py-2 hover:bg-[#ECFBFD] cursor-pointer text-[#4C9DB0]"
+        >
+          {ev.title}
+        </div>
+      ))}
+    </div>
+  );
+};
+
 const ProfilePage = () => {
 
   const [activeTab, setActiveTab] = useState(0);
@@ -29,8 +85,9 @@ const ProfilePage = () => {
   const [reviewText, setReviewText] = useState("");
   const [reviewRating, setReviewRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
-  const [reviewImage, setReviewImage] = useState<string | null>(null);
-
+  const [reviewSearch, setReviewSearch] = useState("");
+  //const [myReviews, setMyReviews] = useState([]);
+  const [selectedEvent, setSelectedEvent] = useState<EventType | null>(null);
 
   /* ---------------- ACCOUNT FIELDS ---------------- */
   const [phone, setPhone] = useState("");
@@ -355,88 +412,155 @@ const ProfilePage = () => {
                       </div>
                     )}
 
-                    {/* ------------------------------
-                        USER REVIEWS TAB
-                    ------------------------------ */}
-                    {activeTab === 1 && (
-                      <div className="space-y-6">
+                {/* ------------------------------  
+                      USER REVIEWS TAB  
+                  ------------------------------ */}
+                  {activeTab === 1 && (
+  <div className="space-y-6">
+{/* Search Bar */}
+<div className="mb-6">
+  <label className="text-[#4C9DB0] font-semibold block mb-2">
+    Search Event to Review
+  </label>
 
-                        {/* Star Rating */}
-                        <div className="flex items-center mb-2">
-                          <span className="mr-3 text-[#4C9DB0] font-semibold">
-                            Your Rating:
-                          </span>
+  <div className="relative">
+    <input
+      type="text"
+      value={reviewSearch}
+      onChange={(e) => {
+        setReviewSearch(e.target.value);
+        setSelectedEvent(null); // allow new searches
+      }}
+      disabled={selectedEvent !== null} // lock after selection
+      placeholder="Start typing event name..."
+      className={`w-full p-3 pl-11 border border-[#9CCED6] rounded-lg bg-[#ECFBFD]
+      text-[#4C9DB0] focus:outline-none
+      ${selectedEvent ? "opacity-60 cursor-not-allowed" : ""}`}
+    />
 
-                          <div className="flex space-x-2">
-                            {[1, 2, 3, 4, 5].map((star) => (
-                              <svg
-                                key={star}
-                                onClick={() => setReviewRating(star)}
-                                onMouseEnter={() => setHoverRating(star)}
-                                onMouseLeave={() => setHoverRating(0)}
-                                className={`w-7 h-7 cursor-pointer transition-transform duration-150 
-                                  ${
-                                    star <= (hoverRating || reviewRating)
-                                      ? "text-[#FFEBAF]"
-                                      : "text-[#9CCED6]"
-                                  } hover:scale-110`}
-                                fill="currentColor"
-                                viewBox="0 0 20 20"
-                              >
-                                <path d="M9.049 2.927c.3-.921..." />
-                              </svg>
-                            ))}
-                          </div>
-                        </div>
+    {/* Search Icon */}
+    <svg
+      className="w-5 h-5 text-[#4C9DB0] absolute left-3 top-1/2 -translate-y-1/2 opacity-70"
+      fill="currentColor"
+      viewBox="0 0 20 20"
+    >
+      <path
+        fillRule="evenodd"
+        d="M12.9 14.32a8 8 0 111.414-1.414l4.387 4.387a1 1 0 01-1.414 1.414l-4.387-4.387zM14 8a6 6 0 11-12 0 6 6 0 0112 0z"
+      />
+    </svg>
+  </div>
 
-                        {/* Review Text */}
-                        <textarea
-                          value={reviewText}
-                          onChange={(e) => setReviewText(e.target.value)}
-                          className="w-full h-40 p-4 border border-[#9CCED6] rounded-lg bg-[#ECFBFD] 
-                          text-[#4C9DB0] focus:outline-none"
-                          placeholder="Write your review..."
-                        />
+    {selectedEvent && (
+  <div className="mt-4 p-4 border border-[#9CCED6] bg-[#ECFBFD] rounded-lg shadow-sm">
+    <h4 className="text-xl font-bold text-[#4C9DB0]">
+      Reviewing: {selectedEvent.title}
+    </h4>
 
-                        {/* Review Photo */}
-                        <div>
-                          <label className="block mb-2 text-[#4C9DB0] font-semibold">
-                            Upload a photo for your review
-                          </label>
+    {/* Event Image */}
+{typeof selectedEvent.imageUrl === "string" && selectedEvent.imageUrl && (
+  <div className="w-full flex justify-center mt-3">
+    <img
+      src={selectedEvent.imageUrl}
+      alt="Event"
+      className="h-32 w-auto rounded-lg shadow-md object-cover"
+    />
+  </div>
+)}
 
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) setReviewImage(URL.createObjectURL(file));
-                            }}
-                            className="block w-full text-sm text-[#4C9DB0]
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-lg file:border-0
-                            file:bg-[#ECFBFD] file:text-[#4C9DB0]
-                            hover:file:bg-[#d7f3f7] cursor-pointer"
-                          />
+    {/* Event Description */}
+    {typeof selectedEvent.description === "string" && selectedEvent.description && (
+      <p className="text-[#4C9DB0] mt-3">Description: {selectedEvent.description}</p>
+    )}
+  </div>
+)}
 
-                          {reviewImage && (
-                            <img
-                              src={reviewImage}
-                              className="mt-4 w-40 h-40 object-cover rounded-lg shadow-md border border-[#9CCED6]"
-                            />
-                          )}
-                        </div>
+  {/* 🔎 Search dropdown (hidden if event selected) */}
+  {!selectedEvent && (
+    <EventSearchResults search={reviewSearch} onSelect={setSelectedEvent} />
+  )}
+</div>
 
-                        {/* Post Review Button */}
-                        <button
-                          className="w-full py-3 bg-[#4C9DB0] text-white rounded-lg shadow-md hover:bg-[#3a8a9d] transition"
-                          onClick={() => alert("Review submitted!")}
-                        >
-                          Post Review
-                        </button>
-                      </div>
-                    )}
 
-                                        {/* ------------------------------
+    {/* -----------------------------
+         STAR RATING
+       ----------------------------- */}
+    <div className="flex flex-col mb-4">
+      <span className="text-[#4C9DB0] font-semibold mb-2">
+        Your Rating:
+      </span>
+
+      <div className="flex space-x-3">
+        {[1, 2, 3, 4, 5].map((star) => {
+          const isFilled = star <= (hoverRating || reviewRating);
+          return (
+            <svg
+              key={star}
+              onClick={() => setReviewRating(star)}
+              onMouseEnter={() => setHoverRating(star)}
+              onMouseLeave={() => setHoverRating(0)}
+              className={`w-10 h-10 cursor-pointer transition-all duration-150 
+                ${isFilled ? "text-[#FFEBAF]" : "text-[#9CCED6]"} 
+                hover:scale-110`}
+              fill="currentColor"
+              viewBox="0 0 20 20"
+            >
+              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07
+                3.292a1 1 0 00.95.69h3.462c.969 0 
+                1.371 1.24.588 1.81l-2.8 2.034a1 1 0 
+                00-.364 1.118l1.07 3.292c.3.921-.755 
+                1.688-1.54 1.118l-2.8-2.034a1 1 0 
+                00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 
+                1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 
+                1 0 00.951-.69l1.07-3.292z" />
+            </svg>
+          );
+        })}
+      </div>
+    </div>
+
+    {/* -----------------------------
+         REVIEW TEXT BOX
+       ----------------------------- */}
+    <textarea
+      value={reviewText}
+      onChange={(e) => setReviewText(e.target.value)}
+      className="w-full h-40 p-4 border border-[#9CCED6] rounded-lg bg-[#ECFBFD] 
+      text-[#4C9DB0] focus:outline-none"
+      placeholder="Write your review..."
+    />
+
+    {/* -----------------------------
+         SUBMIT REVIEW BUTTON
+       ----------------------------- */}
+    <button
+      className="w-full py-3 bg-[#4C9DB0] text-white rounded-lg shadow-md hover:bg-[#3a8a9d] transition"
+      onClick={() => {
+        alert(`Submitted review for event: ${reviewSearch}`);
+      }}
+    >
+      Submit Review
+    </button>
+
+    {/* -----------------------------
+         YOUR PREVIOUS REVIEWS
+       ----------------------------- */}
+    <div className="mt-6">
+      <h3 className="text-xl font-semibold text-[#4C9DB0] mb-3">
+        Your Reviews
+      </h3>
+
+      {/* Placeholder list */}
+      <div className="text-[#4C9DB0] opacity-60 italic">
+        No reviews yet — coming soon.
+      </div>
+    </div>
+
+  </div>
+)}
+
+
+                      { /* ------------------------------
                         ACCOUNT SETTINGS TAB
                     ------------------------------ */}
                     {activeTab === 2 && (
