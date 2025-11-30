@@ -16,6 +16,7 @@ import Bookmarks from "./pages/Bookmark";
 import LandingPage from "./pages/landingpage";
 import SearchPage from "./pages/searchpage";
 import EventDetails from "./pages/EventDetails";
+import BookingConfirmation from "./pages/BookingConfirmation";
 
 function App() {
   return(
@@ -36,6 +37,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/create-event" element={<CreateEvent />} />
         <Route path="/event-details" element={<EventDetails />} />
+        <Route path="/booking-confirmation" element={<BookingConfirmation />} />
       </Routes>
     </Router>
   )

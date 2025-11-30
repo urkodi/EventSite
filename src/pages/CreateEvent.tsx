@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidenav from '../features/Sidenav';
 import UserPanel from '../features/UserPanel';
 import Calendar from '../components/Calendar';
+import { useNavigate } from "react-router-dom";
 
 const CreateEvent = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -34,30 +35,73 @@ const CreateEvent = () => {
     }
   ];
 
-  const categories = [
-    "🎵 Music Concert",
-    "💼 Conference", 
-    "🔧 Workshop",
-    "🤝 Networking",
-    "⚽ Sports",
-    "🎨 Art Exhibition",
-    "🍕 Food & Drink",
-    "❤️ Charity",
-    "✨ Other"
-  ];
+ const categories = [
+  { label: "🎵 Music Concert", value: "music_concert" },
+  { label: "💼 Conference", value: "conference" },
+  { label: "🔧 Workshop", value: "workshop" },
+  { label: "🤝 Networking", value: "networking" },
+  { label: "⚽ Sports", value: "sports" },
+  { label: "🎨 Art Exhibition", value: "art_exhibition" },
+  { label: "🍕 Food & Drink", value: "food_drink" },
+  { label: "❤️ Charity", value: "charity" },
+  { label: "✨ Other", value: "other" }
+];
 
-  const handleInputChange = (e: React.ChangeEvent<never>) => {
-    const { name, value, files } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: files ? files[0] : value
-    }));
-  };
+
+const handleInputChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+) => {
+  const { name, value, files } = e.target as HTMLInputElement;
+
+  setFormData(prev => ({
+    ...prev,
+    [name]: files ? files[0] : value 
+  }));
+};
+
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Event created:', formData);
   };
+
+  //const [responseData, setResponseData] = useState<Record<string, unknown> | null>(null);
+const navigate = useNavigate();
+
+const createAnEvent = async () => {
+  const fd = new FormData();
+
+  //*****The owner field needs to change when the cookies or some session logic of who is logged in is added
+  fd.append("owner", "1");
+  fd.append("title", formData.eventTitle);
+  fd.append("description", formData.eventDescription);
+  fd.append("category", formData.eventCategory);
+  fd.append("date", formData.eventDate);
+  fd.append("time", formData.eventTime);
+  fd.append("address", formData.eventLocation);
+  fd.append("ticket_price", formData.ticketPrice);
+  fd.append("max_attendees", formData.maxAttendees);
+
+  if (formData.eventImage) {
+    fd.append("image_path", formData.eventImage); 
+  }
+
+  try {
+    const res = await fetch("http://127.0.0.1:8000/events/create", {
+      method: "POST",
+      body: fd,
+    });
+
+    if (res.ok) {
+      navigate("/profile");
+    }
+  } catch (error) {
+    console.error("POST error:", error);
+  }
+};
+
+
 
   return (
     <>
@@ -204,7 +248,6 @@ const CreateEvent = () => {
                         color: activeTab === index ? 'var(--color-moonstone)' : 'var(--color-lightermoonstone)'
                       }}
                     >
-                      <span className="text-2xl mr-3">{tab.icon}</span>
                       <span className="font-semibold">{tab.title}</span>
                     </li>
                   ))}
@@ -306,9 +349,8 @@ const CreateEvent = () => {
                         required
                       >
                         <option value="" style={{ color: 'var(--color-lightermoonstone)' }}>Select a category...</option>
-                        {categories.map((category, index) => (
-                          <option key={index} value={category} style={{ color: 'var(--color-moonstone)' }}>{category}</option>
-                        ))}
+                        {categories.map((c, index) => (
+                            <option key={index} value={c.value}>{c.label}</option>))}
                       </select>
                     </div>
                   </div>
@@ -543,6 +585,7 @@ const CreateEvent = () => {
                         }}
                         onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--color-darkervanilla)'}
                         onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--color-vanilla)'}
+                        onClick={createAnEvent}
                       >
                         <span className="text-xl mr-2">🎉</span>
                         Create Event!
