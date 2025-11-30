@@ -19,6 +19,12 @@ type UserReview = {
   eventImage: string | null;
 };
 
+type UserPost = {
+  id: number;
+  description: string;
+  createdAt: string; // ISO timestamp
+};
+
 
 const EventSearchResults = ({
   search,
@@ -88,7 +94,8 @@ const ProfilePage = () => {
 
   /* ------------------ POSTS ------------------ */
   const [postText, setPostText] = useState("");
-  const [postImage, setPostImage] = useState<string | null>(null);
+  const [myPosts, setMyPosts] = useState<UserPost[]>([]);
+
 
   /* ------------------ REVIEWS ------------------ */
   const [reviewText, setReviewText] = useState("");
@@ -173,6 +180,27 @@ const fetchReviews = async () => {
 };
 
 fetchReviews();
+
+// Fetch user's posts
+const fetchPosts = async () => {
+  try {
+    const res = await fetch("http://127.0.0.1:8000/posts/user?user=1");
+    if (!res.ok) throw new Error("Failed to fetch posts");
+
+    const data = await res.json();
+
+    // sort newest → oldest
+    const sorted = data.sort(
+      (a: UserPost, b: UserPost) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
+
+    setMyPosts(sorted);
+  } catch (err) {
+    console.error("Error fetching posts:", err);
+  }
+};
+
+fetchPosts();
 
 
     fetchUser();
@@ -272,6 +300,40 @@ const handleSubmitReview = async () => {
   }
 };
 
+const handleSubmitPost = async () => {
+  if (!postText.trim()) {
+    alert("Post cannot be empty.");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://127.0.0.1:8000/posts/create", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: 1,              // hardcoded for now
+        description: postText // your textarea content
+      }),
+    });
+
+    if (!res.ok) {
+      throw new Error("Failed to create post");
+    }
+
+    alert("Post created!");
+
+    // reset the box
+    setPostText("");
+
+  } catch (err) {
+    console.error("Error creating post:", err);
+    alert("Could not create post.");
+  }
+};
+
+
 
   return (
     <>
@@ -320,7 +382,7 @@ const handleSubmitReview = async () => {
               {/* Profile Info */}
               <div className="text-center">
                 <h3 className="text-2xl font-bold text-white mb-2">
-                  {firstName || "USER"}
+                  {username || "USER"}
                 </h3>
 
                 {/*
@@ -445,41 +507,47 @@ const handleSubmitReview = async () => {
                           placeholder="Write your post..."
                         />
 
-                        {/* Post Photo */}
-                        <div>
-                          <label className="block mb-2 text-[#4C9DB0] font-semibold">
-                            Upload a photo
-                          </label>
-
-                          <input
-                            type="file"
-                            accept="image/*"
-                            onChange={(e) => {
-                              const file = e.target.files?.[0];
-                              if (file) setPostImage(URL.createObjectURL(file));
-                            }}
-                            className="block w-full text-sm text-[#4C9DB0]
-                            file:mr-4 file:py-2 file:px-4
-                            file:rounded-lg file:border-0
-                            file:bg-[#ECFBFD] file:text-[#4C9DB0]
-                            hover:file:bg-[#d7f3f7] cursor-pointer"
-                          />
-
-                          {postImage && (
-                            <img
-                              src={postImage}
-                              className="mt-4 w-40 h-40 object-cover rounded-lg shadow-md border border-[#9CCED6]"
-                            />
-                          )}
-                        </div>
-
                         {/* Post Button */}
                         <button
-                          className="w-full py-3 bg-[#4C9DB0] text-white rounded-lg shadow-md hover:bg-[#3a8a9d] transition"
-                          onClick={() => alert("Post submitted!")}
-                        >
-                          Post
-                        </button>
+  className="w-full py-3 bg-[#4C9DB0] text-white rounded-lg shadow-md hover:bg-[#3a8a9d] transition"
+  onClick={handleSubmitPost}
+>
+  Post
+</button>
+
+{/* -------------------------
+    USER'S PREVIOUS POSTS
+------------------------- */}
+<div className="mt-6">
+  <h3 className="text-xl font-semibold text-[#4C9DB0] mb-3">
+    Your Previous Posts
+  </h3>
+
+  {myPosts.length === 0 ? (
+    <div className="text-[#4C9DB0] opacity-60 italic">
+      You haven't made any posts yet.
+    </div>
+  ) : (
+    <div className="space-y-4">
+      {myPosts.map((post) => (
+        <div
+          key={post.id}
+          className="p-4 border border-[#9CCED6] bg-[#ECFBFD] rounded-lg shadow-sm"
+        >
+          <p className="text-[#4C9DB0]">{post.description}</p>
+
+         <p className="text-sm text-[#4C9DB0]">
+  Posted on {new Date(post.createdAt).toLocaleString()}
+</p>
+
+
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+
                       </div>
                     )}
 
