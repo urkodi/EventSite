@@ -195,7 +195,10 @@ function SearchPage() {
                     scrollbarColor:"#E9CC73 transparent",
                 }}>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-2 mb-8">
+                <div className="mt-6 grid gap-y-6 gap-x-2 px-4 place-items-center" 
+                    style={{ 
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))'
+                        }}>
                   {filteredEvents.length > 0 ? (
                     filteredEvents.map((event) => (
                       <EventBlock

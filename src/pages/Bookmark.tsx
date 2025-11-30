@@ -57,7 +57,10 @@ const Bookmark = () => {
           style={{
             scrollbarColor:"#E9CC73 transparent",
           }}>
-          <ul className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 px-2 mb-8">
+          <ul className="mt-6 grid gap-y-6 gap-x-2 px-4 place-items-center" 
+                style={{ 
+                 gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))'
+                }}>
             {bookmarkedEvents.length > 0 ? (
               bookmarkedEvents.map(event => (
                 <EventBlock

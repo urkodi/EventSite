@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Sidenav from "../features/Sidenav";
 import { Link } from "react-router-dom";
+import UserPanel from "../features/UserPanel";
 
 type EventType = {
   id: number;
