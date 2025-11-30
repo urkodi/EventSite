@@ -84,7 +84,7 @@ function LandingPage() {
           </div>
         </div>
 
-        <section className="w-full flex justify-center items-start gap-16 px-12 mb-20 max-w-7xl">
+        <section className="w-full flex flex-row justify-center items-start md:gap-16 px-12 mb-20 max-w-7xl lg:gap-32">
 
           <section className="flex flex-col w-[50%]">
             <h2 className="bg-moonstone text-whiteblue font-semibold text-xl px-30 py-3 rounded-full mb-6 shadow-xl self-center text-center">

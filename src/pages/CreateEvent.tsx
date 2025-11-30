@@ -1,4 +1,8 @@
 import React, { useState } from 'react';
+import Sidenav from '../features/Sidenav';
+import UserPanel from '../features/UserPanel';
+import Calendar from '../components/Calendar';
+import { useNavigate } from "react-router-dom";
 
 const CreateEvent = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -14,54 +18,100 @@ const CreateEvent = () => {
     eventImage: null
   });
 
+  const [showCalendar, setShowCalendar] = useState(false);
+
   const tabs = [
     {
       title: "Event Details",
-      icon: "📝",
       content: "Fill in the basic information about your event"
     },
     {
       title: "Date & Location", 
-      icon: "📍",
       content: "Set when and where your event will take place"
     },
     {
       title: "Ticket Settings",
-      icon: "🎫",
       content: "Configure pricing and attendance options"
     }
   ];
 
-  const categories = [
-    "🎵 Music Concert",
-    "💼 Conference", 
-    "🔧 Workshop",
-    "🤝 Networking",
-    "⚽ Sports",
-    "🎨 Art Exhibition",
-    "🍕 Food & Drink",
-    "❤️ Charity",
-    "✨ Other"
-  ];
+ const categories = [
+  { label: "🎵 Music Concert", value: "music_concert" },
+  { label: "💼 Conference", value: "conference" },
+  { label: "🔧 Workshop", value: "workshop" },
+  { label: "🤝 Networking", value: "networking" },
+  { label: "⚽ Sports", value: "sports" },
+  { label: "🎨 Art Exhibition", value: "art_exhibition" },
+  { label: "🍕 Food & Drink", value: "food_drink" },
+  { label: "❤️ Charity", value: "charity" },
+  { label: "✨ Other", value: "other" }
+];
 
-  const handleInputChange = (e: React.ChangeEvent<never>) => {
-    const { name, value, files } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: files ? files[0] : value
-    }));
-  };
+
+const handleInputChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+) => {
+  const { name, value, files } = e.target as HTMLInputElement;
+
+  setFormData(prev => ({
+    ...prev,
+    [name]: files ? files[0] : value 
+  }));
+};
+
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Event created:', formData);
-    // Handle form submission here
   };
 
+  //const [responseData, setResponseData] = useState<Record<string, unknown> | null>(null);
+const navigate = useNavigate();
+
+const createAnEvent = async () => {
+  const fd = new FormData();
+
+  //*****The owner field needs to change when the cookies or some session logic of who is logged in is added
+  fd.append("owner", "1");
+  fd.append("title", formData.eventTitle);
+  fd.append("description", formData.eventDescription);
+  fd.append("category", formData.eventCategory);
+  fd.append("date", formData.eventDate);
+  fd.append("time", formData.eventTime);
+  fd.append("address", formData.eventLocation);
+  fd.append("ticket_price", formData.ticketPrice);
+  fd.append("max_attendees", formData.maxAttendees);
+
+  if (formData.eventImage) {
+    fd.append("image_path", formData.eventImage); 
+  }
+
+  try {
+    const res = await fetch("http://127.0.0.1:8000/events/create", {
+      method: "POST",
+      body: fd,
+    });
+
+    if (res.ok) {
+      navigate("/profile");
+    }
+  } catch (error) {
+    console.error("POST error:", error);
+  }
+};
+
+
+
   return (
-    <div className="min-h-screen" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
-      <div className="py-8 flex items-center justify-center px-4">
-        <div className="max-w-6xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden" style={{ border: '2px solid var(--color-lightermoonstone)' }}>
+    <>
+    <div className="flex lg:flex-row flex-col">
+        <Sidenav />
+    </div>
+    <UserPanel />
+    <div className="min-h-screen max-w-[70%] sm:max-w-[50%] md:max-w-[65%] lg:max-w-[65%] py-8 flex items-center justify-center">
+      <div className="max-w-5xl w-full h-[100%] bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
           {/* Header */}
           <div className="p-8 text-white relative overflow-hidden" style={{ background: 'linear-gradient(to right, var(--color-moonstone), var(--color-lightermoonstone))' }}>
             <div className="absolute top-0 right-0 w-32 h-32 rounded-full -m-8 opacity-20" style={{ backgroundColor: 'var(--color-vanilla)' }}></div>
@@ -83,7 +133,9 @@ const CreateEvent = () => {
             </div>
           </div>
 
-          <div className="flex flex-col lg:flex-row">
+          <div className="flex flex-col lg:flex-row overflow-y-auto my-2 overflow-x-hidden" style={{ maxHeight: 'calc(100vh - 200px)', 
+                                                                              scrollbarColor: "#E9CC73 transparent"
+          }}>
             {/* Left Side - Image Upload & Preview */}
             <div className="lg:w-2/5 p-8" style={{ borderRight: '2px solid var(--color-lightermoonstone)', background: 'linear-gradient(to bottom, var(--color-bluewhite), white)' }}>
               <div className="space-y-8">
@@ -164,20 +216,6 @@ const CreateEvent = () => {
                     </li>
                   </ul>
                 </div>
-
-                {/* Progress */}
-                <div className="rounded-2xl p-6 text-white text-center shadow-lg" 
-                     style={{ background: 'linear-gradient(to right, var(--color-moonstone), var(--color-lightermoonstone))' }}>
-                  <div className="text-3xl mb-2">📊</div>
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="font-medium">Completion</span>
-                    <span className="font-bold" style={{ color: 'var(--color-vanilla)' }}>60%</span>
-                  </div>
-                  <div className="w-full rounded-full h-3 mb-2" style={{ backgroundColor: 'rgba(255, 255, 255, 0.3)' }}>
-                    <div className="h-3 rounded-full w-3/5 shadow-inner" style={{ backgroundColor: 'var(--color-vanilla)' }}></div>
-                  </div>
-                  <p className="text-sm" style={{ color: 'var(--color-bluewhite)' }}>Almost there! Keep going! 🎯</p>
-                </div>
               </div>
             </div>
 
@@ -204,7 +242,6 @@ const CreateEvent = () => {
                         color: activeTab === index ? 'var(--color-moonstone)' : 'var(--color-lightermoonstone)'
                       }}
                     >
-                      <span className="text-2xl mr-3">{tab.icon}</span>
                       <span className="font-semibold">{tab.title}</span>
                     </li>
                   ))}
@@ -300,9 +337,8 @@ const CreateEvent = () => {
                         required
                       >
                         <option value="" style={{ color: 'var(--color-lightermoonstone)' }}>Select a category...</option>
-                        {categories.map((category, index) => (
-                          <option key={index} value={category} style={{ color: 'var(--color-moonstone)' }}>{category}</option>
-                        ))}
+                        {categories.map((c, index) => (
+                            <option key={index} value={c.value}>{c.label}</option>))}
                       </select>
                     </div>
                   </div>
@@ -310,33 +346,56 @@ const CreateEvent = () => {
                   {/* Tab 2: Date & Location */}
                   <div className={`space-y-6 ${activeTab === 1 ? 'block' : 'hidden'}`}>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                      <div>
+                      {/* Event Date with Popup Calendar */}
+                      <div className="relative">
                         <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
                           <span className="text-2xl mr-3">📅</span>
                           Event Date
                         </label>
-                        <input
-                          type="date"
-                          name="eventDate"
-                          value={formData.eventDate}
-                          onChange={handleInputChange}
-                          className="w-full px-5 py-4 border-2 rounded-2xl focus:ring-2 text-lg transition duration-300"
-                          style={{ 
-                            borderColor: 'var(--color-lightermoonstone)',
-                            backgroundColor: 'rgba(236, 251, 253, 0.3)',
-                            color: 'var(--color-moonstone)'
-                          }}
-                          onFocus={(e) => {
-                            e.target.style.borderColor = 'var(--color-moonstone)';
-                            e.target.style.boxShadow = '0 0 0 2px var(--color-vanilla)';
-                          }}
-                          onBlur={(e) => {
-                            e.target.style.borderColor = 'var(--color-lightermoonstone)';
-                            e.target.style.boxShadow = 'none';
-                          }}
-                          required
-                        />
+
+                        <div className="relative">
+                          {/* DATE INPUT (typing allowed) */}
+                          <input
+                            type="date"
+                            name="eventDate"
+                            value={formData.eventDate}
+                            onChange={(e) =>
+                              setFormData(prev => ({ ...prev, eventDate: e.target.value }))
+                            }
+                            className="w-full px-5 py-4 border-2 rounded-2xl focus:ring-2 text-lg transition duration-300"
+                            style={{ 
+                              borderColor: 'var(--color-lightermoonstone)',
+                              backgroundColor: 'rgba(236, 251, 253, 0.3)',
+                              color: 'var(--color-moonstone)'
+                            }}
+                            placeholder="yyyy-mm-dd"
+                          />
+
+                          <span
+                            onClick={() => setShowCalendar(!showCalendar)}
+                            className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-2xl"
+                          >
+                            📆
+                          </span>
+
+                          {/* POPUP CALENDAR */}
+                          {showCalendar && (
+                            <div className="absolute z-50 mt-3 shadow-xl rounded-xl border bg-white">
+                              <Calendar
+                                selectedDate={
+                                  formData.eventDate ? new Date(formData.eventDate) : null
+                                }
+                                onDateSelect={(date) => {
+                                  const formatted = date.toISOString().split("T")[0];
+                                  setFormData(prev => ({ ...prev, eventDate: formatted }));
+                                  setShowCalendar(false);
+                                }}
+                              />
+                            </div>
+                          )}
+                        </div>
                       </div>
+
                       <div>
                         <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
                           <span className="text-2xl mr-3">⏰</span>
@@ -509,6 +568,7 @@ const CreateEvent = () => {
                         }}
                         onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--color-darkervanilla)'}
                         onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--color-vanilla)'}
+                        onClick={createAnEvent}
                       >
                         <span className="text-xl mr-2">🎉</span>
                         Create Event!
@@ -522,6 +582,7 @@ const CreateEvent = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

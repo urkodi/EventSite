@@ -20,7 +20,6 @@ import BookingConfirmation from "./pages/BookingConfirmation";
 
 function App() {
   return(
-  // <ProfilePage/>
     <Router>
       <Routes>
         <Route path="/" element={<Homepage />} />  
@@ -35,10 +34,10 @@ function App() {
         <Route path="/bookmark" element={<Bookmarks />} />
         <Route path="/landing" element={<LandingPage />} />
         <Route path="/browse" element={<SearchPage />} />
-        <Route path="/ProfilePage" element={<ProfilePage />} />
-        <Route path="/CreateEvent" element={<CreateEvent />} />
-        <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/create-event" element={<CreateEvent />} />
         <Route path="/event-details" element={<EventDetails />} />
+        <Route path="/booking-confirmation" element={<BookingConfirmation />} />
       </Routes>
     </Router>
   )

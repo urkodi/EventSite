@@ -110,7 +110,7 @@ function EventBlock({
   };
 
   return (
-    <li className="w-52 h-72 rounded-2xl overflow-hidden shadow-md bg-whiteblue flex flex-col relative">
+    <li className="w-52 h-72 rounded-2xl border-4 border-bluewhite overflow-hidden shadow-md bg-whiteblue flex flex-col relative">
       <a href={link} className="flex flex-col h-full">
         {/* Image section */}
         <section className="relative h-1/2 flex-shrink-0">

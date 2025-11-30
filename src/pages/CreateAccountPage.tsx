@@ -159,8 +159,8 @@ const CreateAccountPage = () => {
                 scrollbarColor: '#4C9DB0 transparent',
             }}>
 
-            <main className="flex-grow flex flex-col items-center justify-center mt-10 mb-10">
-                <div className="w-full max-w-md rounded-2xl p-8 bg-lightermoonstone shadow-md">
+            <main className="flex flex-col items-center justify-center mt-10 mb-10 lg:mt-30 lg:mb-30">
+                <div className="w-full max-w-lg md:max-w-xl lg:max-w-xl transform md:scale-105 lg:scale-120 rounded-2xl px-8 py-5 bg-lightermoonstone shadow-md">
                     <h2 className="font-bold mb-6 text-center text-5xl text-moonstone">
                         Create Account
                     </h2>
