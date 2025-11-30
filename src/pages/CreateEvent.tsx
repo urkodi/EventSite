@@ -88,7 +88,7 @@ const createAnEvent = async () => {
   }
 
   try {
-    const res = await fetch("http://127.0.0.1:8000/events/create", {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/events/create`, {
       method: "POST",
       body: fd,
     });

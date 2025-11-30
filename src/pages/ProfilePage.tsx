@@ -139,7 +139,7 @@ const tabs = [
         //part to change when there are user login logic
         const res = await fetch(
           "http://127.0.0.1:8000/users/user_details?user=1"
-        );
+);  
         if (!res.ok) throw new Error("Failed to fetch user");
 
         const data = await res.json();
@@ -169,7 +169,7 @@ const tabs = [
     // Fetch user's reviews
 const fetchReviews = async () => {
   try {
-    const res = await fetch("http://127.0.0.1:8000/reviews/by_user?user=1");
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/reviews/by_user?user=1`);
     if (!res.ok) throw new Error("Failed to fetch reviews");
 
     const data = await res.json();
@@ -184,7 +184,7 @@ fetchReviews();
 // Fetch user's posts
 const fetchPosts = async () => {
   try {
-    const res = await fetch("http://127.0.0.1:8000/posts/user?user=1");
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/posts/user?user=1`);
     if (!res.ok) throw new Error("Failed to fetch posts");
 
     const data = await res.json();
@@ -228,7 +228,7 @@ fetchPosts();
     formData.append("profilePicture", fileInputRef.current.files[0]);
   }
 
-  const res = await fetch("http://127.0.0.1:8000/users/update_user?user=1", {
+  const res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/update_user?user=1`, {
     method: "PUT",
     body: formData,
   });
@@ -249,7 +249,8 @@ fetchPosts();
     setProfilePic(data.profilePicture);
   }
 
-  alert("Updated!");
+// 🔥 Reload the page so all fields and selected event reset
+    window.location.reload();
 
   } catch (error) {
     console.error("UPDATE FAILED:", error);
@@ -269,7 +270,7 @@ const handleSubmitReview = async () => {
   }
 
   try {
-    const res = await fetch("http://127.0.0.1:8000/reviews/create", {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/reviews/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -289,8 +290,6 @@ const handleSubmitReview = async () => {
     const data = await res.json();
     console.log("Review saved:", data);
 
-    alert("Review submitted successfully!");
-
     // 🔥 Reload the page so all fields and selected event reset
     window.location.reload();
 
@@ -307,7 +306,7 @@ const handleSubmitPost = async () => {
   }
 
   try {
-    const res = await fetch("http://127.0.0.1:8000/posts/create", {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/posts/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -322,10 +321,8 @@ const handleSubmitPost = async () => {
       throw new Error("Failed to create post");
     }
 
-    alert("Post created!");
-
-    // reset the box
-    setPostText("");
+    // 🔥 Reload the page so all fields and selected event reset
+    window.location.reload();
 
   } catch (err) {
     console.error("Error creating post:", err);
@@ -733,7 +730,7 @@ const handleSubmitPost = async () => {
 
             {rev.eventImage && (
   <img
-    src={`http://127.0.0.1:8000${rev.eventImage}`}
+    src={`${import.meta.env.VITE_BASE_URL}${rev.eventImage}`}
     alt="Event"
     className="mt-2 w-40 h-24 object-cover rounded-md shadow"
   />
