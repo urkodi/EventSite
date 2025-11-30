@@ -38,13 +38,13 @@ const ForgotPassword = () => {
             </header>
 
             {/* Main Content */}
-            <main className="flex flex-col items-center justify-center mt-10 mb-10">
-                <div className="max-w-md rounded-2xl p-8 bg-bluewhite shadow-md border-12 border-lightermoonstone">
+            <main className="flex flex-col items-center justify-center mt-10 mb-10 lg:mt-30 lg:mb-30">
+                <div className="max-w-lg md:max-w-md lg:max-w-lg transform md:scale-105 lg:scale-120 rounded-2xl p-8 bg-bluewhite shadow-md border-12 border-lightermoonstone">
                     <h2 className="font-bold mb-5 text-center text-5xl text-moonstone">
                         {submitted ? "Check Your Email" : "Forgot Password?"}
                     </h2>
                     <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla mb-5 mt-5"></div>
-                    <div className="mb-5 text-center text-moonstone text-bold text-lg">
+                    <div className="mb-5 text-center text-moonstone font-semibold text-lg">
                         {submitted
                             ? "If we found an account with that email, your 6-digit code has been sent to:"
                             : "Enter your email address below to receive verification code ."

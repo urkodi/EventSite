@@ -13,7 +13,7 @@ const ContactUsPage = () => {
                 style={{
                     scrollbarColor: '#E9CC73 transparent',
                 }}>  
-                <div className="flex justify-items-center bg-bluewhite p-4 rounded-2xl shadow-md flex-col mb-4 w-[95%] mx-auto">
+                <div className="flex justify-items-center bg-bluewhite p-6 rounded-2xl shadow-md flex-col mb-8 w-[95%] mx-auto">
                 <h1 className="text-5xl font-bold text-moonstone mb-4 text-center">Contact Us</h1>
                 {/*Decorative divider*/}
                 <div className="mx-auto w-[90%] rounded-xl h-1 bg-darkervanilla"></div>
@@ -96,7 +96,7 @@ const ContactUsPage = () => {
                 
                 {/*Decorative containers*/}
                 <div className="flex flex-col gap-8 w-full lg:w-[35%]">
-                            <div className="relative w-full max-w-3xl h-[40%] bg-bluewhite rounded-4xl shadow-md overflow-hidden group">
+                            <div className="relative w-full max-w-3xl h-[40%] lg:h-[70%] bg-bluewhite rounded-4xl shadow-md overflow-hidden group">
                                 <img
                                     src={HelpDuck}
                                     alt="Help Duck"

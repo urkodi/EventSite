@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Sidenav from '../features/Sidenav';
 import UserPanel from '../features/UserPanel';
 import Calendar from '../components/Calendar';
+import { useNavigate } from "react-router-dom";
 
 const CreateEvent = () => {
   const [activeTab, setActiveTab] = useState(0);
@@ -34,40 +35,83 @@ const CreateEvent = () => {
     }
   ];
 
-  const categories = [
-    "🎵 Music Concert",
-    "💼 Conference", 
-    "🔧 Workshop",
-    "🤝 Networking",
-    "⚽ Sports",
-    "🎨 Art Exhibition",
-    "🍕 Food & Drink",
-    "❤️ Charity",
-    "✨ Other"
-  ];
+ const categories = [
+  { label: "🎵 Music Concert", value: "music_concert" },
+  { label: "💼 Conference", value: "conference" },
+  { label: "🔧 Workshop", value: "workshop" },
+  { label: "🤝 Networking", value: "networking" },
+  { label: "⚽ Sports", value: "sports" },
+  { label: "🎨 Art Exhibition", value: "art_exhibition" },
+  { label: "🍕 Food & Drink", value: "food_drink" },
+  { label: "❤️ Charity", value: "charity" },
+  { label: "✨ Other", value: "other" }
+];
 
-  const handleInputChange = (e: React.ChangeEvent<never>) => {
-    const { name, value, files } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: files ? files[0] : value
-    }));
-  };
+
+const handleInputChange = (
+  e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+) => {
+  const { name, value, files } = e.target as HTMLInputElement;
+
+  setFormData(prev => ({
+    ...prev,
+    [name]: files ? files[0] : value 
+  }));
+};
+
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log('Event created:', formData);
   };
 
+  //const [responseData, setResponseData] = useState<Record<string, unknown> | null>(null);
+const navigate = useNavigate();
+
+const createAnEvent = async () => {
+  const fd = new FormData();
+
+  //*****The owner field needs to change when the cookies or some session logic of who is logged in is added
+  fd.append("owner", "1");
+  fd.append("title", formData.eventTitle);
+  fd.append("description", formData.eventDescription);
+  fd.append("category", formData.eventCategory);
+  fd.append("date", formData.eventDate);
+  fd.append("time", formData.eventTime);
+  fd.append("address", formData.eventLocation);
+  fd.append("ticket_price", formData.ticketPrice);
+  fd.append("max_attendees", formData.maxAttendees);
+
+  if (formData.eventImage) {
+    fd.append("image_path", formData.eventImage); 
+  }
+
+  try {
+    const res = await fetch(`${import.meta.env.VITE_BASE_URL}/events/create`, {
+      method: "POST",
+      body: fd,
+    });
+
+    if (res.ok) {
+      navigate("/profile");
+    }
+  } catch (error) {
+    console.error("POST error:", error);
+  }
+};
+
+
+
   return (
     <>
-    <div className="flex lg:flex-row flex-col">
+    <div className="flex">
         <Sidenav />
-    </div>
-    <UserPanel />
-    <div className="min-h-screen max-w-[70%] sm:max-w-[50%] md:max-w-[65%] lg:max-w-[65%] py-8 flex items-center justify-center">
-      <div className="max-w-5xl w-full h-[100%] bg-white rounded-2xl shadow-xl overflow-hidden">
-        <div className="max-w-5xl w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
+        <UserPanel />
+      </div>
+      <div className="flex-1 min-h-screen max-w-[70%] sm:max-w-[50%] md:max-w-[65%] lg:max-w-[70%] py-8 flex items-center justify-center">
+        <div className="w-full h-[100%] bg-white rounded-2xl shadow-xl overflow-hidden">
+        <div className="w-full bg-white rounded-3xl shadow-2xl overflow-hidden">
           {/* Header */}
           <div className="p-8 text-white relative overflow-hidden" style={{ background: 'linear-gradient(to right, var(--color-moonstone), var(--color-lightermoonstone))' }}>
             <div className="absolute top-0 right-0 w-32 h-32 rounded-full -m-8 opacity-20" style={{ backgroundColor: 'var(--color-vanilla)' }}></div>
@@ -113,7 +157,9 @@ const CreateEvent = () => {
                         />
                       ) : (
                         <div className="text-center p-6">
-                          <div className="text-4xl mb-3">📸</div>
+                          <svg className="w-16 h-16 mx-auto mb-3" style={{ color: 'var(--color-darkervanilla)' }} fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M4 5a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2h-1.586a1 1 0 01-.707-.293l-1.121-1.121A2 2 0 0011.172 3H8.828a2 2 0 00-1.414.586L6.293 4.707A1 1 0 015.586 5H4zm6 9a3 3 0 100-6 3 3 0 000 6z" clipRule="evenodd" />
+                          </svg>
                           <p className="font-medium" style={{ color: 'var(--color-moonstone)' }}>Add Event Photo</p>
                           <p className="text-sm mt-1" style={{ color: 'var(--color-lightermoonstone)' }}>Click to upload</p>
                         </div>
@@ -126,12 +172,6 @@ const CreateEvent = () => {
                       name="eventImage"
                       accept="image/*"
                     />
-                    <button className="absolute bottom-4 right-4 p-3 rounded-2xl shadow-lg transition duration-200 transform hover:scale-110" 
-                            style={{ backgroundColor: 'var(--color-vanilla)' }}
-                            onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--color-darkervanilla)'}
-                            onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--color-vanilla)'}>
-                      <div className="text-lg">📷</div>
-                    </button>
                   </div>
                   <p className="text-sm inline-block px-3 py-1 rounded-full border" 
                      style={{ 
@@ -150,24 +190,34 @@ const CreateEvent = () => {
                        borderColor: 'var(--color-lightermoonstone)'
                      }}>
                   <h3 className="text-xl font-bold mb-4 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
-                    <div className="text-2xl mr-3">💡</div>
+                    <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z" clipRule="evenodd" />
+                    </svg>
                     Event Tips
                   </h3>
                   <ul className="space-y-3" style={{ color: 'var(--color-moonstone)' }}>
                     <li className="flex items-start p-3 rounded-xl" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
-                      <span className="text-xl mr-3" style={{ color: 'var(--color-darkervanilla)' }}>✨</span>
+                       <svg className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M5 2a1 1 0 011 1v1h1a1 1 0 010 2H6v1a1 1 0 01-2 0V6H3a1 1 0 010-2h1V3a1 1 0 011-1zm0 10a1 1 0 011 1v1h1a1 1 0 110 2H6v1a1 1 0 11-2 0v-1H3a1 1 0 110-2h1v-1a1 1 0 011-1zM12 2a1 1 0 01.967.744L14.146 7.2 17.5 9.134a1 1 0 010 1.732l-3.354 1.935-1.18 4.455a1 1 0 01-1.933 0L9.854 12.8 6.5 10.866a1 1 0 010-1.732l3.354-1.935 1.18-4.455A1 1 0 0112 2z" clipRule="evenodd" />
+                      </svg>
                       <span>Add clear, high-quality images</span>
                     </li>
                     <li className="flex items-start p-3 rounded-xl" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
-                      <span className="text-xl mr-3" style={{ color: 'var(--color-darkervanilla)' }}>📝</span>
+                      <svg className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M18 13V5a2 2 0 00-2-2H4a2 2 0 00-2 2v8a2 2 0 002 2h3l3 3 3-3h3a2 2 0 002-2zM5 7a1 1 0 011-1h8a1 1 0 110 2H6a1 1 0 01-1-1zm1 3a1 1 0 100 2h3a1 1 0 100-2H6z" clipRule="evenodd" />
+                      </svg>
                       <span>Write detailed descriptions</span>
                     </li>
                     <li className="flex items-start p-3 rounded-xl" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
-                      <span className="text-xl mr-3" style={{ color: 'var(--color-darkervanilla)' }}>💰</span>
+                       <svg className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" style={{ color: 'var(--color-moonstone)' }} fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                      </svg>
                       <span>Set realistic pricing</span>
                     </li>
                     <li className="flex items-start p-3 rounded-xl" style={{ backgroundColor: 'var(--color-bluewhite)' }}>
-                      <span className="text-xl mr-3" style={{ color: 'var(--color-darkervanilla)' }}>🏷️</span>
+                      <svg className="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" style={{ color: 'var(--color-moonstone)' }} fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M17.707 9.293a1 1 0 010 1.414l-7 7a1 1 0 01-1.414 0l-7-7A.997.997 0 012 10V5a3 3 0 013-3h5c.256 0 .512.098.707.293l7 7zM5 6a1 1 0 100-2 1 1 0 000 2z" clipRule="evenodd" />
+                      </svg>
                       <span>Choose the right category</span>
                     </li>
                   </ul>
@@ -198,7 +248,6 @@ const CreateEvent = () => {
                         color: activeTab === index ? 'var(--color-moonstone)' : 'var(--color-lightermoonstone)'
                       }}
                     >
-                      <span className="text-2xl mr-3">{tab.icon}</span>
                       <span className="font-semibold">{tab.title}</span>
                     </li>
                   ))}
@@ -212,7 +261,9 @@ const CreateEvent = () => {
                   <div className={`space-y-6 ${activeTab === 0 ? 'block' : 'hidden'}`}>
                     <div>
                       <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
-                        <span className="text-2xl mr-3">🎯</span>
+                        <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm0-2a6 6 0 100-12 6 6 0 000 12zm0-2a4 4 0 100-8 4 4 0 000 8zm0-2a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
+                        </svg>
                         Event Title
                       </label>
                       <input
@@ -241,7 +292,9 @@ const CreateEvent = () => {
 
                     <div>
                       <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
-                        <span className="text-2xl mr-3">📄</span>
+                        <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clipRule="evenodd" />
+                        </svg>
                         Event Description
                       </label>
                       <textarea
@@ -263,14 +316,16 @@ const CreateEvent = () => {
                           e.target.style.borderColor = 'var(--color-lightermoonstone)';
                           e.target.style.boxShadow = 'none';
                         }}
-                        placeholder="Describe your event in detail... ✨"
+                        placeholder="Describe your event in detail. What can attendees expect?"
                         required
                       />
                     </div>
 
                     <div>
                       <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
-                        <span className="text-2xl mr-3">🏷️</span>
+                        <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V3zm2 2a1 1 0 000 2h10a1 1 0 100-2H5z" clipRule="evenodd" />
+                        </svg>
                         Event Category
                       </label>
                       <select
@@ -294,9 +349,8 @@ const CreateEvent = () => {
                         required
                       >
                         <option value="" style={{ color: 'var(--color-lightermoonstone)' }}>Select a category...</option>
-                        {categories.map((category, index) => (
-                          <option key={index} value={category} style={{ color: 'var(--color-moonstone)' }}>{category}</option>
-                        ))}
+                        {categories.map((c, index) => (
+                            <option key={index} value={c.value}>{c.label}</option>))}
                       </select>
                     </div>
                   </div>
@@ -307,7 +361,9 @@ const CreateEvent = () => {
                       {/* Event Date with Popup Calendar */}
                       <div className="relative">
                         <label className="block font-bold text-lg mb-3 flex items-center" style={{ color: 'var(--color-moonstone)' }}>
-                          <span className="text-2xl mr-3">📅</span>
+                          <svg className="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                          </svg>
                           Event Date
                         </label>
 
@@ -331,9 +387,12 @@ const CreateEvent = () => {
 
                           <span
                             onClick={() => setShowCalendar(!showCalendar)}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer text-2xl"
+                            className="absolute right-5 top-1/2 -translate-y-1/2 cursor-pointer"
+                            style={{ color: 'var(--color-moonstone)' }}
                           >
-                            📆
+                            <svg className="w-6.5 h-6.5" fill="currentColor" viewBox="0 0 20 20">
+                              <path fillRule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clipRule="evenodd" />
+                            </svg>
                           </span>
 
                           {/* POPUP CALENDAR */}
@@ -526,6 +585,7 @@ const CreateEvent = () => {
                         }}
                         onMouseOver={(e) => e.currentTarget.style.backgroundColor = 'var(--color-darkervanilla)'}
                         onMouseOut={(e) => e.currentTarget.style.backgroundColor = 'var(--color-vanilla)'}
+                        onClick={createAnEvent}
                       >
                         <span className="text-xl mr-2">🎉</span>
                         Create Event!
