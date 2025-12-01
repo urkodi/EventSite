@@ -45,7 +45,6 @@ function EventBlock({
     e.preventDefault();
     e.stopPropagation();
     
-    // If currently bookmarked and on bookmark page, show confirmation
     if (isBookmarked && onRemoveConfirm) {
       setShowConfirm(true);
       return;
@@ -83,13 +82,13 @@ function EventBlock({
     e.preventDefault();
     e.stopPropagation();
     
-    // Create the share link (using current domain + event link)
+
     const shareUrl = `${window.location.origin}${link}`;
     
     try {
       await navigator.clipboard.writeText(shareUrl);
       setShowCopied(true);
-      setTimeout(() => setShowCopied(false), 2000); // Hide after 2 seconds
+      setTimeout(() => setShowCopied(false), 2000);
     } catch (err) {
       console.error('Failed to copy link:', err);
     }
@@ -114,7 +113,7 @@ function EventBlock({
     e.preventDefault();
     e.stopPropagation();
     setShowMap(true);
-    setMapPosition({ x: 0, y: 0 }); // Reset position when opening
+    setMapPosition({ x: 0, y: 0 }); 
   };
 
   const handleCloseMap = (e: React.MouseEvent) => {
@@ -144,7 +143,6 @@ function EventBlock({
     setIsDragging(false);
   };
 
-  // Add event listeners for dragging
   useEffect(() => {
     if (isDragging) {
       window.addEventListener('mousemove', handleMouseMove);
@@ -156,7 +154,6 @@ function EventBlock({
     }
   }, [isDragging, dragOffset]);
 
-  // Create the Google Maps embed URL
   const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(eventAddress)}&output=embed`;
 
   return (

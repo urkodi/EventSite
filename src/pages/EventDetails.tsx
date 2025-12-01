@@ -5,6 +5,8 @@ import Panels from "../features/Panels";
 import BookmarkSVG from "../components/icons/BookmarkSVG";
 import ShareSVG from "../components/icons/ShareSVG";
 
+import { Link } from 'react-router-dom';
+
 type EventData = {
   eventId: string;
   imageUrl: string;
@@ -15,6 +17,7 @@ type EventData = {
   category: string;
   description?: string;
   link?: string;
+  price?: string | number;
 };
 
 function EventDetails() {
@@ -49,7 +52,8 @@ function EventDetails() {
       category: "Food",
       eventTime: "7:00 PM",
       description: "Join us for a fun outdoor duck hunt event with friends!",
-      link: "/events/1"
+      link: "/events/1",
+      price: "$25"
     },
     {
       eventId: "2",
@@ -61,7 +65,8 @@ function EventDetails() {
       category: "Art",
       eventTime: "5:00 PM",
       description: "A creative display of modern and classic artwork.",
-      link: "/events/2"
+      link: "/events/2",
+      price: "FREE"
     },
   ];
 
@@ -174,7 +179,9 @@ function EventDetails() {
             <p className="text-xl font-semibold">
               {event.eventDate} {event.eventTime ? `• ${event.eventTime}` : ""}
             </p>
+            
             <p className="text-lg">{event.eventAddress}</p>
+            
             <p className="italic text-md">Category: {event.category}</p>
             <button
                 onClick={handleMapClick}
@@ -182,7 +189,7 @@ function EventDetails() {
               >
                 Map
               </button>
-
+              
             <div className="absolute bottom-6 right-6 flex flex-col gap-4">
               <button onClick={handleBookmark} className="text-moonstone">
                 <BookmarkSVG width="2em" height="2em" filled={isBookmarked} />
@@ -202,11 +209,31 @@ function EventDetails() {
         </div>
 
         {event.description && (
-          <div className="bg-bluewhite text-moonstone p-4 rounded-xl shadow-md">
+          <div className="relative bg-bluewhite text-moonstone p-4 rounded-xl shadow-md">
             <h2 className="text-xl font-bold mb-2">About this event</h2>
-            <p>{event.description}</p>
+            <div className="h-1 bg-vanilla rounded-lg mb-1 w-full"></div>
+
+            {event.price && (
+              <p className="text-lg font-semibold text-moonstone mb-2">
+                Price: <span className="text-moonstone">{event.price}</span>
+              </p>
+            )}
+
+            <p className="mb-16">{event.description}</p>
+
+            <div className="absolute bottom-8 right-6">
+              <Link
+                //ask whether to add in this way 
+                //to={`/checkout/${event.eventId}`}
+                to="/checkout"
+                className="py-3 px-4 bg-lightermoonstone text-white font-semibold rounded-full hover:bg-moonstone transition"
+              >
+                Book Event!
+              </Link>
+            </div>
           </div>
         )}
+
 
         <button
           onClick={() => navigate(-1)}

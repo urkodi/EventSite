@@ -3,6 +3,8 @@ import XSVG from "../components/icons/XSVG";
 import ProfilePic from "../assets/images/DuckLogo.png"; // Replace with your actual image path
 
 import { Link } from 'react-router-dom';
+import Calendar from "../components/Calendar";
+import Clock from "../components/Clock";
 
 function UserPanel() {
   const [isOpen, setIsOpen] = useState(false);
@@ -30,14 +32,14 @@ function UserPanel() {
         style={{ height: 'calc(100vh - 4rem)' }}
       >
         <div className="flex justify-between items-center p-3 border-b-2 border-moonstone ml-2">
-          <h2 className="text-xl font-bold text-white">User Panel</h2>
+          <h2 className="text-2xl font-bold text-white">User Panel</h2>
           <button onClick={() => setIsOpen(false)} className="text-white hover:text-vanilla">
             <XSVG width="1.2em" height="1.2em" />
           </button>
         </div>
 
-        <div className="p-4 ml-2 text-white text-lg space-y-2">
-          <div className="flex flex-col gap-2 mb-4">
+        <div className="p-4 ml-2 text-white text-xl space-y-2">
+          <div className="flex flex-col gap-4 mb-4">
           <Link
             to="/profile" 
             className="text-white hover:text-moonstone font-semibold"
@@ -49,8 +51,12 @@ function UserPanel() {
             >Hosted Events
           </Link>
           </div>
-          <p>more blah blah</p>
-          {/* Add user-specific content here */}
+
+          <div className="absolute bottom-4 right-0 px-4 w-full">
+          <p className="py-2 font-semibold">Today's Date :</p>
+          <Calendar />
+          <Clock />
+          </div>
         </div>
       </aside>
     </>
