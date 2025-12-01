@@ -84,6 +84,14 @@ const CreateAccountPage = () => {
         }
     };
 
+    const handleInput = (e) => {
+    e.target.value = e.target.value.replace(/[^0-9]/g, '');
+    if (e.target.value.length === 1) {
+        const next = e.target.nextElementSibling;
+        if (next) next.focus();
+    }
+    };
+
     if (submitted) {
         return (
             <div className="flex flex-col mx-auto h-auto">
@@ -103,38 +111,56 @@ const CreateAccountPage = () => {
                     <div className="w-full max-w-md rounded-2xl p-8 bg-lightermoonstone shadow-md text-center">
                         <h2 className="font-bold mb-6 text-5xl text-moonstone">Check Your Email!</h2>
                         <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla mb-5"></div>
-                        <p className="text-bluewhite text-lg mb-3">
+                        <p className="text-white text-lg mb-3">
                             If we found an account with that email, your 6-digit code has been sent to:
                         </p>
-                        <p className="text-cyan-600 font-semibold">{formData.email}</p>
-                        <div className="flex flex-col p-2 mt-1"> 
-                            <form className="flex justify-center gap-3"> 
-                                <input 
-                                    type="text"
-                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
-                                </input>
-                                <input 
-                                    type="text"
-                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
-                                </input>
-                                <input 
-                                    type="text"
-                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
-                                </input>
-                                <input 
-                                    type="text"
-                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
-                                </input>
-                                <input 
-                                    type="text"
-                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
-                                </input>
-                                <input 
-                                    type="text"
-                                    className="text-center text-2xl text-moonstone bg-bluewhite border-2 border-moonstone w-12 h-15 rounded-xl focus:outline-vanilla">
-                                </input>
-                            </form>  
-                        </div>
+                        <p className="text-moonstone font-semibold">{formData.email}</p>
+                        <div className="flex flex-col p-2 mt-5 "> 
+                                <form className="flex justify-center gap-3"> 
+                                    <input 
+                                        type="text"
+                                        maxLength={1}
+                                        inputMode="numeric"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite w-12 h-15 rounded-xl focus:outline-none focus:ring-2 focus:ring-vanilla"
+                                        onInput={handleInput}>
+                                    </input>
+                                    <input 
+                                        type="text"
+                                        maxLength={1}
+                                        inputMode="numeric"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite w-12 h-15 rounded-xl focus:outline-none focus:ring-2 focus:ring-vanilla"
+                                        onInput={handleInput}>
+                                    </input>
+                                    <input 
+                                        type="text"
+                                        maxLength={1}
+                                        inputMode="numeric"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite w-12 h-15 rounded-xl focus:outline-none focus:ring-2 focus:ring-vanilla"
+                                        onInput={handleInput}>
+                                    </input>
+                                    <input 
+                                        type="text"
+                                        maxLength={1}
+                                        inputMode="numeric"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite w-12 h-15 rounded-xl focus:outline-none focus:ring-2 focus:ring-vanilla"
+                                        onInput={handleInput}>
+                                    </input>
+                                    <input 
+                                        type="text"
+                                        maxLength={1}
+                                        inputMode="numeric"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite w-12 h-15 rounded-xl focus:outline-none focus:ring-2 focus:ring-vanilla"
+                                        onInput={handleInput}>
+                                    </input>
+                                    <input 
+                                        type="text"
+                                        maxLength={1}
+                                        inputMode="numeric"
+                                        className="text-center text-2xl text-moonstone bg-bluewhite w-12 h-15 rounded-xl focus:outline-none focus:ring-2 focus:ring-vanilla"
+                                        onInput={handleInput}>
+                                    </input>
+                                </form>  
+                            </div>
                     </div>
                 </div>
             </div>
@@ -160,13 +186,13 @@ const CreateAccountPage = () => {
                 scrollbarColor: '#4C9DB0 transparent',
             }}>
 
-            <main className="flex flex-col items-center justify-center mt-10 mb-10 lg:mt-30 lg:mb-30">
-                <div className="w-full max-w-lg md:max-w-xl lg:max-w-xl transform md:scale-105 lg:scale-120 rounded-2xl px-8 py-5 bg-lightermoonstone shadow-md">
+            <main className="flex flex-col items-center justify-center mt-10 mb-10 sm:mt-30 sm:mb-20 ">
+                <div className="w-full max-w-lg rounded-2xl sm:scale-120 p-10 bg-lightermoonstone shadow-md">
                     <h2 className="font-bold mb-6 text-center text-5xl text-moonstone">
                         Create Account
                     </h2>
 
-                    <div className="mx-auto w-50 rounded-xl h-2 bg-vanilla mb-5"></div>
+                    <div className="mx-auto w-[30%] rounded-xl h-2 bg-vanilla my-5"></div>
 
                     {error && (
                         <p className="text-cyan-600 text-center mb-4 font-semibold">{error}</p>
@@ -225,7 +251,7 @@ const CreateAccountPage = () => {
                             />
                         </fieldset>
 
-                        <fieldset className="mt-3 text-[13px] text-white space-x-1 flex items-center">
+                        <fieldset className="py-3 text-[13px] text-white space-x-1 flex items-center">
                             <input
                                 type="checkbox"
                                 id="terms"
@@ -239,48 +265,22 @@ const CreateAccountPage = () => {
                             </label>
                         </fieldset>
 
-                        <fieldset className="flex justify-center items-center mt-3">
+                    <div className="mt-8 mb-4 w-auto h-px bg-moonstone flex items-center relative">
+                        <span className="px-3 bg-lightermoonstone text-moonstone relative mx-auto">
+                            <fieldset className="flex justify-center items-center py-2">
                             <button
                                 type="submit"
-                                className="px-10 py-2 text-[20px] font-bold rounded-full bg-moonstone text-bluewhite shadow-md cursor-pointer hover:ring-3 hover:ring-vanilla"
+                                className="px-10 py-2 text-lg font-bold rounded-full bg-moonstone text-bluewhite shadow-md cursor-pointer hover:ring-3 hover:ring-vanilla"
                                 onClick={handleSubmit}
                             >
                                 Sign Up
                             </button>
                         </fieldset>
-                    </form>
-
-                    <div className="mt-5 w-auto h-px bg-moonstone flex items-center relative">
-                        <span className="px-3 bg-lightermoonstone text-moonstone relative mx-auto">
-                            Or continue with
                         </span>
                     </div>
-                    
-                    {/* alternative sign up methods buttons */}
-                    <form className="flex-1 p-3 flex border-none cursor-pointer mt-3">
-                        <button 
-                            type = "button"
-                            onClick={() => alert("FIXME")}
-                            className="flex-1 flex justify-center items-center cursor-pointer">
-                            <img src={GoogleLogo} alt="Google" className="w-10 h-10" />
-                        </button>
-
-                        <button 
-                            type = "button"
-                            onClick={() => alert("FIXME")}
-                            className="flex-1 flex justify-center items-center cursor-pointer">
-                            <img src={AppleLogo} alt="Apple" className="w-10 h-10" />
-                        </button>
-
-                        <button 
-                            type = "button"
-                            onClick={() => alert("FIXME")}
-                            className="flex-1 flex justify-center items-center cursor-pointer">
-                            <img src={FacebookLogo} alt="Facebook" className="w-10 h-10" />
-                        </button>
                     </form>
 
-                    <div className="px-3 text-center text-moonstone">
+                    <div className="text-center text-moonstone">
                         Already have an account?{' '}
                         <a
                             href="/login"
