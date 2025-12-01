@@ -17,6 +17,8 @@ import LandingPage from "./pages/landingpage";
 import SearchPage from "./pages/searchpage";
 import EventDetails from "./pages/EventDetails";
 import NotFound from "./pages/NotFound";
+import Maintenance from "./pages/Maintenance";
+import ServerError from "./pages/ServerError";
 
 
 function App() {
@@ -37,7 +39,10 @@ function App() {
         <Route path="/browse" element={<SearchPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/create-event" element={<CreateEvent />} />
-        <Route path="/event-details" element={<EventDetails />} />        <Route path="*" element={<NotFound />} />
+        <Route path="/event-details" element={<EventDetails />} /> 
+        <Route path="/maintenance" element={<Maintenance />} />
+        <Route path="/server" element={<ServerError />} />       
+        <Route path="*" element={<NotFound />} />
 
 
       </Routes>
