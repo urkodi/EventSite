@@ -62,10 +62,12 @@ const MyTickets = () => {
           style={{
             scrollbarColor:"#E9CC73 transparent",
           }}>
-          <div className="mt-6 grid gap-y-6 gap-x-2 px-4 place-items-center" 
-              style={{ 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))'
-               }}>
+          <div
+              className="mt-2 grid gap-4 px-2"
+                style={{
+                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, max-content))",
+                }}
+              >
             {tickets.length > 0 ? (
               tickets.map(ticket => (
                 <EventBlock

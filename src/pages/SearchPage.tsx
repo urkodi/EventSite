@@ -24,51 +24,56 @@ function SearchPage() {
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [events, setEvents] = useState([
-        { eventId: "1",
-            imageUrl:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg" ,
-            link:"/event-details" ,
-            eventTitle:"Duck Hunt" ,
-            eventDate:"October 30th 2025" ,
-            eventAddress:"44 Hummingbird Ln" ,
-            category:"Food" ,
-        },
-        {
-            eventId:"2",
-            imageUrl:"https://www.stockvault.net/data/2020/01/18/272608/thumb16.jpg",
-            link:"/event-details",
-            eventTitle:"Art Expo",
-            eventDate:"October 30th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Art"
-        },
-        {
-            eventId:"3",
-            imageUrl:"https://gratisography.com/wp-content/uploads/2025/05/gratisography-dino-party-800x525.jpg",
-            link:"/event-details",
-            eventTitle:"Dino Party",
-            eventDate:"November 25th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Party"
-        },
-        {
-            eventId:"4",
-            imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG66KxSseACXvW6KvUTYLxE2DbuCNfv4APUpURpgqxOGkqjvfGR1GqxuYS1WXr2bfoV34&usqp=CAU",
-            link:"/event-details",
-            eventTitle:"Doggy Dance Off",
-            eventDate:"December 5th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Drinks"
-        },
-        {
-            eventId:"5",
-            imageUrl:"https://www.adobe.com/content/dam/www/us/en/events/overview-page/eventshub_evergreen_opengraph_1200x630_2x.jpg",
-            link:"/event-details",
-            eventTitle:"Music Festival",
-            eventDate:"November 25th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Music"
-        },
-        
+    { 
+        eventId: "1",
+        imageUrl:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg",
+        link:`/event-details/1`,
+        eventTitle:"Duck Hunt",
+        eventDate:"October 30th 2025",
+        eventAddress:"44 Hummingbird Ln",
+        category:"Food",
+        eventTime: "3:00 PM"
+    },
+    {
+        eventId:"2",
+        imageUrl:"https://www.stockvault.net/data/2020/01/18/272608/thumb16.jpg",
+        link:`/event-details/2`,
+        eventTitle:"Art Expo",
+        eventDate:"October 30th 2025",
+        eventAddress:"44 Hummingbird Ln",
+        category:"Art",
+        eventTime: "4:00 PM"
+    },
+    {
+        eventId:"3",
+        imageUrl:"https://gratisography.com/wp-content/uploads/2025/05/gratisography-dino-party-800x525.jpg",
+        link:`/event-details/3`,
+        eventTitle:"Dino Party",
+        eventDate:"November 25th 2025",
+        eventAddress:"44 Hummingbird Ln",
+        category:"Party",
+        eventTime: "6:00 PM"
+    },
+    {
+        eventId:"4",
+        imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG66KxSseACXvW6KvUTYLxE2DbuCNfv4APUpURpgqxOGkqjvfGR1GqxuYS1WXr2bfoV34&usqp=CAU",
+        link:`/event-details/4`,
+        eventTitle:"Doggy Dance Off",
+        eventDate:"December 5th 2025",
+        eventAddress:"44 Hummingbird Ln",
+        category:"Drinks",
+        eventTime: "3:00 PM"
+    },
+    {
+        eventId:"5",
+        imageUrl:"https://www.adobe.com/content/dam/www/us/en/events/overview-page/eventshub_evergreen_opengraph_1200x630_2x.jpg",
+        link:`/event-details/5`,
+        eventTitle:"Music Festival",
+        eventDate:"November 25th 2025",
+        eventAddress:"44 Hummingbird Ln",
+        category:"Music",
+        eventTime: "5:00 PM"
+    },
     ]);
 
     useEffect(() => {
@@ -195,10 +200,12 @@ function SearchPage() {
                     scrollbarColor:"#E9CC73 transparent",
                 }}>
 
-                <div className="mt-6 grid gap-y-6 gap-x-2 px-4 place-items-center" 
-                    style={{ 
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))'
-                        }}>
+                <div
+                  className="mt-2 grid gap-3 px-1"
+                  style={{
+                    gridTemplateColumns: "repeat(auto-fit, minmax(220px, max-content))",
+                  }}
+                >
                   {filteredEvents.length > 0 ? (
                     filteredEvents.map((event) => (
                       <EventBlock
@@ -208,6 +215,7 @@ function SearchPage() {
                         link={event.link}
                         eventTitle={event.eventTitle}
                         eventDate={event.eventDate}
+                        eventTime={event.eventTime}
                         eventAddress={event.eventAddress}
                         category={event.category}
                       />

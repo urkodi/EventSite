@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import BookmarkSVG from './icons/BookmarkSVG.tsx'
 import ShareSVG from './icons/ShareSVG.tsx';
 
@@ -9,6 +9,7 @@ type EventBlockProps = {
   eventDate: string;
   eventTitle: string;
   eventAddress: string;
+  eventTime: string;
   category: string;
   onBookmark?: (eventId: string, isBookmarked: boolean) => void;
   showMapButton?: boolean;
@@ -22,6 +23,7 @@ function EventBlock({
   imageUrl, 
   link, 
   eventDate, 
+  eventTime,
   eventTitle, 
   eventAddress, 
   category, 
@@ -34,6 +36,10 @@ function EventBlock({
   const [isBookmarked, setIsBookmarked] = useState(initialBookmarked);
   const [showConfirm, setShowConfirm] = useState(false);
   const [showCopied, setShowCopied] = useState(false);
+  const [showMap, setShowMap] = useState(false);
+  const [mapPosition, setMapPosition] = useState({ x: 0, y: 0 });
+  const [isDragging, setIsDragging] = useState(false);
+  const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
 
   const handleBookmark = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -59,6 +65,7 @@ function EventBlock({
         imageUrl,
         link,
         eventDate,
+        eventTime,
         eventTitle,
         eventAddress,
         category
@@ -106,8 +113,51 @@ function EventBlock({
   const handleMapClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(eventAddress)}`, '_blank');
+    setShowMap(true);
+    setMapPosition({ x: 0, y: 0 }); // Reset position when opening
   };
+
+  const handleCloseMap = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowMap(false);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    setIsDragging(true);
+    setDragOffset({
+      x: e.clientX - mapPosition.x,
+      y: e.clientY - mapPosition.y
+    });
+  };
+
+  const handleMouseMove = (e: MouseEvent) => {
+    if (isDragging) {
+      setMapPosition({
+        x: e.clientX - dragOffset.x,
+        y: e.clientY - dragOffset.y
+      });
+    }
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+  };
+
+  // Add event listeners for dragging
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, dragOffset]);
+
+  // Create the Google Maps embed URL
+  const mapEmbedUrl = `https://www.google.com/maps?q=${encodeURIComponent(eventAddress)}&output=embed`;
 
   return (
     <li className="w-52 h-72 rounded-2xl border-4 border-bluewhite overflow-hidden shadow-md bg-whiteblue flex flex-col relative">
@@ -128,7 +178,9 @@ function EventBlock({
             <h3 className="font-bold text-xl leading-tight line-clamp-2 text-moonstone truncate">
               {eventTitle}
             </h3>
-            <p className="text-sm text-gray-700 truncate">{eventDate}</p>
+            <p className="text-sm text-gray-700 truncate">
+              {eventDate}{eventTime ? ` • ${eventTime}` : ""}
+            </p>
             <p className="text-sm text-gray-700 truncate">{eventAddress}</p>
             
             {/* Map button on bottom left */}
@@ -167,6 +219,59 @@ function EventBlock({
         </section>
       </a>
 
+      {/* Map Popup Modal */}
+      {showMap && (
+        <div className="fixed inset-0 bg-opacity-50 flex items-center justify-center z-50">
+          <div 
+            className="bg-white rounded-2xl shadow-2xl w-[80vw] h-[70vh] max-w-2xl flex flex-col"
+            style={{
+              transform: `translate(${mapPosition.x}px, ${mapPosition.y}px)`,
+              cursor: isDragging ? 'grabbing' : 'default'
+            }}
+          >
+            <div 
+              className="flex justify-between items-center p-4 border-b-2 border-moonstone cursor-grab active:cursor-grabbing"
+              onMouseDown={handleMouseDown}
+            >
+              <div>
+                <h3 className="font-bold text-lg text-moonstone">{eventTitle}</h3>
+                <p className="text-sm text-gray-600">{eventAddress}</p>
+              </div>
+            </div>
+            
+            <div className="flex-grow relative">
+              <iframe
+                src={mapEmbedUrl}
+                className="w-full h-full"
+                style={{ border: 0, pointerEvents: isDragging ? 'none' : 'auto' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+            </div>
+
+            <div className="p-4 border-t-2 border-moonstone flex justify-end gap-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(eventAddress)}`, '_blank');
+                }}
+                className="bg-vanilla hover:bg-darkervanilla text-moonstone px-4 py-2 rounded-full text-md font-semibold transition"
+              >
+                Open in Google Maps
+              </button>
+              <button
+                onClick={handleCloseMap}
+                className="bg-lightermoonstone hover:bg-moonstone text-white px-4 py-2 rounded-full text-md font-semibold transition"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Remove Bookmark Confirmation */}
       {showConfirm && (
         <div className="absolute inset-0 bg-lightermoonstone bg-opacity-70 flex items-center justify-center z-50 rounded-2xl">
           <div className="bg-bluewhite p-4 rounded-lg shadow-lg w-[90%] mx-auto">

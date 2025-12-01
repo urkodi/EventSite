@@ -29,47 +29,52 @@ function Homepage() {
     const [events, setEvents] = useState([
         { eventId: "1",
             imageUrl:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg" ,
-            link:"/event-details" ,
+            link:"/event-details/1" ,
             eventTitle:"Duck Hunt" ,
             eventDate:"October 30th 2025" ,
             eventAddress:"44 Hummingbird Ln" ,
             category:"Food" ,
+            eventTime: "6:00 PM"
         },
         {
             eventId:"2",
             imageUrl:"https://www.stockvault.net/data/2020/01/18/272608/thumb16.jpg",
-            link:"/event-details",
+            link:"/event-details/2",
             eventTitle:"Art Expo",
             eventDate:"October 30th 2025",
             eventAddress:"44 Hummingbird Ln",
-            category:"Art"
+            category:"Art",
+            eventTime: "6:00 PM"
         },
         {
             eventId:"3",
             imageUrl:"https://gratisography.com/wp-content/uploads/2025/05/gratisography-dino-party-800x525.jpg",
-            link:"/event-details",
+            link:"/event-details/3",
             eventTitle:"Dino Party",
             eventDate:"November 25th 2025",
             eventAddress:"44 Hummingbird Ln",
-            category:"Party"
+            category:"Party",
+            eventTime: "1:00 PM"
         },
         {
             eventId:"4",
             imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG66KxSseACXvW6KvUTYLxE2DbuCNfv4APUpURpgqxOGkqjvfGR1GqxuYS1WXr2bfoV34&usqp=CAU",
-            link:"/event-details",
+            link:"/event-details/4",
             eventTitle:"Doggy Dance Off",
             eventDate:"December 5th 2025",
             eventAddress:"44 Hummingbird Ln",
-            category:"Drinks"
+            category:"Drinks",
+            eventTime: "3:00 PM"
         },
         {
             eventId:"5",
             imageUrl:"https://www.adobe.com/content/dam/www/us/en/events/overview-page/eventshub_evergreen_opengraph_1200x630_2x.jpg",
-            link:"/event-details",
+            link:"/event-details/5",
             eventTitle:"Music Festival",
             eventDate:"November 25th 2025",
             eventAddress:"44 Hummingbird Ln",
-            category:"Music"
+            category:"Music",
+            eventTime: "5:00 PM"
         },
         
     ]);
@@ -146,16 +151,9 @@ function Homepage() {
 
             <span className="flex h-auto ml-8 mt-3 mb-1">
                 <Dropdown title="Choose a Location" buttonName="Location">
-                    <div className="w-full mt-4 bg-white rounded-2xl px-2 py-2 flex items-center gap-2">
-                        <span className="px-1 text-neutral-400">
-                            <SearchSVG width="1.2em" height="1.2em" />
-                        </span>
-                        <input
-                            type="text"
-                            placeholder="Search by city or ZIP code"
-                            className= "flex-1 placeholder-neutral-400 border-none outline-none"
-                        />
-                        {/* ADD MAP FEATURE BACK IN LATER */}
+                    <div className="space-y-4">
+                        {/* Map Component */}
+                        <Map/>
                     </div>
                 </Dropdown>
                 <Dropdown 
@@ -226,6 +224,7 @@ function Homepage() {
                                     link={event.link}
                                     eventTitle={event.eventTitle}
                                     eventDate={event.eventDate}
+                                    eventTime={event.eventTime} 
                                     eventAddress={event.eventAddress}
                                     category={event.category} />
                             </li>
@@ -266,6 +265,7 @@ function Homepage() {
                                     link={event.link} 
                                     eventTitle={event.eventTitle} 
                                     eventDate={event.eventDate} 
+                                    eventTime={event.eventTime} 
                                     eventAddress={event.eventAddress}
                                     category="" /> 
                                 </li>
