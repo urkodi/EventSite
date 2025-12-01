@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import HelpDuck from "../assets/images/HelpDuck.png";
+import NotFoundDuck from "../assets/images/NotFoundDuck.png";
 
 const NotFound: React.FC = () => {
   const navigate = useNavigate();
@@ -26,7 +26,7 @@ const NotFound: React.FC = () => {
         {/* Duck Placeholder */}
         <div className="relative mt-10 w-200 h-75">
   <img 
-    src={HelpDuck} 
+    src={NotFoundDuck} 
     alt="duck"
     className="w-full h-full object-contain rounded-2xl"
   />
