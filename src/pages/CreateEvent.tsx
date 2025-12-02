@@ -33,7 +33,7 @@ const CreateEvent = () => {
       .then(res => res.json())
       .then(data => {
         console.log("Logged-in user:", data);
-        setUser({ id: data.id });
+        setUser({ id: data.id ?? 1 });
       })
       .catch(err => console.error("Error loading user:", err));
   }, []);
