@@ -37,6 +37,7 @@ const ForgotPassword = () => {
     return (
         <>
         {/* Header */}
+        <div className="flex flex-col mx-auto h-auto max-h-screen overflow-x-hidden">
         <div className="flex flex-col mx-auto h-auto">
             <header className="w-screen h-auto bg-moonstone p-4">
                 <div className="flex items-left">
@@ -118,7 +119,7 @@ const ForgotPassword = () => {
                         <form onSubmit={handleSubmit} noValidate>
                             {/* Error Message */}
                             {error && (
-                                <p className="text-cyan-600 text-center mb-4">{error}</p>
+                                <p className="text-moonstone text-center mb-4">{error}</p>
                             )}
 
                             {/* Email Input */}
@@ -128,7 +129,7 @@ const ForgotPassword = () => {
                                     placeholder="Email"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
-                                    className="rounded-lg p-2 text-moonstone focus:outline-vanilla border-2 border-moonstone"
+                                    className="rounded-lg p-2 text-moonstone focus:outline-vanilla border-2 border-moonstone bg-bluewhite "
                                 />
                             </form>
 
@@ -144,6 +145,7 @@ const ForgotPassword = () => {
                 </div>
             </main>
 
+        </div>
         </div>
         </>
     );
