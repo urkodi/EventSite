@@ -151,7 +151,7 @@ const tabs = [
     .then(res => res.json())
     .then(data => {
       const userData: UserType = {
-        id: data.id,
+        id: data.id ?? 1, 
       };
       setUser(userData);
       //alert(data.id)
