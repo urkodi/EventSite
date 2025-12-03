@@ -17,19 +17,11 @@ const HostedEvents = () => {
   const [hostedEvents] = useState<HostedEvent[]>([
     {
       id: 1,
-      title: "React Dev Meetup",
+      title: "Catering Event",
       startTime: "6:00 PM",
       date: "2025-11-20",
       address: "123 Main St, Lincoln, RI",
-      image: "https://monsterspost.com/wp-content/uploads/2019/03/Images.jpg",
-    },
-    {
-      id: 2,
-      title: "React Dev Meetup",
-      startTime: "6:00 PM",
-      date: "2025-11-20",
-      address: "123 Main St, Lincoln, RI",
-      image: "https://monsterspost.com/wp-content/uploads/2019/03/Images.jpg",
+      image: "https://www.shelter-structures.com/wp-content/uploads/2025/07/Tent-for-Outdoor-Events.webp",
     },
   ]);
 

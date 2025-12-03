@@ -3,14 +3,13 @@ import Panels from '../features/Panels';
 import EventBlock from '../components/EventBlock';
 
 const initialBookmarkedEvents = [
-  {
-    eventId: '1',
-    title: 'Music Festival',
-    date: 'Oct 12, 2025 at 7:00 PM',
-    time: "7:00 PM",
-    address: 'AMP Amica Mutual Pavilion',
-    image: 'https://hips.hearstapps.com/hmg-prod/images/gettyimages-971260876-1559600482.jpg',
-    category: 'Music'
+  { eventId: "1",
+    image:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg" ,
+    title:"Duck Hunt" ,
+    date:"October 30th 2025" ,
+    address:"44 Hummingbird Ln" ,
+    category:"Food" ,
+    time: "6:00 PM"
   },
   {
     eventId: '2',

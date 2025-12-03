@@ -155,8 +155,10 @@ function EventDetails() {
 
   return (
     <Panels>
-      <div className="flex flex-col w-full h-full text-white p-8 gap-6 overflow-y-auto">
-
+      <div className="flex flex-col w-full h-full text-white p-8 gap-6 overflow-y-auto"
+        style={{
+            scrollbarColor:"#E9CC73 transparent",
+          }}>
         <h1 className="font-bold text-4xl px-6 py-4 bg-moonstone rounded-2xl shadow-md mb-4">
           Event Details
         </h1>

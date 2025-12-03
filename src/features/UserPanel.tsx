@@ -1,14 +1,27 @@
 import { useState, useRef } from "react";
 import XSVG from "../components/icons/XSVG";
-import ProfilePic from "../assets/images/DuckLogo.png"; // Replace with your actual image path
+import ProfilePic from "../assets/images/DuckLogo.png";
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Calendar from "../components/Calendar";
 import Clock from "../components/Clock";
+import useUserStore from "../lib/userStore";
 
 function UserPanel() {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const { removeUser } = useUserStore();
+
+  const handleSignOut = () => {
+    removeUser();
+    
+    localStorage.removeItem('authToken');
+    
+    setIsOpen(false);
+
+    navigate('/landing');
+  };
 
   return (
     <>
@@ -38,24 +51,32 @@ function UserPanel() {
           </button>
         </div>
 
-        <div className="p-4 ml-2 text-white text-xl space-y-2">
+        <div className="p-4 ml-2 text-white text-xl space-y-2 h-full flex flex-col">
           <div className="flex flex-col gap-4 mb-4">
           <Link
             to="/profile" 
-            className="text-white hover:text-moonstone font-semibold"
+            className="text-white hover:text-vanilla font-semibold transition"
             >Profile
           </Link>
           <Link
             to="/hosted-events" 
-            className="text-white hover:text-moonstone font-semibold"
+            className="text-white hover:text-vanilla font-semibold transition"
             >Hosted Events
           </Link>
           </div>
 
-          <div className="absolute bottom-4 right-0 px-4 w-full">
-          <p className="py-2 font-semibold">Today's Date :</p>
-          <Calendar />
-          <Clock />
+          {/* Bottom Section */}
+          <div className="space-y-2 pb-4">
+            <Calendar />
+            <Clock />
+            
+            {/* Sign Out Button */}
+            <button
+              onClick={handleSignOut}
+              className="w-full py-3 px-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition border border-white/30 hover:border-white/50"
+            >
+              Sign Out
+            </button>
           </div>
         </div>
       </aside>
