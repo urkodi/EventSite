@@ -1,5 +1,4 @@
-// src/pages/HostedEvents.tsx
-import React, { useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Panels from "../features/Panels";
 import EventBlock from "../components/EventBlock";
