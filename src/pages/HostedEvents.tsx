@@ -16,7 +16,7 @@ type HostedEvent = {
 const HostedEvents = () => {
   const [hostedEvents] = useState<HostedEvent[]>([
     {
-      id: 1,
+      id: 10,
       title: "Catering Event",
       startTime: "6:00 PM",
       date: "2025-11-20",
@@ -69,7 +69,7 @@ const HostedEvents = () => {
                       key={event.id}
                       eventId={String(event.id)}
                       imageUrl={event.image}
-                      link={`/events/${event.id}`}
+                      link={`/event-details/${event.id}`}
                       eventDate={`${event.date}`}
                       eventTime={event.startTime}
                       eventTitle={event.title}

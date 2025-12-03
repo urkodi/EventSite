@@ -72,7 +72,7 @@ const Bookmark = () => {
                   key={event.eventId}
                   eventId={event.eventId}
                   imageUrl={event.image}
-                  link="/event-details"
+                  link={`/event-details/${event.eventId}`}
                   eventTitle={event.title}
                   eventDate={event.date}
                   eventTime={event.time}

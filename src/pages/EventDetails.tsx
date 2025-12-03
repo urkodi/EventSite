@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import Panels from "../features/Panels";
 
@@ -18,11 +18,15 @@ type EventData = {
   description?: string;
   link?: string;
   price?: string | number;
+  isPastEvent?: boolean; 
 };
 
 function EventDetails() {
   const { eventId } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  
+  const isPastEvent = searchParams.get('past') === 'true';
 
   const [event, setEvent] = useState<EventData | null>(null);
 
@@ -53,7 +57,34 @@ function EventDetails() {
       eventTime: "7:00 PM",
       description: "Join us for a fun outdoor duck hunt event with friends!",
       link: "/events/1",
-      price: "$25"
+      price: "$25",
+      isPastEvent: false
+    },
+    {
+      eventId: "8",
+      imageUrl: "https://www.golocalprov.com/cache/images/remote/https_s3.amazonaws.com/media.golocalprov.com/RIC_Anchormen_Logo_2019.png",
+      eventTitle: "Rhode Island College Internship Fair",
+      eventDate: "Oct 12, 2025",
+      eventAddress: "600 College Rd, Providence, RI 02908",
+      category: "Career",
+      eventTime: "12:00 PM",
+      description: "Connect with top employers and explore internship opportunities at RIC's annual career fair.",
+      link: "/events/3",
+      price: "FREE",
+      isPastEvent: false
+    },
+    {
+      eventId: "4",
+      imageUrl: "https://images.unsplash.com/photo-1600891964599-f61ba0e24092",
+      eventTitle: "Cooking Masterclass: Flavors of the World",
+      eventDate: "Nov 3, 2025",
+      eventAddress: "45 Culinary Ave, Boston, MA 02118",
+      category: "Food",
+      eventTime: "2:00 PM",
+      description: "Learn to cook authentic dishes from around the world with expert chefs.",
+      link: "/events/4",
+      price: "$75",
+      isPastEvent: false
     },
     {
       eventId: "2",
@@ -66,7 +97,21 @@ function EventDetails() {
       eventTime: "5:00 PM",
       description: "A creative display of modern and classic artwork.",
       link: "/events/2",
-      price: "FREE"
+      price: "FREE",
+      isPastEvent: true
+    },
+    {
+      eventId: "10",
+      imageUrl: "https://www.shelter-structures.com/wp-content/uploads/2025/07/Tent-for-Outdoor-Events.webp",
+      eventTitle: "Catering Event",
+      eventDate: "November 20, 2025",
+      eventAddress: "123 Main St, Lincoln, RI",
+      category: "Hosted Event",
+      eventTime: "6:00 PM",
+      description: "A professional catering event featuring gourmet cuisine and elegant outdoor setting. \nTickets Sold: 40 \nTotal Revenue: $2,000",
+      link: "/events/10",
+      price: "$50",
+      isPastEvent: true
     },
   ];
 
@@ -145,6 +190,8 @@ function EventDetails() {
     }
   }, [isDragging, dragOffset]);
 
+  const showBooking = !isPastEvent && !event?.isPastEvent;
+
   if (!event) {
     return (
       <Panels>
@@ -160,7 +207,7 @@ function EventDetails() {
             scrollbarColor:"#E9CC73 transparent",
           }}>
         <h1 className="font-bold text-4xl px-6 py-4 bg-moonstone rounded-2xl shadow-md mb-4">
-          Event Details
+          {isPastEvent || event.isPastEvent ? "Event Details" : "Event Details"}
         </h1>
 
         <div className="flex flex-col md:flex-row gap-8 items-start">
@@ -173,7 +220,7 @@ function EventDetails() {
             />
           </div>
 
-          <div className="relative bg-bluewhite text-moonstone p-6 rounded-xl shadow-md w-[60%] h-full flex flex-col gap-3">
+          <div className="relative bg-bluewhite text-moonstone p-4 rounded-xl shadow-md w-[60%] h-full flex flex-col gap-1">
             <h1 className="text-4xl font-bold">{event.eventTitle}</h1>
 
             <div className="py-1 bg-vanilla rounded-lg"></div>
@@ -221,18 +268,22 @@ function EventDetails() {
               </p>
             )}
 
-            <p className="mb-16">{event.description}</p>
+            <p
+              className={`${showBooking ? "mb-16" : "mb-4"} whitespace-pre-line`}
+            >
+              {event.description}
+            </p>
 
-            <div className="absolute bottom-8 right-6">
-              <Link
-                //ask whether to add in this way 
-                //to={`/checkout/${event.eventId}`}
-                to="/checkout"
-                className="py-3 px-4 bg-lightermoonstone text-white font-semibold rounded-full hover:bg-moonstone transition"
-              >
-                Book Event!
-              </Link>
-            </div>
+            {showBooking && (
+              <div className="absolute bottom-8 right-6">
+                <Link
+                  to="/checkout"
+                  className="py-3 px-4 bg-lightermoonstone text-white font-semibold rounded-full hover:bg-moonstone transition"
+                >
+                  Book Event!
+                </Link>
+              </div>
+            )}
           </div>
         )}
 

@@ -5,8 +5,8 @@ import useUserStore from '../lib/userStore';
 
 const initialTickets = [
   {
-    id: 1,
-    eventId: "1",
+    id: 8,
+    eventId: "8",
     title: 'Rhode Island College Internship Fair',
     startTime: '12:00 PM',
     date: 'Oct 12, 2025',
@@ -74,9 +74,10 @@ const MyTickets = () => {
                   key={ticket.eventId}
                   eventId={ticket.eventId}
                   imageUrl={ticket.image}
-                  link="/event-details"
+                  link={`/event-details/${ticket.eventId}?past=true`}
                   eventTitle={ticket.title}
                   eventDate={ticket.date}
+                  eventTime={ticket.startTime}
                   eventAddress={ticket.address}
                   category={ticket.category}
                   showMapButton={true}
