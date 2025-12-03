@@ -108,7 +108,7 @@ function LandingPage() {
                 Discover events and experiences that match your interests.
               </p>
               <div className="w-fit min-w-0 flex items-center max-w-4xl bg-white rounded-full shadow-md">
-                <div className="flex items-center flex-1 px-4 py-3">
+                <div className="flex items-center flex-1 px-4 py-3 text-bold text-lg">
                   <SearchSVG
                     width="20"
                     height="20"
@@ -130,14 +130,13 @@ function LandingPage() {
         <div className="w-full max-w-full">
           <CategoryCarousel></CategoryCarousel>
         </div>
-        <section className="w-full flex flex-row justify-center items-start md:gap-16 px-12 mb-20 max-w-7xl lg:gap-32">
+        <section className="w-full flex flex-row justify-center items-start mt-16 md:gap-16 px-12 mb-20 max-w-7xl lg:gap-32">
           <section className="flex flex-col w-[50%]">
             <h2 className="bg-moonstone text-whiteblue font-semibold text-xl px-30 py-3 rounded-full mb-6 shadow-xl self-center text-center">
               How It Works
             </h2>
 
             <div className="flex gap-8 justify-center flex-wrap">
-              {/* Info on how the website works */}
               <div
                 className="w-max overflow-x-scroll"
                 style={{
@@ -188,7 +187,7 @@ function LandingPage() {
             </h2>
             <div className="bg-white rounded-2xl shadow-lg w-full py-50 flex flex-col">
               <p className="text-moonstone ml-5">
-                Insert content here blah blah blah someone help me...
+                Whist is an interactive event manager website. Our goal is to make events easy for you.
               </p>
             </div>
           </section>
@@ -273,20 +272,7 @@ function LandingPage() {
               </ul>
             </div>
             <div>
-              <h3 className="text-lg font-semibold mb-4">Follow Us</h3>
               <div className="flex gap-4 text-2xl">
-                <a href="#" className="hover:scale-110 transition">
-                  <Link
-                    to="/contact-us"
-                    className="flex items-center align-middle font-bold hover:text-bluewhite transition-all text-lightermoonstone"
-                  >
-                    <ContactSVG
-                      width="22"
-                      height="22"
-                      className="mr-1 font-bold"
-                    />
-                  </Link>
-                </a>
                 <a href="#" className="hover:scale-110 transition">
                 </a>
                 <a href="#" className="hover:scale-110 transition">
