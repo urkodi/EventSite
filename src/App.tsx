@@ -1,6 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-
 import ProfilePage from "./pages/ProfilePage";
 import CreateEvent from "./pages/CreateEvent";
 import CreateAccountPage from "./pages/CreateAccountPage";
@@ -13,8 +12,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import HostedEvents from "./pages/HostedEvents";
 import MyTickets from "./pages/MyTickets";
 import Bookmarks from "./pages/Bookmark";
-import LandingPage from "./pages/landingpage";
-import SearchPage from "./pages/searchpage";
+import LandingPage from "./pages/LandingPage";
+import SearchPage from "./pages/SearchPage";
 import EventDetails from "./pages/EventDetails";
 import BookingConfirmation from "./pages/BookingConfirmation";
 
@@ -38,6 +37,7 @@ function App() {
         <Route path="/create-event" element={<CreateEvent />} />
         <Route path="/event-details" element={<EventDetails />} />
         <Route path="/booking-confirmation" element={<BookingConfirmation />} />
+        <Route path="/event-details/:eventId" element={<EventDetails />} />
       </Routes>
     </Router>
   )

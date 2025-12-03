@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
 // Payment Form Component (handles Stripe payment)
-function PaymentForm({ event, totalCost, firstName, lastName, email }: any) {
+function PaymentForm({ totalCost, firstName, lastName, email }: any) {
     const checkoutState = useCheckout();
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<any>(null);

@@ -1,12 +1,27 @@
 import { useState, useRef } from "react";
 import XSVG from "../components/icons/XSVG";
-import ProfilePic from "../assets/images/DuckLogo.png"; // Replace with your actual image path
+import ProfilePic from "../assets/images/DuckLogo.png";
 
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import Calendar from "../components/Calendar";
+import Clock from "../components/Clock";
+import useUserStore from "../lib/userStore";
 
 function UserPanel() {
   const [isOpen, setIsOpen] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
+  const { removeUser } = useUserStore();
+
+  const handleSignOut = () => {
+    removeUser();
+    
+    localStorage.removeItem('authToken');
+    
+    setIsOpen(false);
+
+    navigate('/landing');
+  };
 
   return (
     <>
@@ -30,27 +45,39 @@ function UserPanel() {
         style={{ height: 'calc(100vh - 4rem)' }}
       >
         <div className="flex justify-between items-center p-3 border-b-2 border-moonstone ml-2">
-          <h2 className="text-xl font-bold text-white">User Panel</h2>
+          <h2 className="text-2xl font-bold text-white">User Panel</h2>
           <button onClick={() => setIsOpen(false)} className="text-white hover:text-vanilla">
             <XSVG width="1.2em" height="1.2em" />
           </button>
         </div>
 
-        <div className="p-4 ml-2 text-white text-lg space-y-2">
-          <div className="flex flex-col gap-2 mb-4">
+        <div className="p-4 ml-2 text-white text-xl space-y-2 h-full flex flex-col">
+          <div className="flex flex-col gap-4 mb-4">
           <Link
             to="/profile" 
-            className="text-white hover:text-moonstone font-semibold"
+            className="text-white hover:text-vanilla font-semibold transition"
             >Profile
           </Link>
           <Link
             to="/hosted-events" 
-            className="text-white hover:text-moonstone font-semibold"
+            className="text-white hover:text-vanilla font-semibold transition"
             >Hosted Events
           </Link>
           </div>
-          <p>more blah blah</p>
-          {/* Add user-specific content here */}
+
+          {/* Bottom Section */}
+          <div className="space-y-2 pb-4">
+            <Calendar />
+            <Clock />
+            
+            {/* Sign Out Button */}
+            <button
+              onClick={handleSignOut}
+              className="w-full py-3 px-4 bg-white/10 hover:bg-white/20 text-white font-semibold rounded-lg transition border border-white/30 hover:border-white/50"
+            >
+              Sign Out
+            </button>
+          </div>
         </div>
       </aside>
     </>

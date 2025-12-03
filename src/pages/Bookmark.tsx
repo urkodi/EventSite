@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Panels from '../features/Panels';
 import EventBlock from '../components/EventBlock';
 
 const initialBookmarkedEvents = [
-  {
-    eventId: '1',
-    title: 'Music Festival',
-    date: 'Oct 12, 2025 at 7:00 PM',
-    address: 'AMP Amica Mutual Pavilion',
-    image: 'https://hips.hearstapps.com/hmg-prod/images/gettyimages-971260876-1559600482.jpg',
-    category: 'Music'
+  { eventId: "1",
+    image:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg" ,
+    title:"Duck Hunt" ,
+    date:"October 30th 2025" ,
+    address:"44 Hummingbird Ln" ,
+    category:"Food" ,
+    time: "6:00 PM"
   },
   {
     eventId: '2',
     title: 'Computer Science Job Fair',
     date: 'Nov 3, 2025 at 10:00 AM',
+    time: "10:00 AM",
     address: 'Boston Convention Center',
     image: 'https://jessup.edu/wp-content/uploads/2023/12/Programming-in-Computer-Science.jpg',
     category: 'Career'
@@ -23,6 +24,7 @@ const initialBookmarkedEvents = [
     eventId: '3',
     title: 'Paint & Sip',
     date: 'Dec 5, 2025 at 1:00 PM',
+    time: "1:00 PM",
     address: 'New York City, Central Park',
     image: 'https://assets.mainlinetoday.com/2024/02/wine-and-painting-AdobeStock_351266380.jpg',
     category: 'Art'
@@ -31,6 +33,7 @@ const initialBookmarkedEvents = [
     eventId: '4',
     title: 'Cultural Festival',
     date: 'Dec 5, 2025 at 1:00 PM',
+    time: "1:00 PM",
     address: 'New York City, NYC Bar',
     image: 'https://wjla.com/resources/media/6c0acf9b-3e14-4886-9115-92ac22d831f7-large16x9_worldculturefestival.png',
     category: 'Culture'
@@ -57,10 +60,12 @@ const Bookmark = () => {
           style={{
             scrollbarColor:"#E9CC73 transparent",
           }}>
-          <ul className="mt-6 grid gap-y-6 gap-x-2 px-4 place-items-center" 
-                style={{ 
-                 gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))'
-                }}>
+          <div
+              className="mt-2 grid gap-4 px-2"
+                style={{
+                    gridTemplateColumns: "repeat(auto-fit, minmax(220px, max-content))",
+                  }}
+                >
             {bookmarkedEvents.length > 0 ? (
               bookmarkedEvents.map(event => (
                 <EventBlock
@@ -70,6 +75,7 @@ const Bookmark = () => {
                   link="/event-details"
                   eventTitle={event.title}
                   eventDate={event.date}
+                  eventTime={event.time}
                   eventAddress={event.address}
                   category={event.category}
                   isBookmarked={true}
@@ -81,7 +87,7 @@ const Bookmark = () => {
                 No bookmarked events yet.
               </p>
             )}
-          </ul>
+          </div>
         </div>
       </div>
     </Panels>

@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Panels from "../features/Panels";
 import EventBlock from '../components/EventBlock';
-import useUserStore from '../lib/userStore';
 
 const initialTickets = [
   {
@@ -51,7 +50,6 @@ const initialTickets = [
 ];
 
 const MyTickets = () => {
-  const { user } = useUserStore();
   const [tickets] = useState(initialTickets);
 
   return (
@@ -62,10 +60,12 @@ const MyTickets = () => {
           style={{
             scrollbarColor:"#E9CC73 transparent",
           }}>
-          <div className="mt-6 grid gap-y-6 gap-x-2 px-4 place-items-center" 
-              style={{ 
-                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))'
-               }}>
+          <div
+              className="mt-2 grid gap-4 px-2"
+                style={{
+                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, max-content))",
+                }}
+              >
             {tickets.length > 0 ? (
               tickets.map(ticket => (
                 <EventBlock
@@ -75,6 +75,7 @@ const MyTickets = () => {
                   link="/event-details"
                   eventTitle={ticket.title}
                   eventDate={ticket.date}
+                  eventTime={""}
                   eventAddress={ticket.address}
                   category={ticket.category}
                   showMapButton={true}
