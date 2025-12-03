@@ -25,12 +25,12 @@ const ForgotPassword = () => {
         setSubmitted(true);
     };
 
-    const handleInput = (e) => {
-    e.target.value = e.target.value.replace(/[^0-9]/g, '');
-    if (e.target.value.length === 1) {
-        const next = e.target.nextElementSibling;
-        if (next) next.focus();
-    }
+    const handleInput = (e: any) => {
+        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+        if (e.target.value.length === 1) {
+            const next = e.target.nextElementSibling;
+            if (next) next.focus();
+        }
     };
 
 

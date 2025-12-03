@@ -1,4 +1,3 @@
-import Sidenav from '../features/Sidenav';
 import MailWhiteBlue from '../assets/images/MailWhiteBlue.png';
 import HelpDuck from '../assets/images/HelpDuck.png';
 
@@ -25,7 +24,7 @@ const ContactUsPage = () => {
                 <div className="mt-2 flex flex-col lg:flex-row justify-center gap-10 px-4 max-w-screen-2xl mx-auto">
 
                 {/*Contact form container*/}
-                <div className="w-full lg:w-[60%] min-w-[300px] bg-lightermoonstone p-6 rounded-4xl h-[100%] shadow-md">
+                <div className="w-full lg:w-[60%] min-w-[300px] bg-lightermoonstone p-6 rounded-4xl h-full shadow-md">
                     <div className="flex flex-row">
                         <img src={MailWhiteBlue} alt="Mail" className="w-10 h-10 mb-4" />
                         <h2 className="text-2xl text-whiteblue ml-5">Please fill out the form below</h2>

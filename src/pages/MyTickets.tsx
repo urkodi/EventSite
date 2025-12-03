@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Panels from "../features/Panels";
 import EventBlock from '../components/EventBlock';
-import useUserStore from '../lib/userStore';
 
 const initialTickets = [
   {
@@ -51,7 +50,6 @@ const initialTickets = [
 ];
 
 const MyTickets = () => {
-  const { user } = useUserStore();
   const [tickets] = useState(initialTickets);
 
   return (
@@ -77,6 +75,7 @@ const MyTickets = () => {
                   link="/event-details"
                   eventTitle={ticket.title}
                   eventDate={ticket.date}
+                  eventTime={""}
                   eventAddress={ticket.address}
                   category={ticket.category}
                   showMapButton={true}

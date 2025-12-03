@@ -1,29 +1,21 @@
-import React, { useState, useEffect} from "react";
+import { useState, useEffect} from "react";
 import Panels from "../features/Panels";
-import BookmarkIcon from "../assets/icons/bookmark.svg";
-import ExternalLinkIcon from "../assets/icons/external-link.svg";
 import MicIcon from "../assets/icons/mic-vocal.svg";
 import WineIcon from "../assets/icons/wine.svg";
 import BurgerIcon from "../assets/icons/hamburger.svg";
 import BallIcon from "../assets/icons/volleyball.svg";
 import ArtIcon from "../assets/icons/palette.svg";
-import PartyIcon from "../assets/icons/party.svg"; 
-import useUserStore from "../lib/userStore";
-
+import PartyIcon from "../assets/icons/party.svg";
 import EventBlock from "../components/EventBlock";
 import SearchSVG from "../components/icons/SearchSVG";
 import Dropdown from "../components/Dropdown";
-import Category from "../components/Category";
-import TicketSVG from "../components/icons/TicketSVG";
 
 import Calendar from "../components/Calendar";
 
 function SearchPage() {
-  
-  const { user } = useUserStore();
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [events, setEvents] = useState([
+    const [events, _setEvents] = useState([
     { 
         eventId: "1",
         imageUrl:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg",

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Panels from '../features/Panels';
 import EventBlock from '../components/EventBlock';
 

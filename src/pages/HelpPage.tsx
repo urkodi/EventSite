@@ -1,10 +1,8 @@
 import { useState, type JSX } from 'react';
-import Sidenav from '../features/Sidenav';
 
 {/* Imported icons for help topics */}
 import SearchMoonstone from '../assets/icons/SearchMoonstone.svg';
 import LockMoonstone from '../assets/icons/LockMoonstone.svg';
-import MailMoonstone from '../assets/icons/MailMoonstone.svg';
 import UserMoonstone from '../assets/icons/UserMoonstone.svg';
 import BellMoonstone from '../assets/icons/BellMoonstone.svg';
 import CalendarMoonstone from '../assets/icons/CalendarMoonstone.svg';
