@@ -7,8 +7,8 @@ import Map from "../components/Map";
 import Dropdown from "../components/Dropdown";
 
 import MicIcon from "../assets/icons/mic-vocal.svg";
-import WineIcon from "../assets/icons/wine.svg";
 import BurgerIcon from "../assets/icons/hamburger.svg";
+import WorldIcon from "../assets/icons/world.svg";
 import BallIcon from "../assets/icons/volleyball.svg";
 import ArtIcon from "../assets/icons/palette.svg";
 import PartyIcon from "../assets/icons/party.svg";
@@ -16,8 +16,87 @@ import PartyIcon from "../assets/icons/party.svg";
 import { Link } from 'react-router-dom';
 
 import Calendar from "../components/Calendar";
-import LandingPage from "./landingpage";
+import LandingPage from "./LandingPage";
 import type { Event, User } from "../global";
+
+import FoodImage from "../assets/images/Food.jpg";
+import JazzImage from "../assets/images/Jazz.jpg";
+import OKImage from "../assets/images/OK.jpg";
+import VanGoghImage from "../assets/images/VanGogh.jpg";
+import CityImage from "../assets/images/city.jpg";
+
+const fakeEvents: Event[] = [
+    {
+        "id": 30,
+        "imageUrl": VanGoghImage,
+        "name": "Van Gogh: Immersive Experience",
+        "description": "Step into the world of Vincent van Gogh through a 360-degree digital art installation",
+        "category": "art_exhibition",
+        "imagePath": VanGoghImage,
+        "date": "2025-08-10",
+        "time": "10:00",
+        "address": "123 Art Museum Drive, New York, NY",
+        "ticketPrice": 25.00,
+        "maxAttendees": 500,
+        "owner": 5
+    },
+    {
+        "id": 31,
+        "imageUrl": JazzImage,
+        "name": "Jazz Under the Stars",
+        "description": "An evening of smooth jazz performances in an open-air amphitheater",
+        "category": "music_concert",
+        "imagePath": JazzImage,
+        "date": "2025-09-05",
+        "time": "19:30",
+        "address": "Central Park Bandshell, New York, NY",
+        "ticketPrice": 45.00,
+        "maxAttendees": 2000,
+        "owner": 7
+    },
+    {
+        "id": 32,
+        "imageUrl": FoodImage,
+        "name": "Food Trucks at Mulligans",
+        "description": "Come eat some food at Mulligans Island",
+        "category": "food_drink",
+        "imagePath": FoodImage,
+        "date": "2025-10-20",
+        "time": "09:00",
+        "address": "Warwick, RI",
+        "ticketPrice": 0.00,
+        "maxAttendees": 5000,
+        "owner": 9
+    },
+    {
+        "id": 33,
+        "imageUrl": OKImage,
+        "name": "Omega Kappa Fraternity Party",
+        "description": "Omega Kappa is hosting the party of all time, you won't wanna miss it!",
+        "category": "party",
+        "imagePath": OKImage,
+        "date": "2025-11-12",
+        "time": "08:30",
+        "address": "Harvard University, Cambridge, MA",
+        "ticketPrice": 0.00,
+        "maxAttendees": 300,
+        "owner": 11
+    },
+    {
+        "id": 34,
+        "imageUrl": CityImage,
+        "name": "Sustainable Cities Forum",
+        "description": "Discussion on urban planning, green architecture, and eco-friendly city development",
+        "category": "conference",
+        "imagePath": CityImage,
+        "date": "2025-07-25",
+        "time": "13:00",
+        "address": "Chicago Cultural Center, Chicago, IL",
+        "ticketPrice": 120.00,
+        "maxAttendees": 800,
+        "owner": 13
+    }
+];
 
 function Homepage() {
 
@@ -32,7 +111,8 @@ function Homepage() {
 
             if (res.ok) {
                 const data = await res.json();
-                setEvents(data);
+                const fullData = [...data, ...fakeEvents];
+                setEvents(fullData);
             }
         }
 
@@ -54,8 +134,8 @@ function Homepage() {
 
     const categories = [
         { categoryId: "music_concert", icon: MicIcon },
-        { categoryId: "food_drink", icon: WineIcon },
         { categoryId: "food_drink", icon: BurgerIcon },
+        { categoryId: "conference", icon: WorldIcon },
         { categoryId: "sports", icon: BallIcon },
         { categoryId: "art_exhibition", icon: ArtIcon },
         { categoryId: "party", icon: PartyIcon },
@@ -97,7 +177,7 @@ function Homepage() {
         setSelectedDate(null);
     };
 
-    if (!user) return <LandingPage/>
+    if (!user) return <LandingPage />
 
     return (
         <Panels>
