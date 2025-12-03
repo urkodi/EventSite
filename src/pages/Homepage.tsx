@@ -16,6 +16,7 @@ import PartyIcon from "../assets/icons/party.svg";
 import { Link } from 'react-router-dom';
 
 import Calendar from "../components/Calendar";
+import LandingPage from "./landingpage";
 import type { Event, User } from "../global";
 
 function Homepage() {
@@ -95,6 +96,8 @@ function Homepage() {
     const clearDateFilter = () => {
         setSelectedDate(null);
     };
+
+    if (!user) return <LandingPage/>
 
     return (
         <Panels>
