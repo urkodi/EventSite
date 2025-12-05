@@ -12,10 +12,25 @@ import Dropdown from "../components/Dropdown";
 
 import Calendar from "../components/Calendar";
 
+type EventData = {
+    eventId: string;
+    imageUrl: string;
+    eventTitle: string;
+    eventDate: string;
+    eventTime?: string;
+    eventAddress: string;
+    category: string;
+    link?: string;
+};
+
 function SearchPage() {
+    const [searchQuery, setSearchQuery] = useState<string>("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-    const [events, _setEvents] = useState([
+    const [events, setEvents] = useState<EventData[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
+
+    const hardcodedEvents: EventData[] = [
     { 
         eventId: "1",
         imageUrl:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg",
@@ -66,11 +81,66 @@ function SearchPage() {
         category:"Music",
         eventTime: "5:00 PM"
     },
-    ]);
+    ];
 
+    //backend call to fetch events 
     useEffect(() => {
-        //backend call to fetch events
-    }, [])
+    const fetchEvents = async () => {
+        setLoading(true);
+        const params = new URLSearchParams();
+        
+        if (searchQuery) params.append('q', searchQuery);
+        if (selectedCategory) params.append('category', selectedCategory);
+        if (selectedDate) {
+            params.append('date', selectedDate.toISOString().split('T')[0]);
+        }
+        
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/events/search/?${params}`
+            );
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch events');
+            }
+            
+            const dbEvents: EventData[] = await response.json();
+            
+            // Filter hardcoded events with ALL filters including date
+            const filteredHardcoded = hardcodedEvents.filter((event) => {
+                const matchesSearch = searchQuery 
+                    ? event.eventTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      event.eventAddress.toLowerCase().includes(searchQuery.toLowerCase())
+                    : true;
+                const matchesCategory = selectedCategory ? event.category === selectedCategory : true;
+                const matchesDate = selectedDate ? isSameDay(parseEventDate(event.eventDate), selectedDate) : true;
+                return matchesSearch && matchesCategory && matchesDate;
+            });
+            
+            // Combine filtered hardcoded and database events
+            const allEvents = [...filteredHardcoded, ...dbEvents];
+            setEvents(allEvents);
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            
+            // Fallback: also filter hardcoded events by date
+            const filteredHardcoded = hardcodedEvents.filter((event) => {
+                const matchesSearch = searchQuery 
+                    ? event.eventTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      event.eventAddress.toLowerCase().includes(searchQuery.toLowerCase())
+                    : true;
+                const matchesCategory = selectedCategory ? event.category === selectedCategory : true;
+                const matchesDate = selectedDate ? isSameDay(parseEventDate(event.eventDate), selectedDate) : true;
+                return matchesSearch && matchesCategory && matchesDate;
+            });
+            setEvents(filteredHardcoded);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchEvents();
+}, [searchQuery, selectedCategory, selectedDate]);
 
     const categories = [
         { categoryId: "Music", icon: MicIcon },
@@ -80,20 +150,19 @@ function SearchPage() {
         { categoryId: "Art", icon: ArtIcon },
         { categoryId: "Party", icon: PartyIcon },
     ];
-
     const parseEventDate = (dateString: string): Date => {
-        const months: { [key: string]: number } = {
-            January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
-            July: 6, August: 7, September: 8, October: 9, November: 10, December: 11
-        };
-        
-        const parts = dateString.split(' ');
-        const month = months[parts[0]];
-        const day = parseInt(parts[1].replace(/\D/g, ''));
-        const year = parseInt(parts[2]);
-        
-        return new Date(year, month, day);
+    const months: { [key: string]: number } = {
+        January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
+        July: 6, August: 7, September: 8, October: 9, November: 10, December: 11
     };
+    
+    const parts = dateString.split(' ');
+    const month = months[parts[0]];
+    const day = parseInt(parts[1].replace(/\D/g, ''));
+    const year = parseInt(parts[2]);
+    
+    return new Date(year, month, day);
+};
 
     const isSameDay = (date1: Date, date2: Date): boolean => {
         return (
@@ -102,12 +171,6 @@ function SearchPage() {
             date1.getFullYear() === date2.getFullYear()
         );
     };
-    
-    const filteredEvents = events.filter((event) => {
-        const matchesCategory = selectedCategory ? event.category === selectedCategory : true;
-        const matchesDate = selectedDate ? isSameDay(parseEventDate(event.eventDate), selectedDate) : true;
-        return matchesCategory && matchesDate;
-    });
 
     const handleDateSelect = (date: Date) => {
         setSelectedDate(date);
@@ -131,7 +194,9 @@ function SearchPage() {
             <input
               type="text"
               placeholder="Find an Event..."
-              className="placeholder-neutral-400 outline-none border-none"
+              value={searchQuery}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+              className="placeholder-neutral-400 outline-none border-none w-full"
             />
         </section>
         </div>
@@ -175,7 +240,7 @@ function SearchPage() {
                         selectedCategory === categoryId ? null : categoryId
                     )
                 }
-                className={`bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-sm hover:bg-vanilla transition transition-transform duration-300 active:scale-95 hover:scale-90 ${
+                className={`bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-sm hover:bg-vanilla transition-transform duration-300 active:scale-95 hover:scale-90 ${
                   selectedCategory === categoryId
                     ? "ring-2 ring-[var(--color-vanilla)]"
                     : ""
@@ -198,16 +263,20 @@ function SearchPage() {
                     gridTemplateColumns: "repeat(auto-fit, minmax(220px, max-content))",
                   }}
                 >
-                  {filteredEvents.length > 0 ? (
-                    filteredEvents.map((event) => (
+                  {loading ? (
+                    <p className="text-white italic opacity-70 col-span-full">
+                        Loading events...
+                    </p>
+                  ) : events.length > 0 ? (
+                    events.map((event) => (
                       <EventBlock
                         key={event.eventId}
                         eventId={event.eventId}
                         imageUrl={event.imageUrl}
-                        link={event.link}
+                        link={event.link || `/event-details/${event.eventId}`}
                         eventTitle={event.eventTitle}
                         eventDate={event.eventDate}
-                        eventTime={event.eventTime}
+                        eventTime={event.eventTime || ""}
                         eventAddress={event.eventAddress}
                         category={event.category}
                       />

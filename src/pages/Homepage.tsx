@@ -16,26 +16,18 @@ import PartyIcon from "../assets/icons/party.svg";
 import { Link } from 'react-router-dom';
 
 import Calendar from "../components/Calendar";
-import LandingPage from "./landingpage";
+import LandingPage from "./LandingPage";
 import type { Event, User } from "../global";
 
 function Homepage() {
-
     const [user, setUser] = useState<User | null>(null);
+    const [searchQuery, setSearchQuery] = useState<string>("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
     const [selectedDate, setSelectedDate] = useState<Date | null>(null);
     const [events, setEvents] = useState<Event[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        async function getEvents() {
-            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/events/list_all`);
-
-            if (res.ok) {
-                const data = await res.json();
-                setEvents(data);
-            }
-        }
-
         async function getUser() {
             const res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/logged_in`, {
                 credentials: "include"
@@ -45,12 +37,41 @@ function Homepage() {
                 const data = await res.json();
                 setUser(data);
             }
+        }
 
+        getUser();
+    }, []);
+
+    
+    useEffect(() => {
+        async function getEvents() {
+            setLoading(true);
+            const params = new URLSearchParams();
+            
+            if (searchQuery) params.append('q', searchQuery);
+            if (selectedCategory) params.append('category', selectedCategory);
+            if (selectedDate) {
+                params.append('date', selectedDate.toISOString().split('T')[0]);
+            }
+
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_BASE_URL}/events/search?${params}`
+                );
+
+                if (res.ok) {
+                    const data = await res.json();
+                    setEvents(data);
+                }
+            } catch (error) {
+                console.error('Error fetching events:', error);
+            } finally {
+                setLoading(false);
+            }
         }
 
         getEvents();
-        getUser();
-    }, [])
+    }, [searchQuery, selectedCategory, selectedDate]);  // Watch ALL filters
 
     const categories = [
         { categoryId: "music_concert", icon: MicIcon },
@@ -60,34 +81,6 @@ function Homepage() {
         { categoryId: "art_exhibition", icon: ArtIcon },
         { categoryId: "party", icon: PartyIcon },
     ];
-
-    const parseEventDate = (dateString: string): Date => {
-        const months: { [key: string]: number } = {
-            January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
-            July: 6, August: 7, September: 8, October: 9, November: 10, December: 11
-        };
-
-        const parts = dateString.split(' ');
-        const month = months[parts[0]];
-        const day = parseInt(parts[1].replace(/\D/g, ''));
-        const year = parseInt(parts[2]);
-
-        return new Date(year, month, day);
-    };
-
-    const isSameDay = (date1: Date, date2: Date): boolean => {
-        return (
-            date1.getDate() === date2.getDate() &&
-            date1.getMonth() === date2.getMonth() &&
-            date1.getFullYear() === date2.getFullYear()
-        );
-    };
-
-    const filteredEvents = events.filter((event) => {
-        const matchesCategory = selectedCategory ? event.category === selectedCategory : true;
-        const matchesDate = selectedDate ? isSameDay(parseEventDate(event.date), selectedDate) : true;
-        return matchesCategory && matchesDate;
-    });
 
     const handleDateSelect = (date: Date) => {
         setSelectedDate(date);
@@ -115,7 +108,9 @@ function Homepage() {
                     <input
                         type="text"
                         placeholder="Find an Event..."
-                        className="placeholder-neutral-400 outline-none border-none"
+                        value={searchQuery}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                        className="placeholder-neutral-400 outline-none border-none w-full"
                     />
                 </section>
             </div>
@@ -151,7 +146,7 @@ function Homepage() {
                                 )
                             }
                             className={`bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-sm hover:bg-vanilla transition duration-300 active:scale-95 hover:scale-90 ${selectedCategory === categoryId
-                                ? "ring-2 ring--vanilla"
+                                ? "ring-2 ring-vanilla"
                                 : ""
                                 }`}
                         >
@@ -178,14 +173,17 @@ function Homepage() {
                     </Link>
                 </div>
 
-                <div className="overflow-x-auto mx-10 max-w-full"
-                    style={{
-                        scrollbarColor: "#E9CC73 transparent",
-                    }}>
-
-                    <ul className="flex gap-6 snap-x snap-mandatory mb-2">
-                        {filteredEvents.length > 0 ? (
-                            filteredEvents.map((event) => (
+                {loading ? (
+                    <div className="text-white italic opacity-70 px-10 py-4">
+                        Loading events...
+                    </div>
+                ) : events.length > 0 ? (
+                    <div className="overflow-x-auto mx-10 max-w-full"
+                        style={{
+                            scrollbarColor: "#E9CC73 transparent",
+                        }}>
+                        <ul className="flex gap-6 snap-x snap-mandatory mb-2">
+                            {events.map((event) => (
                                 <li key={event.id} className="snap-start shrink-0">
                                     <EventBlock
                                         eventId={`${event.id}`}
@@ -197,14 +195,14 @@ function Homepage() {
                                         eventAddress={event.address || ""}
                                         category={event.category || ""} />
                                 </li>
-                            ))
-                        ) : (
-                            <li className="text-white italic opacity-70">
-                                No events found for the selected filters.
-                            </li>
-                        )}
-                    </ul>
-                </div>
+                            ))}
+                        </ul>
+                    </div>
+                ) : (
+                    <div className="text-white italic opacity-70 px-10 py-8 text-center bg-lightermoonstone/20 rounded-lg mx-10">
+                        No events found for the selected filters. Try adjusting your search or filters.
+                    </div>
+                )}
 
                 {/* DISCOVER EVENTS */}
                 <div className="mt-2 bg-lightermoonstone rounded-xl px-4 py-2 mx-2 mb-4">
@@ -219,14 +217,17 @@ function Homepage() {
                         </Link>
                     </div>
 
-                    <div className="overflow-x-auto"
-                        style={{
-                            scrollbarColor: "#ECFBFD transparent",
-                        }}>
-
-                        <ul className="flex gap-6 snap-x snap-mandatory mb-2 mt-2">
-                            {filteredEvents.length > 0 ? (
-                                filteredEvents.map((event) => (
+                    {loading ? (
+                        <div className="text-white italic opacity-70 px-4 py-4">
+                            Loading events...
+                        </div>
+                    ) : events.length > 0 ? (
+                        <div className="overflow-x-auto"
+                            style={{
+                                scrollbarColor: "#ECFBFD transparent",
+                            }}>
+                            <ul className="flex gap-6 snap-x snap-mandatory mb-2 mt-2">
+                                {events.map((event) => (
                                     <li key={event.id} className="snap-start shrink-0">
                                         <EventBlock
                                             eventId={`${event.id}`}
@@ -238,14 +239,14 @@ function Homepage() {
                                             eventAddress={event.address || ""}
                                             category={event.category || ""} />
                                     </li>
-                                ))
-                            ) : (
-                                <li className="text-white italic opacity-70">
-                                    No events found for the selected filters.
-                                </li>
-                            )}
-                        </ul>
-                    </div>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : (
+                        <div className="text-white italic opacity-70 px-4 py-8 text-center bg-white/10 rounded-lg">
+                            No events found for the selected filters. Try adjusting your search or filters.
+                        </div>
+                    )}
                 </div>
             </div>
 
