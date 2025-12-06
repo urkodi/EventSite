@@ -28,6 +28,18 @@ html, body, #root {
   display: flex;
 }
 
+
+
+
+
+@keyframes drift {
+  0%   { transform: translate(0, 0) scale(1); }
+  25%  { transform: translate(40px, -50px) scale(1.05); }
+  50%  { transform: translate(-30px, 40px) scale(0.95); }
+  75%  { transform: translate(30px, -20px) scale(1.02); }
+  100% { transform: translate(0, 0) scale(1); }
+}
+
 .slick-track {
   overflow: visible !important;
 }
