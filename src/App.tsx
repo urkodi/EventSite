@@ -15,6 +15,9 @@ import Bookmarks from "./pages/Bookmark";
 import LandingPage from "./pages/LandingPage";
 import SearchPage from "./pages/SearchPage";
 import EventDetails from "./pages/EventDetails";
+import NotFound from "./pages/NotFound";
+import Maintenance from "./pages/Maintenance";
+import ServerError from "./pages/ServerError";
 import BookingConfirmation from "./pages/BookingConfirmation";
 
 function App() {
@@ -35,6 +38,10 @@ function App() {
         <Route path="/browse" element={<SearchPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/create-event" element={<CreateEvent />} />
+        <Route path="/event-details" element={<EventDetails />} /> 
+        <Route path="/maintenance" element={<Maintenance />} />
+        <Route path="/server" element={<ServerError />} />       
+        <Route path="*" element={<NotFound />} />
         <Route path="/event-details" element={<EventDetails />} />
         <Route path="/booking-confirmation" element={<BookingConfirmation />} />
         <Route path="/event-details/:eventId" element={<EventDetails />} />
