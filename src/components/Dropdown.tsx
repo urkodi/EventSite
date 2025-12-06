@@ -40,7 +40,9 @@ function Dropdown({ buttonName, title, children }: DropdownProps) {
       {isOpen && (
         <div
           id="dropdown-content"
-          className="absolute z-50 bg-lightgrey p-4 rounded-xl min-w-[300px] shadow-lg"
+          className="absolute z-50 bg-lightgrey p-4 rounded-xl min-w-[300px] max-h-[370px] overflow-y-scroll shadow-lg"
+          style={{ scrollbarColor: "#E9CC73 transparent"
+          }}
         >
           <div className="relative mb-3">
             <h1 className="font-semibold text-black/70 text-xl text-center">{title}</h1>
@@ -48,6 +50,7 @@ function Dropdown({ buttonName, title, children }: DropdownProps) {
                 <XSVG width="1em" height="1em" />
               </button>
           </div>
+
           {children}
         </div>
       )}

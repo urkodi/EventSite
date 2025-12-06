@@ -1,6 +1,101 @@
 import { useState } from "react";
+import { loadStripe } from '@stripe/stripe-js';
+import { CheckoutProvider, PaymentElement, useCheckout } from '@stripe/react-stripe-js/checkout';
 import eventlogo from "../assets/images/eventlogo.png";
 import { Link } from "react-router-dom";
+
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
+
+// Payment Form Component (handles Stripe payment)
+function PaymentForm({ totalCost, firstName, lastName, email }: any) {
+    const checkoutState = useCheckout();
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<any>(null);
+
+    if (checkoutState.type === 'loading') {
+        return (
+            <div className="text-center py-8">
+                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-moonstone mx-auto"></div>
+                <p className="text-gray-600 mt-4">Loading payment form...</p>
+            </div>
+        );
+    }
+
+    if (checkoutState.type === 'error') {
+        return (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4">
+                <p className="text-red-600">Error: {checkoutState.error.message}</p>
+            </div>
+        );
+    }
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+
+        // Validate contact info
+        if (!firstName || !lastName || !email) {
+            setError({ message: 'Please fill in all contact details' });
+            return;
+        }
+
+        setLoading(true);
+        setError(null);
+
+        // Update email in Stripe
+        const emailResult = await checkoutState.checkout.updateEmail(email);
+        if (emailResult.type === 'error') {
+            setError(emailResult.error);
+            setLoading(false);
+            return;
+        }
+
+        // Confirm payment
+        const result = await checkoutState.checkout.confirm();
+        if (result.type === 'error') {
+            setError(result.error);
+            setLoading(false);
+        }
+        // On success, user will be redirected to return_url
+    };
+
+    return (
+        <form onSubmit={handleSubmit}>
+            {/* Stripe Payment Element */}
+            <div className="mb-6">
+                <h3 className="block text-sm font-medium text-gray-700 mb-3">Payment Method</h3>
+                <PaymentElement 
+                    options={{
+                        layout: 'tabs',
+                    }} 
+                />
+            </div>
+
+            {/* Error Display */}
+            {error && (
+                <div className="mb-4 bg-red-50 border border-red-200 rounded-lg p-3">
+                    <p className="text-red-600 text-sm">{error.message}</p>
+                </div>
+            )}
+
+            {/* Complete Booking Button */}
+            <button
+                type="submit"
+                disabled={loading}
+                className={`w-full py-3 px-4 rounded-lg font-semibold text-white transition ${
+                    loading 
+                        ? 'bg-gray-400 cursor-not-allowed' 
+                        : 'bg-moonstone hover:bg-[#4C9DB0]'
+                }`}
+            >
+                {loading ? 'Processing...' : `Complete Booking - $${totalCost.toFixed(2)}`}
+            </button>
+
+            <p className="text-xs text-gray-500 text-center mt-3">
+                🔒 Secured by Stripe
+            </p>
+        </form>
+    );
+}
 
 export default function EventCheckout() {
     const event ={
@@ -19,7 +114,21 @@ export default function EventCheckout() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
-    const [paymentMethod, setPaymentMethod] = useState("card");
+
+      // Create Checkout Session client secret
+    const clientSecret = fetch(`${import.meta.env.VITE_API_URL}/api/payments/create-checkout-session`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            amount: Math.round(totalCost * 100), 
+            quantity: event.quantity,
+            event_name: event.name
+        })
+    })
+        .then((response) => response.json())
+        .then((json) => json.checkoutSessionClientSecret);
 
     return (
         <div className="flex flex-col mx-auto h-auto max-h-screen overflow-x-hidden"> 
@@ -122,7 +231,7 @@ export default function EventCheckout() {
                                 </div>
                             
                                 {/* Email */}
-                                <div className="mt-4">
+                                <div className="mt-4 mb-6">
                                     <label className="block text-sm text-gray-700 font-medium mb-1">Email Address</label>
                                     <input
                                         type="email"
@@ -131,47 +240,19 @@ export default function EventCheckout() {
                                         className="w-full px-3 py-2 border border-[#9CCED6] rounded-lg focus:ring-2 focus:ring-[#4C9DB0] focus:border-transparent outline-none"
                                         placeholder="jenna.stone@example.com"/>
                                 </div>
-                                {/* Payment Method */}
-                                <div className="mb-6">
-                                <h3 className="block text-sm font-medium text-gray-700 mt-4 mb-3">Payment Method</h3>
-                                
-                                <div className="flex gap-2">
-                                    <button
-                                    type="button"
-                                    onClick={() => setPaymentMethod('card')}
-                                    className={`flex-1 py-2 px-4 border-2 rounded-lg font-medium transition ${
-                                        paymentMethod === 'card'
-                                        ? 'bg-[#4C9DB0] text-white border-[#4C9DB0]'
-                                        : 'bg-white text-gray-900 border-[#9CCED6] hover:border-[#4C9DB0]'
-                                    }`}
+                                {/* Stripe Payment Form */}
+                                    <CheckoutProvider
+                                        stripe={stripePromise}
+                                        options={{ clientSecret }}
                                     >
-                                    Card
-                                    </button>
-                                    
-                                    <button
-                                    type="button"
-                                    onClick={() => setPaymentMethod('google')}
-                                    className={`flex-1 py-2 px-4 border-2 rounded-lg font-medium transition ${
-                                        paymentMethod === 'google'
-                                        ? 'bg-[#4C9DB0] text-white border-[#4C9DB0]'
-                                        : 'bg-white text-gray-900 border-[#9CCED6] hover:border-[#4C9DB0]'
-                                    }`}
-                                    >
-                                    Google Pay
-                                    </button>
-                                    
-                                    <button
-                                    type="button"
-                                    onClick={() => setPaymentMethod('apple')}
-                                    className={`flex-1 py-2 px-4 border-2 rounded-lg font-medium transition ${
-                                        paymentMethod === 'apple'
-                                        ? 'bg-[#4C9DB0] text-white border-[#4C9DB0]'
-                                        : 'bg-white text-gray-900 border-[#9CCED6] hover:border-[#4C9DB0]'
-                                    }`}
-                                    >
-                                    Apple Pay
-                                    </button>
-                                </div>
+                                        <PaymentForm 
+                                            event={event}
+                                            totalCost={totalCost}
+                                            firstName={firstName}
+                                            lastName={lastName}
+                                            email={email}
+                                        />
+                                    </CheckoutProvider>
                                 </div>
                             </div> 
                         </div>
@@ -179,6 +260,5 @@ export default function EventCheckout() {
                 </div>
             </div>
         </div>        
-    </div>
     );
 }

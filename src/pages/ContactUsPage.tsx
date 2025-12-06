@@ -1,41 +1,36 @@
-import Sidenav from '../features/Sidenav';
 import MailWhiteBlue from '../assets/images/MailWhiteBlue.png';
 import HelpDuck from '../assets/images/HelpDuck.png';
 
 import { Link } from "react-router-dom";
+import Panels from '../features/Panels';
 
 const ContactUsPage = () => {
 
     return (
-        <>
-            <div className="flex lg:flex-row flex-col">
-                <Sidenav />
-            </div>
-
-            <div className="flex-grow flex-col p-6 bg-lightermoonstone h-auto shadow-md overflow-y-scroll"
+        <Panels>
+            <div className="overflow-y-scroll h-[calc(100vh-90px)] px-6 py-4"
                 style={{
-                    scrollbarColor: '#4C9DB0 transparent',
+                    scrollbarColor: '#E9CC73 transparent',
                 }}>  
-                <div className="flex justify-items-center bg-bluewhite p-4 rounded-2xl shadow-md flex-col mb-8 w-[95%] mx-auto">
+                <div className="flex justify-items-center bg-bluewhite p-6 rounded-2xl shadow-md flex-col mb-8 w-[95%] mx-auto">
                 <h1 className="text-5xl font-bold text-moonstone mb-4 text-center">Contact Us</h1>
                 {/*Decorative divider*/}
-                <div className="mx-auto w-1/2 rounded-xl h-2 bg-darkervanilla"></div>
+                <div className="mx-auto w-[90%] rounded-xl h-1 bg-darkervanilla"></div>
                 {/*Introductory text*/}
-                <p className="mt-5 text-lg text-moonstone text-bold mb-6 text-center">
+                <p className="mt-2 px-6 text-lg text-moonstone mb-2 text-center">
                     You’re not just a visitor, you’re a part of our community. We’re here to listen and help so feel free to reach out!</p>
                 </div>
 
-                <div className="mt-4 flex flex-col lg:flex-row justify-center gap-10 px-4 max-w-screen-2xl mx-auto">
+                <div className="mt-2 flex flex-col lg:flex-row justify-center gap-10 px-4 max-w-screen-2xl mx-auto">
 
                 {/*Contact form container*/}
-                <div className="w-full lg:w-[60%] min-w-[300px] bg-moonstone p-6 rounded-4xl shadow-md">
+                <div className="w-full lg:w-[60%] min-w-[300px] bg-lightermoonstone p-6 rounded-4xl h-full shadow-md">
                     <div className="flex flex-row">
                         <img src={MailWhiteBlue} alt="Mail" className="w-10 h-10 mb-4" />
                         <h2 className="text-2xl text-whiteblue ml-5">Please fill out the form below</h2>
                     </div>
                     <form className="">
                         <div className="mb-1 space-y-4">
-
                             <div className="flex justify-center gap-4 max-w-3xl mx-auto">
                                 <input
                                     type="text"
@@ -83,7 +78,7 @@ const ContactUsPage = () => {
 
                                     <div className="flex justify-items-center w-full">
 
-                                        <div className="mt-6 flex justify-center">
+                                        <div className="flex justify-center">
                                             <button
                                                 type="submit"
                                                 className="px-12 py-3 text-[22px] font-bold rounded-full bg-vanilla text-moonstone shadow-md hover:ring-3 hover:ring-vanilla hover:bg-darkervanilla transition"
@@ -100,7 +95,7 @@ const ContactUsPage = () => {
                 
                 {/*Decorative containers*/}
                 <div className="flex flex-col gap-8 w-full lg:w-[35%]">
-                            <div className="relative w-full max-w-3xl h-80 bg-bluewhite rounded-4xl shadow-md overflow-hidden group">
+                            <div className="relative w-full max-w-3xl h-[40%] lg:h-[70%] bg-bluewhite rounded-4xl shadow-md overflow-hidden group">
                                 <img
                                     src={HelpDuck}
                                     alt="Help Duck"
@@ -108,15 +103,15 @@ const ContactUsPage = () => {
                                 />
                             </div>
 
-                    <div className="bg-moonstone p-6 rounded-4xl shadow-md h-25 flex justify-center items-center">
+                    <div className="bg-lightermoonstone p-6 rounded-4xl shadow-md h-[30%] flex justify-center items-center">
                         <h2 className="text-xl text-bluewhite text-center font-bold">Thank you for reaching out!</h2>
                     </div>
 
-                    <div className="bg-bluewhite p-6 rounded-4xl shadow-md h-25 flex justify-center items-center">
+                    <div className="bg-bluewhite p-6 rounded-4xl shadow-md h-[30%] flex justify-center items-center">
                         <h3 className="text-2xl font-bold text-moonstone">Need Quick Answers?</h3>
                         <Link 
                             to="/help"
-                            className="mx-auto bg-vanilla text-center text-moonstone font-semibold px-6 py-2 rounded-full shadow-md hover:ring-3 hover:ring-vanilla hover:bg-darkervanilla transition"
+                            className="mx-auto bg-vanilla text-center text-moonstone font-semibold px-6 py-2 rounded-3xl shadow-md hover:ring-3 hover:ring-vanilla hover:bg-darkervanilla transition"
                             >
                             Visit Help
                         </Link>
@@ -126,7 +121,7 @@ const ContactUsPage = () => {
                 </div>
             </div>
             </div>
-        </>
+        </Panels>
     );
 };
 

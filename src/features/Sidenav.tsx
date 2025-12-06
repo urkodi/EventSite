@@ -20,7 +20,6 @@ function Sidenav() {
                         <NavLink icon = {SearchSVG} text = "Browse" link = "/browse"/>
                         <NavLink icon = {TicketSVG} text = "My Tickets" link = "/my-tickets"/>
                         <NavLink icon = {BookmarkSVG} text = "Bookmark" link = "/bookmark"/>
-                        
                     </ul>
                     <ul> 
                         <ContactLink icon = {HelpSVG} text = "Help" link = "/help"/>

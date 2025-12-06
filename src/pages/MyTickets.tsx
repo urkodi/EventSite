@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Panels from "../features/Panels";
 import EventBlock from '../components/EventBlock';
-import useUserStore from '../lib/userStore';
 
 const initialTickets = [
   {
-    id: 1,
-    eventId: "1",
+    id: 8,
+    eventId: "8",
     title: 'Rhode Island College Internship Fair',
     startTime: '12:00 PM',
     date: 'Oct 12, 2025',
@@ -51,7 +50,6 @@ const initialTickets = [
 ];
 
 const MyTickets = () => {
-  const { user } = useUserStore();
   const [tickets] = useState(initialTickets);
 
   return (
@@ -62,16 +60,22 @@ const MyTickets = () => {
           style={{
             scrollbarColor:"#E9CC73 transparent",
           }}>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-2 mb-8">
+          <div
+              className="mt-2 grid gap-4 px-2"
+                style={{
+                  gridTemplateColumns: "repeat(auto-fit, minmax(220px, max-content))",
+                }}
+              >
             {tickets.length > 0 ? (
               tickets.map(ticket => (
                 <EventBlock
                   key={ticket.eventId}
                   eventId={ticket.eventId}
                   imageUrl={ticket.image}
-                  link="/event-details"
+                  link={`/event-details/${ticket.eventId}?past=true`}
                   eventTitle={ticket.title}
                   eventDate={ticket.date}
+                  eventTime={""}
                   eventAddress={ticket.address}
                   category={ticket.category}
                   showMapButton={true}

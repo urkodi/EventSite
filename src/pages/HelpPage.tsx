@@ -1,22 +1,21 @@
 import { useState, type JSX } from 'react';
-import Sidenav from '../features/Sidenav';
 
 {/* Imported icons for help topics */}
 import SearchMoonstone from '../assets/icons/SearchMoonstone.svg';
 import LockMoonstone from '../assets/icons/LockMoonstone.svg';
-import MailMoonstone from '../assets/icons/MailMoonstone.svg';
 import UserMoonstone from '../assets/icons/UserMoonstone.svg';
 import BellMoonstone from '../assets/icons/BellMoonstone.svg';
 import CalendarMoonstone from '../assets/icons/CalendarMoonstone.svg';
 import ShoppingCart from '../assets/icons/ShoppingCart.svg';
 import { Link } from 'react-router-dom';
+import Panels from '../features/Panels';
 
 const FlipBox = ({ frontContent, backContent }: { frontContent: JSX.Element; backContent: JSX.Element }) => {
     const [flipped, setFlipped] = useState(false);
 
     return (
         <div
-            className="h-60 w-60 cursor-pointer transition-transform duration-300 active:scale-95 hover:scale-95"
+            className="h-58 w-58 cursor-pointer transition-transform duration-300 active:scale-95 hover:scale-95"
             style={{ perspective: '1000px' }}
             onClick={() => setFlipped(!flipped)}
         >
@@ -52,44 +51,37 @@ const FlipBox = ({ frontContent, backContent }: { frontContent: JSX.Element; bac
 
 const HelpPage = () => {
     return (
-        <>
-            <div className="flex lg:flex-row flex-col">
-                <Sidenav />
-            </div>
-
-            <main
-                className="flex-grow p-6 bg-lightermoonstone h-auto shadow-md overflow-y-scroll"
+        <Panels>
+            <div className="overflow-y-scroll h-[calc(100vh-90px)] px-6 py-4"
                 style={{
-                    scrollbarColor: '#4C9DB0 transparent',
-                }}
-            >
-                <div className="flex flex-col items-center w-[90%] mx-auto bg-bluewhite p-4 rounded-2xl shadow-md mb-8 border-6 border-moonstone">
+                    scrollbarColor:"#E9CC73 transparent",
+                }}>
+                <div className="flex flex-col items-center mx-auto bg-bluewhite p-4 rounded-2xl shadow-md">
                     <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-moonstone mb-4 text-center">
                         How can we help?
                     </h1>
-                    <div className="mx-auto w-130 rounded-xl h-2 bg-darkervanilla"></div>
+                    <div className="mx-auto w-[90%] rounded-xl h-1 bg-darkervanilla"></div>
 
                     <div className="mt-4 text-moonstone text-center">
-                        <p className="mb-2">
+                        <p className="text-lg">
                             Need a hand? Find answers to common questions below.
                         </p>
                     </div>
                 </div>
                 
-                <div className="flex items-center text-center justify-center mx-auto bg-moonstone w-[70%] h-12 rounded-xl">
-                <div className="flex text-xl text-whiteblue font-bold"> ----------  Can't find what you're looking for?<Link
+                <div className="flex items-center text-center justify-center mx-auto bg-moonstone w-[70%] h-12 rounded-xl mt-4">
+                <div className="flex text-xl text-whiteblue font-bold py-2"> Can't find what you're looking for?<Link
                     to="/contact-us"
-                    className="ml-1 underline"
+                    className="ml-2 underline"
                     >
                     Contact Us
                     </Link>
-                    <p className="ml-2">----------</p>
                 </div>
                 </div>
 
-                <div className="mt-6 grid gap-6 px-4 place-items-center" 
+                <div className="mt-6 grid gap-y-6 gap-x-6 px-4 place-items-center" 
                     style={{ 
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))'
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))'
                         }}>
 
                     {/* Account Access Box */}
@@ -159,7 +151,7 @@ const HelpPage = () => {
                         frontContent={
                             <>
                                 <img src={SearchMoonstone} alt="Search" className="w-20 h-20 mx-auto" />
-                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Browsing Events</h2>
+                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Browsing</h2>
                                 <p className="mt-1 text-moonstone text-center">
                                     Find out how to search, filter, and explore events that match your interests.
                                 </p>
@@ -216,133 +208,9 @@ const HelpPage = () => {
                             </>
                         }
                     />
-
-                    <FlipBox
-                        frontContent={
-                            <>  
-                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
-                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
-                                <p className="mt-1 text-moonstone text-center">
-                                    add description
-                                </p>
-                            </>
-                        }
-                        backContent={
-                            <>
-                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
-                                <p className="mt-2 text-moonstone text-center">
-                                    Add help
-                                </p>
-                            </>
-                        }
-                    />
-
-                    <FlipBox
-                        frontContent={
-                            <>  
-                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
-                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
-                                <p className="mt-1 text-moonstone text-center">
-                                    add description
-                                </p>
-                            </>
-                        }
-                        backContent={
-                            <>
-                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
-                                <p className="mt-2 text-moonstone text-center">
-                                    Add help
-                                </p>
-                            </>
-                        }
-                    />
-
-                    <FlipBox
-                        frontContent={
-                            <>  
-                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
-                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
-                                <p className="mt-1 text-moonstone text-center">
-                                    add description
-                                </p>
-                            </>
-                        }
-                        backContent={
-                            <>
-                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
-                                <p className="mt-2 text-moonstone text-center">
-                                    Add help
-                                </p>
-                            </>
-                        }
-                    />
-
-                    <FlipBox
-                        frontContent={
-                            <>  
-                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
-                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
-                                <p className="mt-1 text-moonstone text-center">
-                                    add description
-                                </p>
-                            </>
-                        }
-                        backContent={
-                            <>
-                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
-                                <p className="mt-2 text-moonstone text-center">
-                                    Add help
-                                </p>
-                            </>
-                        }
-                    />
-
-                    <FlipBox
-                        frontContent={
-                            <>  
-                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
-                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
-                                <p className="mt-1 text-moonstone text-center">
-                                    add description
-                                </p>
-                            </>
-                        }
-                        backContent={
-                            <>
-                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
-                                <p className="mt-2 text-moonstone text-center">
-                                    Add help
-                                </p>
-                            </>
-                        }
-                    />
-
-                    <FlipBox
-                        frontContent={
-                            <>  
-                                <img src={MailMoonstone} alt="User" className="w-20 h-20 mx-auto" />
-                                <h2 className="text-2xl font-bold text-darkervanilla mt-2 text-center">Add title</h2>
-                                <p className="mt-1 text-moonstone text-center">
-                                    add description
-                                </p>
-                            </>
-                        }
-                        backContent={
-                            <>
-                                <h2 className="text-xl font-bold text-moonstone text-center">Add header</h2>
-                                <p className="mt-2 text-moonstone text-center">
-                                    Add help
-                                </p>
-                            </>
-                        }
-                    />
-
-
                 </div>
-
-                <div className="mt-8 mx-auto w-130 rounded-xl h-2 bg-vanilla"></div>
-            </main>
-        </>
+            </div>
+        </Panels>
     );
 };
 

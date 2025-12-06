@@ -5,243 +5,257 @@ import Panels from "../features/Panels";
 import SearchSVG from "../components/icons/SearchSVG";
 import Map from "../components/Map";
 import Dropdown from "../components/Dropdown";
-import useUserStore from "../lib/userStore";
-import Category from "../components/Category";
-import TicketSVG from "../components/icons/TicketSVG";
-import ChevronSVG from "../components/icons/ChevronSVG";
 
 import MicIcon from "../assets/icons/mic-vocal.svg";
 import WineIcon from "../assets/icons/wine.svg";
 import BurgerIcon from "../assets/icons/hamburger.svg";
 import BallIcon from "../assets/icons/volleyball.svg";
 import ArtIcon from "../assets/icons/palette.svg";
-import PartyIcon from "../assets/icons/party.svg"; 
+import PartyIcon from "../assets/icons/party.svg";
 
 import { Link } from 'react-router-dom';
 
-function Homepage() {
+import Calendar from "../components/Calendar";
+import LandingPage from "./LandingPage";
+import type { Event, User } from "../global";
 
-    const { user } = useUserStore();
+function Homepage() {
+    const [user, setUser] = useState<User | null>(null);
+    const [searchQuery, setSearchQuery] = useState<string>("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const [events, setEvents] = useState([
-        { eventId: "1",
-            imageUrl:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg" ,
-            link:"/event-details" ,
-            eventTitle:"Duck Hunt" ,
-            eventDate:"October 30th 2025" ,
-            eventAddress:"44 Hummingbird Ln" ,
-            category:"Food" ,
-        },
-        {
-            eventId:"2",
-            imageUrl:"https://www.stockvault.net/data/2020/01/18/272608/thumb16.jpg",
-            link:"/event-details",
-            eventTitle:"Art Expo",
-            eventDate:"October 30th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Art"
-        },
-        {
-            eventId:"3",
-            imageUrl:"https://gratisography.com/wp-content/uploads/2025/05/gratisography-dino-party-800x525.jpg",
-            link:"/event-details",
-            eventTitle:"Dino Party",
-            eventDate:"October 30th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Party"
-        },
-        {
-            eventId:"4",
-            imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG66KxSseACXvW6KvUTYLxE2DbuCNfv4APUpURpgqxOGkqjvfGR1GqxuYS1WXr2bfoV34&usqp=CAU",
-            link:"/event-details",
-            eventTitle:"Doggy Dance Off",
-            eventDate:"October 30th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Drinks"
-        },
-        {
-            eventId:"5",
-            imageUrl:"https://www.adobe.com/content/dam/www/us/en/events/overview-page/eventshub_evergreen_opengraph_1200x630_2x.jpg",
-            link:"/event-details",
-            eventTitle:"Music Festival",
-            eventDate:"October 30th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Music"
-        },
-        
-    ]);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [events, setEvents] = useState<Event[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        //backend call to fetch events
-    }, [])
+        async function getUser() {
+            const res = await fetch(`${import.meta.env.VITE_BASE_URL}/users/logged_in`, {
+                credentials: "include"
+            });
+
+            if (res.ok) {
+                const data = await res.json();
+                setUser(data);
+            }
+        }
+
+        getUser();
+    }, []);
+
+    
+    useEffect(() => {
+        async function getEvents() {
+            setLoading(true);
+            const params = new URLSearchParams();
+            
+            if (searchQuery) params.append('q', searchQuery);
+            if (selectedCategory) params.append('category', selectedCategory);
+            if (selectedDate) {
+                params.append('date', selectedDate.toISOString().split('T')[0]);
+            }
+
+            try {
+                const res = await fetch(
+                    `${import.meta.env.VITE_BASE_URL}/events/search?${params}`
+                );
+
+                if (res.ok) {
+                    const data = await res.json();
+                    setEvents(data);
+                }
+            } catch (error) {
+                console.error('Error fetching events:', error);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        getEvents();
+    }, [searchQuery, selectedCategory, selectedDate]);  // Watch ALL filters
 
     const categories = [
-        { categoryId: "Music", icon: MicIcon },
-        { categoryId: "Drinks", icon: WineIcon },
-        { categoryId: "Food", icon: BurgerIcon },
-        { categoryId: "Sports", icon: BallIcon },
-        { categoryId: "Art", icon: ArtIcon },
-        { categoryId: "Party", icon: PartyIcon },
+        { categoryId: "music_concert", icon: MicIcon },
+        { categoryId: "food_drink", icon: WineIcon },
+        { categoryId: "food_drink", icon: BurgerIcon },
+        { categoryId: "sports", icon: BallIcon },
+        { categoryId: "art_exhibition", icon: ArtIcon },
+        { categoryId: "party", icon: PartyIcon },
     ];
 
-    const filteredEvents = selectedCategory
-    ? events.filter((e) => e.category === selectedCategory)
-    : events;
+    const handleDateSelect = (date: Date) => {
+        setSelectedDate(date);
+    };
+
+    const clearDateFilter = () => {
+        setSelectedDate(null);
+    };
+
+    if (!user) return <LandingPage/>
 
     return (
         <Panels>
             <div className="px-10 mt-2 flex items-center justify-between">
                 <section className="text-white">
-                    <h1 className="text-3xl">
+                    <h1 className="text-3xl font-bold">
                         Hello, <span className="font-bold">{user?.firstName || "USER"}</span>!
                     </h1>
                     <h2 className="text-lg">
-                        Let's find something fun to do...
+                        Let's find something fun to do . . .
                     </h2>
                 </section>
                 <section className="w-[50%] bg-white p-3 rounded-2xl flex items-center gap-2 text-neutral-400">
-                    <SearchSVG width="1.4em" height="1.4em"/>
+                    <SearchSVG width="1.4em" height="1.4em" />
                     <input
                         type="text"
                         placeholder="Find an Event..."
-                        className="placeholder-neutral-400 outline-none border-none"
+                        value={searchQuery}
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                        className="placeholder-neutral-400 outline-none border-none w-full"
                     />
                 </section>
             </div>
 
             <span className="flex h-auto ml-8 mt-3 mb-1">
-                <Dropdown title="Choose a Location" buttonName="Boston">
-                    <div className="w-full mt-4 bg-white rounded-2xl px-2 py-2 flex items-center gap-2">
-                        <span className="px-1 text-neutral-400">
-                            <SearchSVG width="1.2em" height="1.2em" />
-                        </span>
-                        <input
-                            type="text"
-                            placeholder="Search by city or ZIP code"
-                            className= "flex-1 placeholder-neutral-400 border-none outline-none"
-                        />
-                        {/* ADD MAP FEATURE BACK IN LATER */}
+                <Dropdown title="Choose a Location" buttonName="Location">
+                    <div className="space-y-4">
+                        <Map />
                     </div>
                 </Dropdown>
-                <Dropdown title="Dates" buttonName="Today">
-                    <input>
-                    
-                    </input>
+                <Dropdown
+                    title="Filter By Date"
+                    buttonName={selectedDate ? selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : "Date"}
+                >
+                    <Calendar onDateSelect={handleDateSelect} selectedDate={selectedDate} />
+                    {selectedDate && (
+                        <button
+                            onClick={clearDateFilter}
+                            className="w-full mt-3 px-2 py-2 bg-lightermoonstone hover:bg-moonstone text-white rounded-lg font-semibold transition"
+                        >
+                            Clear Date Filter
+                        </button>
+                    )}
                 </Dropdown>
-                <span className="h-auto w-0.5 my-2 m-4 rounded-xl bg-lightgrey"/>
+                <span className="h-auto w-0.5 my-2 m-4 rounded-xl bg-lightgrey" />
                 <div className="flex gap-2">
-                {categories.map(({categoryId, icon }, i) => (
-                    <button
-                        key={i}
-                        onClick={() =>
-                        setSelectedCategory(
-                        selectedCategory === categoryId ? null : categoryId
-                    )
-                }
-                className={`bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-sm hover:bg-vanilla transition transition-transform duration-300 active:scale-95 hover:scale-90 ${
-                  selectedCategory === categoryId
-                    ? "ring-2 ring-[var(--color-vanilla)]"
-                    : ""
-                }`}
-              >
-                <img src={icon} alt={categoryId} className="w-6 h-6" />
-              </button>
-            ))}
-            </div>
+                    {categories.map(({ categoryId, icon }, i) => (
+                        <button
+                            key={i}
+                            onClick={() =>
+                                setSelectedCategory(
+                                    selectedCategory === categoryId ? null : categoryId
+                                )
+                            }
+                            className={`bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-sm hover:bg-vanilla transition duration-300 active:scale-95 hover:scale-90 ${selectedCategory === categoryId
+                                ? "ring-2 ring-vanilla"
+                                : ""
+                                }`}
+                        >
+                            <img src={icon} alt={categoryId} className="w-6 h-6" />
+                        </button>
+                    ))}
+                </div>
             </span>
 
             <div className="overflow-y-auto h-[calc(100vh-230px)] overflow-x-hidden mr-2"
                 style={{
-                    scrollbarColor:"#E9CC73 transparent",
+                    scrollbarColor: "#E9CC73 transparent",
                 }}>
-                
+
                 {/* FEATURED EVENTS */}
                 <div className="justify-between flex items-center">
                     <h1 className="mb-2 mt-2 font-bold text-white text-2xl px-10">
-                        Featured Events 
+                        Featured Events
                     </h1>
-                    <Link 
+                    <Link
                         to="/browse"
                         className="flex items-center font-semibold gap-1 text-white mr-10 hover:underline">
                         Browse More
                     </Link>
                 </div>
 
-                <div className="overflow-x-auto mx-10 max-w-full"
-                    style={{
-                        scrollbarColor:"#E9CC73 transparent",
-                    }}>
-
-                <ul className="flex gap-6 snap-x snap-mandatory mb-2">
-                    {filteredEvents.length > 0 ? (
-                        filteredEvents.map((event) => (
-                            <li key={event.eventId} className="snap-start shrink-0">
-                                <EventBlock
-                                    eventId={event.eventId}
-                                    imageUrl={event.imageUrl}
-                                    link={event.link}
-                                    eventTitle={event.eventTitle}
-                                    eventDate={event.eventDate}
-                                    eventAddress={event.eventAddress}
-                                    category={event.category} />
-                            </li>
-                        ))
-                    ) : (
-                        <li className="text-white italic opacity-70">
-                            No events found.
-                        </li>
-                    )}
-                    </ul>
-                </div>
+                {loading ? (
+                    <div className="text-white italic opacity-70 px-10 py-4">
+                        Loading events...
+                    </div>
+                ) : events.length > 0 ? (
+                    <div className="overflow-x-auto mx-10 max-w-full"
+                        style={{
+                            scrollbarColor: "#E9CC73 transparent",
+                        }}>
+                        <ul className="flex gap-6 snap-x snap-mandatory mb-2">
+                            {events.map((event) => (
+                                <li key={event.id} className="snap-start shrink-0">
+                                    <EventBlock
+                                        eventId={`${event.id}`}
+                                        imageUrl={event.imageUrl || ""}
+                                        link={`/event-details/${event.id}`}
+                                        eventTitle={event.name}
+                                        eventDate={event.date}
+                                        eventTime={event.time}
+                                        eventAddress={event.address || ""}
+                                        category={event.category || ""} />
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                ) : (
+                    <div className="text-white italic opacity-70 px-10 py-8 text-center bg-lightermoonstone/20 rounded-lg mx-10">
+                        No events found for the selected filters. Try adjusting your search or filters.
+                    </div>
+                )}
 
                 {/* DISCOVER EVENTS */}
                 <div className="mt-2 bg-lightermoonstone rounded-xl px-4 py-2 mx-2 mb-4">
                     <div className="justify-between flex items-center">
                         <h1 className="mb-2 mt-2 font-bold text-white text-2xl">
-                            Discover Events 
+                            Discover Events
                         </h1>
-                        <Link 
+                        <Link
                             to="/browse"
                             className="flex items-center font-semibold gap-1 text-white mr-2 hover:underline">
                             Browse More
                         </Link>
                     </div>
 
-                    <div className="overflow-x-auto"
-                        style={{
-                            scrollbarColor:"#ECFBFD transparent",
-                        }}>
-                                
-                    <ul className="flex gap-6 snap-x snap-mandatory mb-2 mt-2">
-                        {filteredEvents.length > 0 ? (
-                            filteredEvents.map((event) => (
-                                <li key={event.eventId} className="snap-start shrink-0">
-                                <EventBlock 
-                                    eventId={event.eventId}
-                                    imageUrl={event.imageUrl} 
-                                    link={event.link} 
-                                    eventTitle={event.eventTitle} 
-                                    eventDate={event.eventDate} 
-                                    eventAddress={event.eventAddress}
-                                    category="" /> 
-                                </li>
-                            ))
-                        ) : (
-                            <li className="text-white italic opacity-70">
-                                No events found.
-                            </li>
-                        )}
-                        </ul>
-                    </div>
+                    {loading ? (
+                        <div className="text-white italic opacity-70 px-4 py-4">
+                            Loading events...
+                        </div>
+                    ) : events.length > 0 ? (
+                        <div className="overflow-x-auto"
+                            style={{
+                                scrollbarColor: "#ECFBFD transparent",
+                            }}>
+                            <ul className="flex gap-6 snap-x snap-mandatory mb-2 mt-2">
+                                {events.map((event) => (
+                                    <li key={event.id} className="snap-start shrink-0">
+                                        <EventBlock
+                                            eventId={`${event.id}`}
+                                            imageUrl={event.imageUrl || ""}
+                                            link={`/event-details/${event.id}`}
+                                            eventTitle={event.name}
+                                            eventDate={event.date}
+                                            eventTime={event.time}
+                                            eventAddress={event.address || ""}
+                                            category={event.category || ""} />
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    ) : (
+                        <div className="text-white italic opacity-70 px-4 py-8 text-center bg-white/10 rounded-lg">
+                            No events found for the selected filters. Try adjusting your search or filters.
+                        </div>
+                    )}
                 </div>
             </div>
 
-                <div className="flex">
-                    <div className="bg-lightermoonstone">
+            <div className="flex">
+                <div className="bg-lightermoonstone">
 
 
-                    </div>
                 </div>
+            </div>
         </Panels>
     )
 }

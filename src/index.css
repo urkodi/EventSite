@@ -1,14 +1,19 @@
 @import "tailwindcss";
+@import 
+url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 @theme {
   --color-whiteblue:#ECFBFD;
   --color-bluewhite:#ECFBFD;
   --color-moonstone:#4C9DB0;
+  --color-darkermoonstone:#3a8799;
   --color-lightermoonstone:#9CCED6;
   --color-darkervanilla:#E9CC73;
   --color-vanilla:#FFEBAF;
   --color-lightgrey:#E3E3E3;
 }
+
+
 html, body, #root {
   height: 100%;
   width: 100%;
@@ -35,3 +40,6 @@ html, body, #root {
   100% { transform: translate(0, 0) scale(1); }
 }
 
+.slick-track {
+  overflow: visible !important;
+}

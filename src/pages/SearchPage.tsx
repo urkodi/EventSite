@@ -1,77 +1,146 @@
-import React, { useState, useEffect} from "react";
+import { useState, useEffect} from "react";
 import Panels from "../features/Panels";
-import BookmarkIcon from "../assets/icons/bookmark.svg";
-import ExternalLinkIcon from "../assets/icons/external-link.svg";
 import MicIcon from "../assets/icons/mic-vocal.svg";
 import WineIcon from "../assets/icons/wine.svg";
 import BurgerIcon from "../assets/icons/hamburger.svg";
 import BallIcon from "../assets/icons/volleyball.svg";
 import ArtIcon from "../assets/icons/palette.svg";
-import PartyIcon from "../assets/icons/party.svg"; 
-import useUserStore from "../lib/userStore";
-
+import PartyIcon from "../assets/icons/party.svg";
 import EventBlock from "../components/EventBlock";
 import SearchSVG from "../components/icons/SearchSVG";
 import Dropdown from "../components/Dropdown";
-import Category from "../components/Category";
-import TicketSVG from "../components/icons/TicketSVG";
 
+import Calendar from "../components/Calendar";
+
+type EventData = {
+    eventId: string;
+    imageUrl: string;
+    eventTitle: string;
+    eventDate: string;
+    eventTime?: string;
+    eventAddress: string;
+    category: string;
+    link?: string;
+};
 
 function SearchPage() {
-  
-  const { user } = useUserStore();
+    const [searchQuery, setSearchQuery] = useState<string>("");
     const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-    const [events, setEvents] = useState([
-        { eventId: "1",
-            imageUrl:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg" ,
-            link:"/event-details" ,
-            eventTitle:"Duck Hunt" ,
-            eventDate:"October 30th 2025" ,
-            eventAddress:"44 Hummingbird Ln" ,
-            category:"Food" ,
-        },
-        {
-            eventId:"2",
-            imageUrl:"https://www.stockvault.net/data/2020/01/18/272608/thumb16.jpg",
-            link:"/event-details",
-            eventTitle:"Art Expo",
-            eventDate:"October 30th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Art"
-        },
-        {
-            eventId:"3",
-            imageUrl:"https://gratisography.com/wp-content/uploads/2025/05/gratisography-dino-party-800x525.jpg",
-            link:"/event-details",
-            eventTitle:"Dino Party",
-            eventDate:"October 30th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Party"
-        },
-        {
-            eventId:"4",
-            imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG66KxSseACXvW6KvUTYLxE2DbuCNfv4APUpURpgqxOGkqjvfGR1GqxuYS1WXr2bfoV34&usqp=CAU",
-            link:"/event-details",
-            eventTitle:"Doggy Dance Off",
-            eventDate:"October 30th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Drinks"
-        },
-        {
-            eventId:"5",
-            imageUrl:"https://www.adobe.com/content/dam/www/us/en/events/overview-page/eventshub_evergreen_opengraph_1200x630_2x.jpg",
-            link:"/event-details",
-            eventTitle:"Music Festival",
-            eventDate:"October 30th 2025",
-            eventAddress:"44 Hummingbird Ln",
-            category:"Music"
-        },
-        
-    ]);
+    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    const [events, setEvents] = useState<EventData[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
+    const hardcodedEvents: EventData[] = [
+    { 
+        eventId: "1",
+        imageUrl:"https://images.pexels.com/photos/20804701/pexels-photo-20804701.jpeg?cs=srgb&dl=pexels-agrosales-20804701.jpg&fm=jpg",
+        link:`/event-details/1`,
+        eventTitle:"Duck Hunt",
+        eventDate:"October 30th 2025",
+        eventAddress:"44 Hummingbird Ln",
+        category:"Food",
+        eventTime: "3:00 PM"
+    },
+    {
+        eventId:"2",
+        imageUrl:"https://www.stockvault.net/data/2020/01/18/272608/thumb16.jpg",
+        link:`/event-details/2`,
+        eventTitle:"Art Expo",
+        eventDate:"October 30th 2025",
+        eventAddress:"44 Hummingbird Ln",
+        category:"Art",
+        eventTime: "4:00 PM"
+    },
+    {
+        eventId:"3",
+        imageUrl:"https://gratisography.com/wp-content/uploads/2025/05/gratisography-dino-party-800x525.jpg",
+        link:`/event-details/3`,
+        eventTitle:"Dino Party",
+        eventDate:"November 25th 2025",
+        eventAddress:"44 Hummingbird Ln",
+        category:"Party",
+        eventTime: "6:00 PM"
+    },
+    {
+        eventId:"4",
+        imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQG66KxSseACXvW6KvUTYLxE2DbuCNfv4APUpURpgqxOGkqjvfGR1GqxuYS1WXr2bfoV34&usqp=CAU",
+        link:`/event-details/4`,
+        eventTitle:"Doggy Dance Off",
+        eventDate:"December 5th 2025",
+        eventAddress:"44 Hummingbird Ln",
+        category:"Drinks",
+        eventTime: "3:00 PM"
+    },
+    {
+        eventId:"5",
+        imageUrl:"https://www.adobe.com/content/dam/www/us/en/events/overview-page/eventshub_evergreen_opengraph_1200x630_2x.jpg",
+        link:`/event-details/5`,
+        eventTitle:"Music Festival",
+        eventDate:"November 25th 2025",
+        eventAddress:"44 Hummingbird Ln",
+        category:"Music",
+        eventTime: "5:00 PM"
+    },
+    ];
+
+    //backend call to fetch events 
     useEffect(() => {
-        //backend call to fetch events
-    }, [])
+    const fetchEvents = async () => {
+        setLoading(true);
+        const params = new URLSearchParams();
+        
+        if (searchQuery) params.append('q', searchQuery);
+        if (selectedCategory) params.append('category', selectedCategory);
+        if (selectedDate) {
+            params.append('date', selectedDate.toISOString().split('T')[0]);
+        }
+        
+        try {
+            const response = await fetch(
+                `${import.meta.env.VITE_API_URL}/events/search/?${params}`
+            );
+            
+            if (!response.ok) {
+                throw new Error('Failed to fetch events');
+            }
+            
+            const dbEvents: EventData[] = await response.json();
+            
+            // Filter hardcoded events with ALL filters including date
+            const filteredHardcoded = hardcodedEvents.filter((event) => {
+                const matchesSearch = searchQuery 
+                    ? event.eventTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      event.eventAddress.toLowerCase().includes(searchQuery.toLowerCase())
+                    : true;
+                const matchesCategory = selectedCategory ? event.category === selectedCategory : true;
+                const matchesDate = selectedDate ? isSameDay(parseEventDate(event.eventDate), selectedDate) : true;
+                return matchesSearch && matchesCategory && matchesDate;
+            });
+            
+            // Combine filtered hardcoded and database events
+            const allEvents = [...filteredHardcoded, ...dbEvents];
+            setEvents(allEvents);
+        } catch (error) {
+            console.error('Error fetching events:', error);
+            
+            // Fallback: also filter hardcoded events by date
+            const filteredHardcoded = hardcodedEvents.filter((event) => {
+                const matchesSearch = searchQuery 
+                    ? event.eventTitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                      event.eventAddress.toLowerCase().includes(searchQuery.toLowerCase())
+                    : true;
+                const matchesCategory = selectedCategory ? event.category === selectedCategory : true;
+                const matchesDate = selectedDate ? isSameDay(parseEventDate(event.eventDate), selectedDate) : true;
+                return matchesSearch && matchesCategory && matchesDate;
+            });
+            setEvents(filteredHardcoded);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    fetchEvents();
+}, [searchQuery, selectedCategory, selectedDate]);
 
     const categories = [
         { categoryId: "Music", icon: MicIcon },
@@ -81,10 +150,36 @@ function SearchPage() {
         { categoryId: "Art", icon: ArtIcon },
         { categoryId: "Party", icon: PartyIcon },
     ];
+    const parseEventDate = (dateString: string): Date => {
+    const months: { [key: string]: number } = {
+        January: 0, February: 1, March: 2, April: 3, May: 4, June: 5,
+        July: 6, August: 7, September: 8, October: 9, November: 10, December: 11
+    };
+    
+    const parts = dateString.split(' ');
+    const month = months[parts[0]];
+    const day = parseInt(parts[1].replace(/\D/g, ''));
+    const year = parseInt(parts[2]);
+    
+    return new Date(year, month, day);
+};
 
-    const filteredEvents = selectedCategory
-    ? events.filter((e) => e.category === selectedCategory)
-    : events;
+    const isSameDay = (date1: Date, date2: Date): boolean => {
+        return (
+            date1.getDate() === date2.getDate() &&
+            date1.getMonth() === date2.getMonth() &&
+            date1.getFullYear() === date2.getFullYear()
+        );
+    };
+
+    const handleDateSelect = (date: Date) => {
+        setSelectedDate(date);
+    };
+
+    const clearDateFilter = () => {
+        setSelectedDate(null);
+    };
+
   return (
     <Panels>
       {/* SEARCH + FILTER SECTION */}
@@ -99,14 +194,16 @@ function SearchPage() {
             <input
               type="text"
               placeholder="Find an Event..."
-              className="placeholder-neutral-400 outline-none border-none"
+              value={searchQuery}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+              className="placeholder-neutral-400 outline-none border-none w-full"
             />
         </section>
         </div>
 
         {/* Filter Buttons + Icon Buttons */}
         <span className="flex h-auto mt-4 mb-4">
-                <Dropdown title="Choose a Location" buttonName="Boston">
+                <Dropdown title="Choose a Location" buttonName="Location">
                     <div className="w-full mt-4 bg-white rounded-2xl px-2 py-2 flex items-center gap-2">
                         <span className="px-1 text-neutral-400">
                             <SearchSVG width="1.2em" height="1.2em" />
@@ -119,10 +216,19 @@ function SearchPage() {
                         {/* ADD MAP FEATURE BACK IN LATER */}
                     </div>
                 </Dropdown>
-                <Dropdown title="Dates" buttonName="Today">
-                    <input>
-                    
-                    </input>
+                <Dropdown 
+                    title="Filter By Date" 
+                    buttonName={selectedDate ? selectedDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) : "Date"}
+                >
+                    <Calendar onDateSelect={handleDateSelect} selectedDate={selectedDate} />
+                    {selectedDate && (
+                        <button
+                            onClick={clearDateFilter}
+                            className="w-full mt-3 px-2 py-2 bg-lightermoonstone hover:bg-moonstone text-white rounded-lg font-semibold transition"
+                        >
+                            Clear Date Filter
+                        </button>
+                    )}
                 </Dropdown>
                 <span className="h-auto w-0.5 my-2 m-4 rounded-xl bg-lightgrey"/>
                 <div className="flex gap-2">
@@ -134,7 +240,7 @@ function SearchPage() {
                         selectedCategory === categoryId ? null : categoryId
                     )
                 }
-                className={`bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-sm hover:bg-vanilla transition transition-transform duration-300 active:scale-95 hover:scale-90 ${
+                className={`bg-white rounded-full w-12 h-12 flex items-center justify-center shadow-sm hover:bg-vanilla transition-transform duration-300 active:scale-95 hover:scale-90 ${
                   selectedCategory === categoryId
                     ? "ring-2 ring-[var(--color-vanilla)]"
                     : ""
@@ -151,16 +257,26 @@ function SearchPage() {
                     scrollbarColor:"#E9CC73 transparent",
                 }}>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 px-2 mb-8">
-                  {filteredEvents.length > 0 ? (
-                    filteredEvents.map((event) => (
+                <div
+                  className="mt-2 grid gap-3 px-1"
+                  style={{
+                    gridTemplateColumns: "repeat(auto-fit, minmax(220px, max-content))",
+                  }}
+                >
+                  {loading ? (
+                    <p className="text-white italic opacity-70 col-span-full">
+                        Loading events...
+                    </p>
+                  ) : events.length > 0 ? (
+                    events.map((event) => (
                       <EventBlock
                         key={event.eventId}
                         eventId={event.eventId}
                         imageUrl={event.imageUrl}
-                        link={event.link}
+                        link={event.link || `/event-details/${event.eventId}`}
                         eventTitle={event.eventTitle}
                         eventDate={event.eventDate}
+                        eventTime={event.eventTime || ""}
                         eventAddress={event.eventAddress}
                         category={event.category}
                       />
